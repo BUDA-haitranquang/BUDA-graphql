@@ -36,9 +36,9 @@ type BuyOrderItem{
     ID: Int
 }
 type Query{
-    findIngredientByIngredientID(ingredientID:Int): [Ingredient]
+    findIngredientByIngredientID(ingredientID:Int): Ingredient
     findAllProductByUserID(userID: Int): [Product] 
-    findProductByProductID(productID: Int): [Product]
+    findProductByProductID(productID: Int): Product
     findAllProductByProductGroupID(productGroupID: Int): [Product] 
     findIngredientByName(ingredientName: String): [Ingredient]
 }

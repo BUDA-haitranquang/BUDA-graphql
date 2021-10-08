@@ -9,7 +9,7 @@ class Budabackend extends RESTDataSource {
         //this.baseURL = 'http://192.168.1.10:8080/'
     }
     async findIngredientByIngredientID(ingredientID) {
-        return this.get(`api/Ingredient/${ingredientID}`);
+        return this.get(`api/Ingredient/ingredientID/${ingredientID}`);
     }
     async findIngredientByName(ingredientName) {
         return this.get(`api/Ingredient/${ingredientName}`);
