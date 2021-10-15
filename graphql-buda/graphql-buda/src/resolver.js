@@ -1,31 +1,44 @@
 const { argsToArgsConfig } = require("graphql/type/definition");
-
+// const bcrypt = require('bcrypt');
+// const jwt = require('jsonwebtoken');
 module.exports.resolvers = {
     Query: {
-        findIngredientByIngredientID: async (_, args, { dataSources }) => {
-            return dataSources.buda.findIngredientByIngredientID(args.ingredientID);
+        ingredient: async (_, args, { dataSources }) => {
+            return dataSources.buda.ingredient(args.ingredientID);
         },
-        findIngredientByName: async (_, args, { dataSources }) => {
-            return dataSources.buda.findIngredientByName(args.ingredientName);
+        ingredient_name: async (_, args, { dataSources }) => {
+            return dataSources.buda.ingredient_name(args.ingredientName);
         },
    
-        findProductByProductID: async (_, args, { dataSources }) => {
-            return dataSources.buda.findProductByProductID(args.productID);
+        product_id: async (_, args, { dataSources }) => {
+            return dataSources.buda.product_id(args.productID);
         },
-        findAllProductByUserID: async (_, args, { dataSources }) => {
-            return dataSources.buda.findAllProductByUserID(args.userID);
+        product_user: async (_, args, { dataSources }) => {
+            return dataSources.buda.product_user(args.userID);
         },
-        findAllProductByProductGroupID: async (_, args, { dataSources }) => {
-            return dataSources.buda.findAllProductByProductGroupID(args.productGroupID);
+        product_group: async (_, args, { dataSources }) => {
+            return dataSources.buda.product_group(args.productGroupID);
         }
     },
     Mutation: {
-        registerNewProduct: async (_, args, { dataSources }) => {
-            return dataSources.buda.registerNewProduct(args.userID, args.productID);
+        newproduct: async (_, args, { dataSources }) => {
+            return dataSources.buda.newproduct(args.userID, args.productID);
         },
-        createNewIngredient: async (_, args, { dataSources }) => {
-            return dataSources.buda.createNewIngredient(args.newingredient);
+        newingredient: async (_, args, { dataSources }) => {
+            return dataSources.buda.newingredient(args.newingredient);
         },
+        newstaff: async (_, args, { dataSources }) => {
+            return dataSources.buda.newstaff(args.newstaff);
+        },
+        newuser: async (_, args, { dataSources }) => {
+            return dataSources.buda.newuser(args.userRegister); 
+        },
+        userlogin: async (_, args, { dataSources }) => {
+            return dataSources.buda.userlogin(args.email, args.password);
+        },
+        stafflogin: async (_, args, { dataSources }) => {
+            return dataSources.buda.userlogin(args.uuid, args.password);
+        }
         // cleanCache: async (_, __, { dataSources }) => {
         //     return dataSources.buda.cleanCache();
         // }
