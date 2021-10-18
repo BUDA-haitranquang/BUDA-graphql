@@ -6,38 +6,37 @@ module.exports.resolvers = {
         ingredient: async (_, args, { dataSources }) => {
             return dataSources.buda.ingredient(args.ingredientID);
         },
-        ingredient_name: async (_, args, { dataSources }) => {
-            return dataSources.buda.ingredient_name(args.ingredientName);
+        ingredientsByName: async (_, args, { dataSources }) => {
+            return dataSources.buda.ingredientsByName(args.ingredientName);
         },
-   
-        product_id: async (_, args, { dataSources }) => {
-            return dataSources.buda.product_id(args.productID);
+        product: async (_, args, { dataSources }) => {
+            return dataSources.buda.product(args.productID);
         },
-        product_user: async (_, args, { dataSources }) => {
-            return dataSources.buda.product_user(args.userID);
+        productsByUserID: async (_, args, { dataSources }) => {
+            return dataSources.buda.productsByUserID(args.userID);
         },
-        product_group: async (_, args, { dataSources }) => {
-            return dataSources.buda.product_group(args.productGroupID);
+        productsByGroupID: async (_, args, { dataSources }) => {
+            return dataSources.buda.productsByGroupID(args.productGroupID);
+        },
+        userLogin: async (_, args, { dataSources }) => {
+            return dataSources.buda.userLogin(args.email, args.password);
+        },
+        staffLogin: async (_, args, { dataSources }) => {
+            return dataSources.buda.staffLogin(args.uuid, args.password);
         }
     },
     Mutation: {
-        newproduct: async (_, args, { dataSources }) => {
-            return dataSources.buda.newproduct(args.userID, args.productID);
+        newProduct: async (_, args, { dataSources }) => {
+            return dataSources.buda.newProduct(args.newproduct);
         },
-        newingredient: async (_, args, { dataSources }) => {
-            return dataSources.buda.newingredient(args.newingredient);
+        newIngredient: async (_, args, { dataSources }) => {
+            return dataSources.buda.newIngredient(args.newingredient);
         },
-        newstaff: async (_, args, { dataSources }) => {
-            return dataSources.buda.newstaff(args.newstaff);
+        newStaff: async (_, args, { dataSources }) => {
+            return dataSources.buda.newStaff(args.newstaff);
         },
-        newuser: async (_, args, { dataSources }) => {
-            return dataSources.buda.newuser(args.userRegister); 
-        },
-        userlogin: async (_, args, { dataSources }) => {
-            return dataSources.buda.userlogin(args.email, args.password);
-        },
-        stafflogin: async (_, args, { dataSources }) => {
-            return dataSources.buda.userlogin(args.uuid, args.password);
+        newUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.newUser(args.userRegister); 
         }
         // cleanCache: async (_, __, { dataSources }) => {
         //     return dataSources.buda.cleanCache();

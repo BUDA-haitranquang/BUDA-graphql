@@ -87,12 +87,12 @@ type Authenticate {
 }
 type Query{
     ingredient(ingredientID:Int): Ingredient
-    product_user(userID: Int): [Product] 
-    product_id(productID: Int): Product
-    product_group(productGroupID: Int): [Product] 
-    ingredient_name(ingredientName: String): [Ingredient]
-    # userlogin(userLogin: UserLogin): User
-    # stafflogin(stafflogin: StaffLogin): Staff
+    productsByUserID(userID: Int): [Product] 
+    product(productID: Int): Product
+    productsByGroupID(productGroupID: Int): [Product] 
+    ingredientsByName(ingredientName: String): [Ingredient]
+    userLogin(email: String!, password: String!): Authenticate
+    staffLogin(uuid: String!, password: String!): Authenticate
 }
 input ProductInput {
     productID: Int
@@ -124,11 +124,9 @@ input StaffInput{
     salary: Float
 }
 type Mutation{
-    newproduct(userID: Int, productInput: ProductInput): Product
-    newingredient(userID: Int, ingredientInput: IngredientInput): Ingredient
-    newstaff(staffInput: StaffInput): Staff
-    newuser(userRegister: UserRegister): User
-    userlogin(email: String!, password: String!): Authenticate
-    stafflogin(uuid: String!, password: String!): Authenticate
+    newProduct(userID: Int, productInput: ProductInput): Product
+    newIngredient(userID: Int, ingredientInput: IngredientInput): Ingredient
+    newStaff(staffInput: StaffInput): Staff
+    newUser(userRegister: UserRegister): User
 }
 `;
