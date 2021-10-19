@@ -18,6 +18,18 @@ module.exports.resolvers = {
         productsByGroupID: async (_, args, { dataSources }) => {
             return dataSources.buda.productsByGroupID(args.productGroupID);
         },
+        buyordersByUserID: async (_, args, { dataSources }) => {
+            return dataSources.buda.buyordersByUserID(args.userID);
+        },
+        buyordersBySupplierID: async (_, args, { dataSources }) => {
+            return dataSources.buda.buyordersBySupplierID(args.supplierID);
+        },
+        sellordersByUserID: async (_, args, { dataSources }) =>{
+            return dataSources.buda.sellordersByUserID(args.userID);
+        },
+        sellordersByCustomerID: async (_, args, { dataSources }) => {
+            return dataSources.buda.sellordersByCustomerID(args.customerID);
+        },
         userLogin: async (_, args, { dataSources }) => {
             return dataSources.buda.userLogin(args.email, args.password);
         },
@@ -27,13 +39,13 @@ module.exports.resolvers = {
     },
     Mutation: {
         newProduct: async (_, args, { dataSources }) => {
-            return dataSources.buda.newProduct(args.newproduct);
+            return dataSources.buda.newProduct(args.userID, args.productInput);
         },
         newIngredient: async (_, args, { dataSources }) => {
-            return dataSources.buda.newIngredient(args.newingredient);
+            return dataSources.buda.newIngredient(args.userID, args.ingredientInput);
         },
         newStaff: async (_, args, { dataSources }) => {
-            return dataSources.buda.newStaff(args.newstaff);
+            return dataSources.buda.newStaff(args.staffInput);
         },
         newUser: async (_, args, { dataSources }) => {
             return dataSources.buda.newUser(args.userRegister); 

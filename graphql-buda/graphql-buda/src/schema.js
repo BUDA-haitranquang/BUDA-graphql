@@ -77,9 +77,67 @@ type StaffLogin{
     uuid: String 
     password: String 
 }
+type Supplier{
+    id: Int
+}
+type Customer{
+    id: Int
+}
+type Discount{
+    id: Int
+}
+type BuyOrder{
+     buyOrderID: Int
+     supplier: Supplier
+     #creationTime: ZonedDateTime
+     status: Status
+     totalCost: Float
+     userID: Int
+     buyOrderItems: [BuyOrderItem]
+}
+type SellOrder{
+     sellOrderID: Int
+     customer: Customer
+     discount: Discount
+    # creationTime: ZonedDateTime
+     ageGroup: AgeGroup
+     gender: Gender
+     actualDiscountCash: Float
+     actualDiscountPercentage: Float
+     realCost: Float
+     finalCost: Float
+     userID: Int
+     customerMessage: String
+     status: Status
+     sellOrderItems: [SellOrderItem]
+}
 enum StaffPosition{
     MANAGER, 
     BASIC
+}
+enum Gender{
+    MALE,
+    FEMALE,
+    UNKNOWN
+}
+enum AgeGroup{
+    FROM_0_TO_12, 
+    FROM_12_TO_18, 
+    FROM_18_TO_24, 
+    FROM_24_TO_30,
+    FROM_30_TO_40,
+    FROM_40_TO_50,
+    FROM_50_TO_65,
+    FROM_65_AND_ABOVE,
+    UNKNOWN
+}
+enum Status{
+    FINISHED, 
+    DELIVERING, 
+    PACKAGING, 
+    RECEIVING, 
+    DELAYING, 
+    CANCELLED
 }
 type Authenticate {
   accessToken: String!
@@ -91,6 +149,10 @@ type Query{
     product(productID: Int): Product
     productsByGroupID(productGroupID: Int): [Product] 
     ingredientsByName(ingredientName: String): [Ingredient]
+    buyordersByUserID(userID: Int): [BuyOrder]
+    buyordersBySupplierID(supplierID: Int): [BuyOrder]
+    sellordersByUserID(userID: Int): [SellOrder]
+    sellordersByCustomerID(customerID: Int): [SellOrder]
     userLogin(email: String!, password: String!): Authenticate
     staffLogin(uuid: String!, password: String!): Authenticate
 }

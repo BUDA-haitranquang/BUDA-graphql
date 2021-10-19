@@ -23,7 +23,18 @@ class Budabackend extends RESTDataSource {
     async productsByGroupID(productGroupID) {
         return this.get(`api/product/product-groupID/${productGroupID}/all`);
     }
-   
+    async buyordersByUserID(userID){
+        return this.get(`api/Buy-order/user/${userID}/all`);
+    }
+    async buyordersBySupplierID(supplierID) {
+        return this.get(`api/Buy-order/supplier/${supplierID}/all`);
+    }
+    async sellordersByUserID(userID) {
+        return this.get(`api/sell-order/user/${userID}/all`);
+    }
+    async sellordersByCustomerID(customerID) {
+        return this.get(`api/sell-order/customer/${customerID}/all`);
+    }
     async cleanCache() {
         try {
             await this.httpCache.keyValueCache.wrapped.client.flushdb();
