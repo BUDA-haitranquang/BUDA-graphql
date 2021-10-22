@@ -49,6 +49,12 @@ module.exports.resolvers = {
         },
         newUser: async (_, args, { dataSources }) => {
             return dataSources.buda.newUser(args.userRegister); 
+        },
+        newBuyOrder: async (_, args, { dataSources }) => {
+            return dataSources.buda.newBuyOrder(args.buyOrderInput);
+        },
+        newSellOrder: async (_, args, { dataSources }) => {
+            return dataSources.buda.newSellOrder(args.sellOrderInput);
         }
         // cleanCache: async (_, __, { dataSources }) => {
         //     return dataSources.buda.cleanCache();

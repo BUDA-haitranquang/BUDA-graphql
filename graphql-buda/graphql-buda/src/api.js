@@ -5,8 +5,8 @@ class Budabackend extends RESTDataSource {
     }
     constructor() {
         super();
-        this.baseURL = "http://localhost:8080"
-        //this.baseURL = 'http://192.168.1.10:8080/'
+        this.baseURL = "http://143.198.194.24:8080/"
+        //this.baseURL = 'http://localhost:8080/'
     }
     async ingredient(ingredientID) {
         return this.get(`api/Ingredient/ingredientID/${ingredientID}`);
@@ -23,14 +23,14 @@ class Budabackend extends RESTDataSource {
     async productsByGroupID(productGroupID) {
         return this.get(`api/product/product-groupID/${productGroupID}/all`);
     }
-    async buyordersByUserID(userID){
-        return this.get(`api/Buy-order/user/${userID}/all`);
+    async buyordersByUserID(){
+        return this.get(`api/buy-order/user/all/`);
     }
     async buyordersBySupplierID(supplierID) {
-        return this.get(`api/Buy-order/supplier/${supplierID}/all`);
+        return this.get(`api/buy-order/supplier/${supplierID}/all`);
     }
-    async sellordersByUserID(userID) {
-        return this.get(`api/sell-order/user/${userID}/all`);
+    async sellordersByUserID() {
+        return this.get(`api/sell-order/all`);
     }
     async sellordersByCustomerID(customerID) {
         return this.get(`api/sell-order/customer/${customerID}/all`);
@@ -72,6 +72,13 @@ class Budabackend extends RESTDataSource {
             password: password,
         })
     }
-
+    async newBuyOrder(buyOrderInput) {
+        const buyOrderInputJson = JSON.parse(JSON.stringify(buyOrderInput));
+        return this.post(`api/buy-order/new`, buyOrderInputJson);
+    }
+    async newSellOrder(sellOrderInput) {
+        const sellOrderInputJson = JSON.parse(JSON.stringify(sellOrderInput));
+        return this.post(`api/sell-order/new`, sellOrderInputJson);
+    }
 }
 module.exports = Budabackend

@@ -17,6 +17,7 @@ type Product{
 }
 type SellOrderItem{
      id: Int
+     quantity: Int
 }
 type ProductLeftLog{
     id: Int
@@ -33,7 +34,14 @@ type Ingredient{
      buyOrderItems: [BuyOrderItem]
 }
 type BuyOrderItem{
-    ID: Int
+     buyOrderItemID: Int
+     buyOrder: BuyOrder 
+     ingredient: Ingredient 
+     quantity: Int
+     pricePerUnit: Float
+     creationTime: String
+     userID: Int
+     supplierID: Int
 }
 type Purchase{
     id: Int
@@ -78,10 +86,17 @@ type StaffLogin{
     password: String 
 }
 type Supplier{
-    id: Int
+     supplierID: Int
+     email: String 
+     pictureID: Int
+     name: String
+     address: String
+     phoneNumber: String
+     userID: Int
 }
 type Customer{
-    id: Int
+    CustomerID: Int
+    phoneNumber: String
 }
 type Discount{
     id: Int
@@ -89,7 +104,7 @@ type Discount{
 type BuyOrder{
      buyOrderID: Int
      supplier: Supplier
-     #creationTime: ZonedDateTime
+     creationTime: String
      status: Status
      totalCost: Float
      userID: Int
@@ -99,7 +114,7 @@ type SellOrder{
      sellOrderID: Int
      customer: Customer
      discount: Discount
-    # creationTime: ZonedDateTime
+     creationTime: String
      ageGroup: AgeGroup
      gender: Gender
      actualDiscountCash: Float
@@ -149,9 +164,9 @@ type Query{
     product(productID: Int): Product
     productsByGroupID(productGroupID: Int): [Product] 
     ingredientsByName(ingredientName: String): [Ingredient]
-    buyordersByUserID(userID: Int): [BuyOrder]
+    buyordersByUserID: [BuyOrder]
     buyordersBySupplierID(supplierID: Int): [BuyOrder]
-    sellordersByUserID(userID: Int): [SellOrder]
+    sellordersByUserID: [SellOrder]
     sellordersByCustomerID(customerID: Int): [SellOrder]
     userLogin(email: String!, password: String!): Authenticate
     staffLogin(uuid: String!, password: String!): Authenticate
@@ -185,10 +200,30 @@ input StaffInput{
     staffUUID: String
     salary: Float
 }
+input BuyOrderInput{
+     buyOrderID: Int
+     status: Status
+     totalCost: Float
+     userID: Int
+}
+input SellOrderInput{
+     sellOrderID: Int
+     ageGroup: AgeGroup
+     gender: Gender
+     actualDiscountCash: Float
+     actualDiscountPercentage: Float
+     realCost: Float
+     finalCost: Float
+     userID: Int
+     customerMessage: String
+     status: Status
+}
 type Mutation{
     newProduct(userID: Int, productInput: ProductInput): Product
     newIngredient(userID: Int, ingredientInput: IngredientInput): Ingredient
     newStaff(staffInput: StaffInput): Staff
     newUser(userRegister: UserRegister): User
+    newBuyOrder(buyOrderInput: BuyOrderInput): BuyOrder
+    newSellOrder(sellOrderInput: SellOrderInput): SellOrder
 }
 `;
