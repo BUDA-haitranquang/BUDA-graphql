@@ -5,8 +5,8 @@ class Budabackend extends RESTDataSource {
     }
     constructor() {
         super();
-        this.baseURL = "http://143.198.194.24:8080/"
-        //this.baseURL = 'http://localhost:8080/'
+        //this.baseURL = "http://143.198.194.24:8080/"
+        this.baseURL = 'http://localhost:8080/'
     }
     async ingredient(ingredientID) {
         return this.get(`api/Ingredient/ingredientID/${ingredientID}`);
