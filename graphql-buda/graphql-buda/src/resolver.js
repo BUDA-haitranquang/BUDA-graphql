@@ -30,6 +30,24 @@ module.exports.resolvers = {
         sellordersByCustomerID: async (_, args, { dataSources }) => {
             return dataSources.buda.sellordersByCustomerID(args.customerID);
         },
+        customersByUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.customersByUser(args.userID);
+        },
+        customerByPhone: async (_, args, { dataSources })=> {
+            return dataSources.buda.customerByPhone(args.phoneNumber);
+        },
+        discountsByUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.discountsByUser(args.userID);
+        },
+        discount: async (_, args, { dataSources }) => {
+            return dataSources.buda.discount(args.discountID);
+        },
+        suppliersByUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.suppliersByUser(args.userID);
+        },
+        supplierByPhone: async (_, args, { dataSources }) => {
+            return dataSources.buda.supplierByPhone(args.phoneNumber);
+        },
         userLogin: async (_, args, { dataSources }) => {
             return dataSources.buda.userLogin(args.email, args.password);
         },
@@ -55,6 +73,15 @@ module.exports.resolvers = {
         },
         newSellOrder: async (_, args, { dataSources }) => {
             return dataSources.buda.newSellOrder(args.sellOrderInput);
+        },
+        newCustomer: async (_, args, { dataSources }) => {
+            return dataSources.buda.newCustomer(args.customerInput);
+        },
+        newDiscount: async (_, args, { dataSources }) => {
+            return dataSources.buda.newDiscount(args.discountInput);
+        },
+        newSupplier: async (_, args, { dataSources }) => {
+            return dataSources.buda.newSupplier(args.supplierInput);
         }
         // cleanCache: async (_, __, { dataSources }) => {
         //     return dataSources.buda.cleanCache();

@@ -5,8 +5,8 @@ class Budabackend extends RESTDataSource {
     }
     constructor() {
         super();
-        //this.baseURL = "http://143.198.194.24:8080/"
-        this.baseURL = 'http://localhost:8080/'
+        this.baseURL = "http://143.198.194.24:8080/"
+        //this.baseURL = 'http://localhost:8080/'
     }
     async ingredient(ingredientID) {
         return this.get(`api/Ingredient/ingredientID/${ingredientID}`);
@@ -34,6 +34,24 @@ class Budabackend extends RESTDataSource {
     }
     async sellordersByCustomerID(customerID) {
         return this.get(`api/sell-order/customer/${customerID}/all`);
+    }
+    async customersByUser(){
+        return this.get(`api/customer/all`);
+    }
+    async customerByPhone(phoneNumber){
+        return this.get(`api/customer/byphone`);
+    }
+    async discountsByUser(){
+        return this.get(`api/discount/all`);
+    }
+    async discount(discountID){
+        return this.get(`api/discount/discountID/${discountID}`);
+    }
+    async suppliersByUser(){
+        return this.get(`api/supplier/all`);
+    }
+    async supplierByPhone(phoneNumber){
+        return this.get(`api/supplier/byphone`);
     }
     async cleanCache() {
         try {
@@ -79,6 +97,18 @@ class Budabackend extends RESTDataSource {
     async newSellOrder(sellOrderInput) {
         const sellOrderInputJson = JSON.parse(JSON.stringify(sellOrderInput));
         return this.post(`api/sell-order/new`, sellOrderInputJson);
+    }
+    async newCustomer(customerInput){
+        const customerInputJson = JSON.parse(JSON.stringify(customerInput));
+        return this.post(`api/customer/new`, customerInputJson);
+    }
+    async newDiscount(discountInput){
+        const discountInputJson = JSON.parse(JSON.stringify(discountInput));
+        return this.post(`api/discount/new`, discountInputJson);
+    }
+    async newSupplier(supplierInput){
+        const supplierInputJson = JSON.parse(JSON.stringify(supplierInput));
+        return this.post(`api/supplier/new`, supplierInputJson);
     }
 }
 module.exports = Budabackend
