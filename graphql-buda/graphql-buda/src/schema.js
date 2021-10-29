@@ -171,19 +171,22 @@ type Plan{
     planID: Int
     purchases: [Purchase]
     name: String 
-    Price: Float
+    price: Float
     duration: Int
     pictureID: Int
     description: String
 }
-type MembershipType
-{
+type MembershipType{
      membershipTypeID: Int
      membershipName: String 
      description: String 
      userID: Int
      discount: Discount
      minimumSpend: Float
+}
+type Picture{
+    pictureID: Int
+    pictureLink: String
 }
 enum StaffPosition{
     MANAGER, 
@@ -380,10 +383,14 @@ input PlanInput{
     planID: Int
     purchases: [PurchaseInput]
     name: String 
-    Price: Float
+    price: Float
     duration: Int
     pictureID: Int
     description: String
+}
+input PictureInput{
+    pictureID: Int
+    pictureLink: String
 }
 type Authenticate {
   accessToken: String!
@@ -395,10 +402,10 @@ type Query{
     product(productID: Int): Product
     productsByGroupID(productGroupID: Int): [Product] 
     ingredientsByName(ingredientName: String): [Ingredient]
-    buyordersByUserID: [BuyOrder]
-    buyordersBySupplierID(supplierID: Int): [BuyOrder]
-    sellordersByUserID: [SellOrder]
-    sellordersByCustomerID(customerID: Int): [SellOrder]
+    buyOrdersByUserID: [BuyOrder]
+    buyOrdersBySupplierID(supplierID: Int): [BuyOrder]
+    sellOrdersByUserID: [SellOrder]
+    sellOrdersByCustomerID(customerID: Int): [SellOrder]
     customersByUser: [Customer]
     customerByPhone(phoneNumber: String): Customer 
     discountsByUser: [Discount]
@@ -407,6 +414,9 @@ type Query{
     supplierByPhone(phoneNumber: String): Supplier
     userLogin(email: String!, password: String!): Authenticate
     staffLogin(uuid: String!, password: String!): Authenticate
+    plan(planID: Int): Plan 
+    plans: [Plan]
+    picture(pictureID: Int): Picture
 }
 
 type Mutation{
@@ -419,5 +429,11 @@ type Mutation{
     newCustomer(customerInput: CustomerInput): Customer
     newDiscount(discountInput: DiscountInput): Discount
     newSupplier(supplierInput: SupplierInput): Supplier
+    newPlan(planInput: PlanInput): Plan
+    newPicture(pictureInput: PictureInput): Picture
+    deleteSellOrder(sellOrderID: Int): String
+    deletePlan(planID: Int): String
+    deletePicture(pictureID: Int): String
+    updatePicture(picture: PictureInput): Picture
 }
 `;

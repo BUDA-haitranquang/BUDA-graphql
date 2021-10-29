@@ -23,16 +23,16 @@ class Budabackend extends RESTDataSource {
     async productsByGroupID(productGroupID) {
         return this.get(`api/product/product-groupID/${productGroupID}/all`);
     }
-    async buyordersByUserID(){
+    async buyOrdersByUserID(){
         return this.get(`api/buy-order/user/all/`);
     }
-    async buyordersBySupplierID(supplierID) {
+    async buyOrdersBySupplierID(supplierID) {
         return this.get(`api/buy-order/supplier/${supplierID}/all`);
     }
-    async sellordersByUserID() {
+    async sellOrdersByUserID() {
         return this.get(`api/sell-order/all`);
     }
-    async sellordersByCustomerID(customerID) {
+    async sellOrdersByCustomerID(customerID) {
         return this.get(`api/sell-order/customer/${customerID}/all`);
     }
     async customersByUser(){
@@ -52,6 +52,12 @@ class Budabackend extends RESTDataSource {
     }
     async supplierByPhone(phoneNumber){
         return this.get(`api/supplier/byphone`);
+    }
+    async plans(){
+        return this.get(`api/plan/all`);
+    }
+    async picture(pictureID){
+        return this.get(`api/picture/${pictureID}`);
     }
     async cleanCache() {
         try {
@@ -109,6 +115,27 @@ class Budabackend extends RESTDataSource {
     async newSupplier(supplierInput){
         const supplierInputJson = JSON.parse(JSON.stringify(supplierInput));
         return this.post(`api/supplier/new`, supplierInputJson);
+    }
+    async newPlan(planInput){
+        const planInputJson = JSON.parse(JSON.stringify(planInput));
+        return this.post(`api/plan`, planInputJson);
+    }
+    async newPicture(pictureInput){
+        const pictureInputJson = JSON.parse(JSON.stringify(pictureInput));
+        return this.post(`api/picture`, pictureInputJson);
+    }
+    async deleteSellOrder(sellOrderID){
+        return this.delete(`api/sell-order/${sellOrderID}`);
+    }
+    async deletePlan(planID){
+        return this.delete(`api/plan/${planID}`);
+    }
+    async deletePicture(pictureID){
+        return this.delete(`api/picture/${pictureID}`);
+    }
+    async updatePicture(picture){
+        const pictureJson = JSON.parse(JSON.stringify(picture));
+        return this.put(`api/picture`,pictureJson);
     }
 }
 module.exports = Budabackend
