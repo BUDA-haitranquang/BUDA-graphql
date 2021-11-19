@@ -227,10 +227,10 @@ input ProductInput{
     description: String
     userID: Int
     pictureID: Int
-    sellingPrice: Float
-    alertAmount: Int
-    amountLeft: Int
-    costPerUnit: Float
+    sellingPrice: Float = 0
+    alertAmount: Int = 0
+    amountLeft: Int = 0
+    costPerUnit: Float = 0
     groupID: Int
     sellOrderItems: [SellOrderItemInput] 
     productLeftLogs: [ProductLeftLogInput]
@@ -261,31 +261,31 @@ input IngredientInput{
      ingredientID: Int
      name: String 
      description: String 
-     amountLeft: Int
-     price: Float
+     amountLeft: Int = 0
+     price: Float = 0
      userID: Int
      pictureID: Int
-     alertAmountLeft: Int
+     alertAmountLeft: Int = 0
      buyOrderItems: [BuyOrderItemInput]
 }
 input BuyOrderItemInput{
      buyOrderItemID: Int
      buyOrder: BuyOrderInput 
      ingredient: IngredientInput 
-     quantity: Int
-     pricePerUnit: Float
+     quantity: Int = 0
+     pricePerUnit: Float = 0
      creationTime: String
      userID: Int
      supplierID: Int
 }
 input PurchaseInput{
-    purchaseID: Int
+     purchaseID: Int
      user: UserInput
      plan: PlanInput
      creationTime: String
      expiryDate: String
      message: String
-     totalCost: Float
+     totalCost: Float = 0
 }
 input UserInput{
      userID: Int
@@ -308,14 +308,14 @@ input StaffInput{
     userID: Int  
     staffPosition: StaffPosition
     staffUUID: String
-    salary: Float
+    salary: Float = 0
 }
 input BuyOrderInput {
      buyOrderID: Int
      supplier: SupplierInput
      creationTime: String
      status: Status
-     totalCost: Float
+     totalCost: Float = 0
      userID: Int
      buyOrderItems: [BuyOrderItemInput]
 }
@@ -326,10 +326,10 @@ input SellOrderInput{
      creationTime: String
      ageGroup: AgeGroup
      gender: Gender
-     actualDiscountCash: Float
-     actualDiscountPercentage: Float
-     realCost: Float
-     finalCost: Float
+     actualDiscountCash: Float = 0
+     actualDiscountPercentage: Float = 0
+     realCost: Float = 0
+     finalCost: Float = 0
      userID: Int
      customerMessage: String
      status: Status
@@ -339,7 +339,7 @@ input CustomerInput{
      customerID: Int
      ageGroup: AgeGroup 
      gender: Gender 
-     totalSpend: Float
+     totalSpend: Float = 0
      membershipID: Int
      name: String
      address: String 
@@ -351,10 +351,10 @@ input DiscountInput{
      discountID: Int
      name: String 
      description: String 
-     cash: Float
-     percentage: Float
-     cashLimit: Float
-     orderCount: Int
+     cash: Float = 0
+     percentage: Float = 0
+     cashLimit: Float = 0
+     orderCount: Int = 0
      expiryTime: String
      createdTime: String
      userID: Int
@@ -377,14 +377,14 @@ input MembershipTypeInput{
      description: String 
      userID: Int
      discount: DiscountInput
-     minimumSpend: Float
+     minimumSpend: Float = 0
 }
 input PlanInput{
     planID: Int
     purchases: [PurchaseInput]
     name: String 
-    price: Float
-    duration: Int
+    price: Float = 0
+    duration: Int = 0
     pictureID: Int
     description: String
 }
@@ -398,20 +398,25 @@ type Authenticate {
 }
 type Query{
     ingredient(ingredientID:Int): Ingredient
-    productsByUserID(userID: Int): [Product] 
+#     ingredientsByName(ingredientName: String): [Ingredient]
+    ingredientsByUser: [Ingredient]
+    hiddenIngredients: [Ingredient]
+    hideIngredient(ingredientID: Int): Ingredient 
+    productsByUser: [Product] 
     product(productID: Int): Product
-    productsByGroupID(productGroupID: Int): [Product] 
-    ingredientsByName(ingredientName: String): [Ingredient]
-    buyOrdersByUserID: [BuyOrder]
-    buyOrdersBySupplierID(supplierID: Int): [BuyOrder]
-    sellOrdersByUserID: [SellOrder]
-    sellOrdersByCustomerID(customerID: Int): [SellOrder]
+    productsByGroup(productGroupID: Int): [Product] 
+    hiddenProducts: [Product]
+    hideProduct(productID: Int): Product
+    buyOrdersByUser: [BuyOrder]
+    buyOrdersBySupplier(supplierID: Int): [BuyOrder]
+    sellOrdersByUser: [SellOrder]
+    sellOrdersByCustomer(customerID: Int): [SellOrder]
     customersByUser: [Customer]
-    customerByPhone(phoneNumber: String): Customer 
+#     customerByPhone(phoneNumber: String): Customer 
     discountsByUser: [Discount]
     discount(discountID: Int): Discount
     suppliersByUser: [Supplier]
-    supplierByPhone(phoneNumber: String): Supplier
+#     supplierByPhone(phoneNumber: String): Supplier
     userLogin(email: String!, password: String!): Authenticate
     staffLogin(uuid: String!, password: String!): Authenticate
     plan(planID: Int): Plan 
@@ -420,8 +425,8 @@ type Query{
 }
 
 type Mutation{
-    newProduct(userID: Int, productInput: ProductInput): Product
-    newIngredient(userID: Int, ingredientInput: IngredientInput): Ingredient
+    newProduct(productInput: ProductInput): Product
+    newIngredient(ingredientInput: IngredientInput): Ingredient
     newStaff(staffInput: StaffInput): Staff
     newUser(userRegister: UserRegister): User
     newBuyOrder(buyOrderInput: BuyOrderInput): BuyOrder
@@ -431,9 +436,11 @@ type Mutation{
     newSupplier(supplierInput: SupplierInput): Supplier
     newPlan(planInput: PlanInput): Plan
     newPicture(pictureInput: PictureInput): Picture
+#     deleteProduct(productID: Int): String
     deleteSellOrder(sellOrderID: Int): String
     deletePlan(planID: Int): String
     deletePicture(pictureID: Int): String
     updatePicture(picture: PictureInput): Picture
+    updateSellOrder(sellOrder: SellOrderInput): SellOrder
 }
 `;

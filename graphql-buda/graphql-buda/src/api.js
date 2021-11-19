@@ -5,42 +5,57 @@ class Budabackend extends RESTDataSource {
     }
     constructor() {
         super();
-        this.baseURL = "http://143.198.194.24:8080/"
-        //this.baseURL = 'http://localhost:8080/'
+        //this.baseURL = "http://143.198.194.24:8080/"
+        this.baseURL = 'http://localhost:8080/'
     }
     async ingredient(ingredientID) {
-        return this.get(`api/Ingredient/ingredientID/${ingredientID}`);
+        return this.get(`api/ingredient/ingredientID/${ingredientID}`);
     }
-    async ingredientsByName(ingredientName) {
-        return this.get(`api/Ingredient/${ingredientName}`);
+    // async ingredientsByName(ingredientName) {
+    //     return this.get(`api/ingredient/${ingredientName}`);
+    // }
+    async ingredientsByUser(){
+        return this.get(`api/ingredient/all`);
+    }
+    async hiddenIngredients(){
+        return this.get(`api/ingredient/hidden/all`);
+    }
+    async hideIngredient(ingredientID){
+        return this.get(`api/ingredient/hide/${ingredientID}`);
     }
     async product(productID) {
         return this.get(`api/product/productID/${productID}`);
     }
-    async productsByUserID(userID) {
-        return this.get(`api/product/userID/${userID}/all`);
+    async productsByUser() {
+        return this.get(`api/product/all`);
     }
-    async productsByGroupID(productGroupID) {
-        return this.get(`api/product/product-groupID/${productGroupID}/all`);
+    async productsByGroup(productGroupID) {
+        return this.get(`api/product/group/${productGroupID}/all`);
     }
-    async buyOrdersByUserID(){
+    async hiddenProducts(){
+        return this.get(`api/product/hidden/all`);
+    }
+    async hideProduct(productID) {
+        return this.get(`api/product/hide/${productID}`);
+    }
+    async buyOrdersByUser(){
         return this.get(`api/buy-order/user/all/`);
     }
-    async buyOrdersBySupplierID(supplierID) {
+    async buyOrdersBySupplier(supplierID) {
         return this.get(`api/buy-order/supplier/${supplierID}/all`);
     }
-    async sellOrdersByUserID() {
+    async sellOrdersByUser() {
         return this.get(`api/sell-order/all`);
     }
-    async sellOrdersByCustomerID(customerID) {
+    async sellOrdersByCustomer(customerID) {
         return this.get(`api/sell-order/customer/${customerID}/all`);
     }
     async customersByUser(){
         return this.get(`api/customer/all`);
     }
-    async customerByPhone(phoneNumber){
-        return this.get(`api/customer/byphone`);
-    }
+    // async customerByPhone(phoneNumber){
+    //     return this.get(`api/customer/byphone`);
+    // }
     async discountsByUser(){
         return this.get(`api/discount/all`);
     }
@@ -50,9 +65,9 @@ class Budabackend extends RESTDataSource {
     async suppliersByUser(){
         return this.get(`api/supplier/all`);
     }
-    async supplierByPhone(phoneNumber){
-        return this.get(`api/supplier/byphone`);
-    }
+    // async supplierByPhone(phoneNumber){
+    //     return this.get(`api/supplier/byphone`);
+    // }
     async plans(){
         return this.get(`api/plan/all`);
     }
@@ -68,13 +83,13 @@ class Budabackend extends RESTDataSource {
             return false;
         }
     }
-    async newProduct(userID, productInput) {
+    async newProduct(productInput) {
         const productInputJson = JSON.parse(JSON.stringify(productInput));
-        return this.post(`api/product/new/userID/${userID}`, productInputJson);
+        return this.post(`api/product/new`, productInputJson);
     }
-    async newIngredient(userID, ingredientInput) {
+    async newIngredient(ingredientInput) {
         const ingredientInputJson = JSON.parse(JSON.stringify(ingredientInput));
-        return this.post(`api/Ingredient/new/userID/${userID}`, ingredientInputJson);
+        return this.post(`api/ingredient/new`, ingredientInputJson);
     }
     async newStaff(staffInput){
         const staffInputJson = JSON.parse(JSON.stringify(staffInput));
@@ -124,6 +139,9 @@ class Budabackend extends RESTDataSource {
         const pictureInputJson = JSON.parse(JSON.stringify(pictureInput));
         return this.post(`api/picture`, pictureInputJson);
     }
+    // async deleteProduct(productID){
+    //     return this.delete(`api/product/productID/${productID}`);
+    // }
     async deleteSellOrder(sellOrderID){
         return this.delete(`api/sell-order/${sellOrderID}`);
     }
@@ -136,6 +154,10 @@ class Budabackend extends RESTDataSource {
     async updatePicture(picture){
         const pictureJson = JSON.parse(JSON.stringify(picture));
         return this.put(`api/picture`,pictureJson);
+    }
+    async updateSellOrder(sellOrder){
+        const sellOrderJson = JSON.parse(JSON.stringify(sellOrder));
+        return this.put(`api/sell-order/update`, sellOrderJson);   
     }
 }
 module.exports = Budabackend
