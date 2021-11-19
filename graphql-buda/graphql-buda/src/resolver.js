@@ -13,10 +13,10 @@ module.exports.resolvers = {
             return dataSources.buda.ingredientsByUser(args.userID);
         },
         hiddenIngredients: async (_, args, { dataSources }) => {
-            return dataSources.buda.hiddeningredients(args.userID);
+            return dataSources.buda.hiddenIngredients(args.userID);
         },
         hideIngredient: async (_, args, { dataSources }) => {
-            return dataSources.buda.hideingredient(args.ingredientID)
+            return dataSources.buda.hideIngredient(args.ingredientID)
         },
         product: async (_, args, { dataSources }) => {
             return dataSources.buda.product(args.productID);
@@ -28,10 +28,10 @@ module.exports.resolvers = {
             return dataSources.buda.productsByGroup(args.productGroupID);
         },
         hiddenProducts: async (_, args, { dataSources }) => {
-            return dataSources.buda.hiddenproducts(args.userID);
+            return dataSources.buda.hiddenProducts(args.userID);
         },
         hideProduct: async (_, args, { dataSources }) => {
-            return dataSources.buda.hideproduct(args.productID);
+            return dataSources.buda.hideProduct(args.productID);
         },
         buyOrdersByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.buyOrdersByUser(args.userID);
