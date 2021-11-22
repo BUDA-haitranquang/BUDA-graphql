@@ -74,6 +74,30 @@ class Budabackend extends RESTDataSource {
     async picture(pictureID){
         return this.get(`api/picture/${pictureID}`);
     }
+    async fixedCostsByUser(){
+        return this.get(`api/fixed-cost/all`);
+    }
+    async otherCostsByUser(){
+        return this.get(`api/other-cost/all`);
+    }
+    async incompletedOtherCostsByUser(){
+        return this.get(`api/other-cost/all/incompleted`);
+    }   
+    async otherCostsXDaysByUser(X){
+        return this.get(`api/other-cost/all/last-x-days/${X}`);
+    }
+    async fixedCostBillsByUser(){
+        return this.get(`api/fixed-cost-bill/all`);
+    }
+    async fixedCostBillsByFixedCost(fixedCostID){
+        return this.get(`api/fixed-cost-bill/fixedCostID/${fixedCostID}/all`);
+    }
+    async fixedCostBillsXDaysByUser(X){
+        return this.get(`api/fixed-cost-bill/all/last-x-days/${X}`);
+    }
+    async incompletedFixedCostBillsByUser(){
+        return this.get(`api/fixed-cost-bill/all/incompleted`);
+    }
     async cleanCache() {
         try {
             await this.httpCache.keyValueCache.wrapped.client.flushdb();
@@ -139,6 +163,18 @@ class Budabackend extends RESTDataSource {
         const pictureInputJson = JSON.parse(JSON.stringify(pictureInput));
         return this.post(`api/picture`, pictureInputJson);
     }
+    async newFixedCost(fixedCostInput){
+        const fixedCostInputJson = JSON.parse(JSON.stringify(fixedCostInput));
+        return this.post(`api/fixed-cost/new`, fixedCostInputJson);
+    }
+    async newOtherCost(otherCostInput){
+        const otherCostInputJson = JSON.parse(JSON.stringify(otherCostInput));
+        return this.post(`api/other-cost/new`, otherCostInputJson);
+    }
+    async newFixedCostBill(fixedCostBillInput){
+        const fixedCostBillInputJson = JSON.parse(JSON.stringify(fixedCostBillInput));
+        return this.post(`api/fixed-cost-bill/new`, fixedCostBillInputJson);
+    }
     // async deleteProduct(productID){
     //     return this.delete(`api/product/productID/${productID}`);
     // }
@@ -151,6 +187,9 @@ class Budabackend extends RESTDataSource {
     async deletePicture(pictureID){
         return this.delete(`api/picture/${pictureID}`);
     }
+    async deleteFixedCost(fixedCostID){
+        return this.delete(`api/fixed-cost/${fixedCostID}`);
+    }
     async updatePicture(picture){
         const pictureJson = JSON.parse(JSON.stringify(picture));
         return this.put(`api/picture`,pictureJson);
@@ -158,6 +197,10 @@ class Budabackend extends RESTDataSource {
     async updateSellOrder(sellOrder){
         const sellOrderJson = JSON.parse(JSON.stringify(sellOrder));
         return this.put(`api/sell-order/update`, sellOrderJson);   
+    }
+    async updateFixedCost(fixedCost){
+        const fixedCostJson = JSON.parse(JSON.stringify(fixedCost));
+        return this.put(`api/fixed-cost/update`, fixedCostJson);
     }
 }
 module.exports = Budabackend

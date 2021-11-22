@@ -72,6 +72,30 @@ module.exports.resolvers = {
         picture: async (_, args, { dataSources }) => {
             return dataSources.buda.picture(args.pictureID);
         },
+        fixedCostsByUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.fixedCostsByUser(args.userID);
+        },
+        otherCostsByUser: async (_, args, { dataSources}) => {
+            return dataSources.buda.otherCostsByUser(args.userID);
+        },
+        incompletedOtherCostsByUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.incompletedOtherCostsByUser(args.userID);
+        },
+        otherCostsXDaysByUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.otherCostsXDaysByUser(args.X);
+        },
+        fixedCostBillsByUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.fixedCostBillsByUser(args);
+        },
+        fixedCostBillsByFixedCost: async (_, args, { dataSources }) => {
+            return dataSources.buda.fixedCostBillsByFixedCost(args.fixedCostID);
+        },
+        fixedCostBillsXDaysByUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.fixedCostBillsXDaysByUser(args.X);
+        },
+        incompletedFixedCostBillsByUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.incompletedFixedCostBillsByUser(args)
+        },
         userLogin: async (_, args, { dataSources }) => {
             return dataSources.buda.userLogin(args.email, args.password);
         },
@@ -113,6 +137,15 @@ module.exports.resolvers = {
         newPicture: async (_, args, { dataSources }) => {
             return dataSources.buda.newPicture(args.pictureInput);
         },
+        newFixedCost: async (_, args, { dataSources }) => {
+            return dataSources.buda.newFixedCost(args.fixedCostInput);
+        },
+        newOtherCost: async (_, args, { dataSources }) => {
+            return dataSources.buda.newOtherCost(args.otherCostInput);
+        },
+        newFixedCostBill: async (_, args, { dataSources }) => {
+            return dataSources.buda.newFixedCostBill(args.fixedCostBillInput);
+        },
         // deleteProduct: async (_, args, { dataSources }) => {
         //     return dataSources.buda.deleteProduct(args.productID);
         // },
@@ -125,11 +158,17 @@ module.exports.resolvers = {
         deletePicture: async (_, args, { dataSources }) => {
             return dataSources.buda.deletePicture(args.pictureID);
         },
+        deleteFixedCost: async (_, args, { dataSources }) => {
+            return dataSources.buda.deleteFixedCost(args.fixedCostID);
+        },
         updatePicture: async (_, args, { dataSources }) => {
             return dataSources.buda.updatePicture(args.picture);
         },
         updateSellOrder: async (_,args, { dataSources }) => {
             return dataSources.buda.updateSellOrder(args.sellOrder);
+        },
+        updateFixedCost: async (_, args, { dataSources }) => {
+            return dataSources.buda.updateFixedCost(args.fixedCost);
         }
         // cleanCache: async (_, __, { dataSources }) => {
         //     return dataSources.buda.cleanCache();

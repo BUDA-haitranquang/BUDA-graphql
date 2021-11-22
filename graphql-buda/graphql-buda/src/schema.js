@@ -188,6 +188,34 @@ type Picture{
     pictureID: Int
     pictureLink: String
 }
+type FixedCost{
+     fixedCostID: Int
+     name: String
+     description: String 
+     moneyAmount: Float
+     period: Int
+     userID: Int
+     fixedCostBills: [FixedCostBill] 
+}
+type FixedCostBill{
+     fixedCostBillID: Int
+     fixedCost: FixedCost 
+     userID: Int
+     totalSpend: Float
+     message: String 
+     creationTime: String
+     dueTime: String
+     status: Status
+}
+type OtherCost{
+     otherCostID: Int
+     userID: Int
+     totalCost: Float
+     creationTime: String
+     name: String 
+     description: String 
+     status: Status 
+}
 enum StaffPosition{
     MANAGER, 
     BASIC
@@ -392,6 +420,34 @@ input PictureInput{
     pictureID: Int
     pictureLink: String
 }
+input FixedCostInput{
+     fixedCostID: Int
+     name: String
+     description: String 
+     moneyAmount: Float
+     period: Int
+     userID: Int
+     fixedCostBills: [FixedCostBillInput] 
+}
+input FixedCostBillInput{
+     fixedCostBillID: Int
+     fixedCost: FixedCostInput 
+     userID: Int
+     totalSpend: Float
+     message: String 
+     creationTime: String
+     dueTime: String
+     status: Status
+}
+input OtherCostInput{
+     otherCostID: Int
+     userID: Int
+     totalCost: Float
+     creationTime: String
+     name: String 
+     description: String 
+     status: Status 
+}
 type Authenticate {
   accessToken: String!
   refreshToken: String!
@@ -422,6 +478,14 @@ type Query{
     plan(planID: Int): Plan 
     plans: [Plan]
     picture(pictureID: Int): Picture
+    fixedCostsByUser: [FixedCost]
+    otherCostsByUser: [OtherCost]
+    incompletedOtherCostsByUser: [OtherCost]
+    otherCostsXDaysByUser(X: Int): [OtherCost]  
+    fixedCostBillsByUser: [FixedCostBill]
+    fixedCostBillsByFixedCost(fixedCostID: Int): [FixedCostBill]   
+    fixedCostBillsXDaysByUser(X: Int): [FixedCostBill] 
+    incompletedFixedCostBillsByUser: [FixedCostBill]
 }
 
 type Mutation{
@@ -436,11 +500,16 @@ type Mutation{
     newSupplier(supplierInput: SupplierInput): Supplier
     newPlan(planInput: PlanInput): Plan
     newPicture(pictureInput: PictureInput): Picture
+    newFixedCost(fixedCostInput: FixedCostInput): FixedCost
+    newOtherCost(otherCostInput: OtherCostInput): OtherCost
+    newFixedCostBill(fixedCostBillInput: FixedCostBillInput): FixedCostBill
 #     deleteProduct(productID: Int): String
     deleteSellOrder(sellOrderID: Int): String
     deletePlan(planID: Int): String
     deletePicture(pictureID: Int): String
+    deleteFixedCost(fixedCostID: Int): String
     updatePicture(picture: PictureInput): Picture
     updateSellOrder(sellOrder: SellOrderInput): SellOrder
+    updateFixedCost(fixedCost: FixedCostInput): FixedCost
 }
 `;
