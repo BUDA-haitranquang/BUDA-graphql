@@ -492,7 +492,7 @@ type Mutation{
     newProduct(productInput: ProductInput): Product
     newIngredient(ingredientInput: IngredientInput): Ingredient
     newStaff(staffInput: StaffInput): Staff
-    newUser(userRegister: UserRegister): User
+    newUser(userRegister: UserRegister): Authenticate
     newBuyOrder(buyOrderInput: BuyOrderInput): BuyOrder
     newSellOrder(sellOrderInput: SellOrderInput): SellOrder
     newCustomer(customerInput: CustomerInput): Customer
