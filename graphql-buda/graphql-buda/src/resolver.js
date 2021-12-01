@@ -95,12 +95,6 @@ module.exports.resolvers = {
         },
         incompletedFixedCostBillsByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.incompletedFixedCostBillsByUser(args)
-        },
-        userLogin: async (_, args, { dataSources }) => {
-            return dataSources.buda.userLogin(args.email, args.password);
-        },
-        staffLogin: async (_, args, { dataSources }) => {
-            return dataSources.buda.staffLogin(args.uuid, args.password);
         }
     },
     Mutation: {
@@ -145,6 +139,12 @@ module.exports.resolvers = {
         },
         newFixedCostBill: async (_, args, { dataSources }) => {
             return dataSources.buda.newFixedCostBill(args.fixedCostBillInput);
+        },
+        userLogin: async (_, args, { dataSources }) => {
+            return dataSources.buda.userLogin(args.email, args.password);
+        },
+        staffLogin: async (_, args, { dataSources }) => {
+            return dataSources.buda.staffLogin(args.uuid, args.password);
         },
         // deleteProduct: async (_, args, { dataSources }) => {
         //     return dataSources.buda.deleteProduct(args.productID);

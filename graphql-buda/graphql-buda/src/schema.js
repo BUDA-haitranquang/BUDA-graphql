@@ -473,8 +473,6 @@ type Query{
     discount(discountID: Int): Discount
     suppliersByUser: [Supplier]
 #     supplierByPhone(phoneNumber: String): Supplier
-    userLogin(email: String!, password: String!): Authenticate
-    staffLogin(uuid: String!, password: String!): Authenticate
     plan(planID: Int): Plan 
     plans: [Plan]
     picture(pictureID: Int): Picture
@@ -503,6 +501,8 @@ type Mutation{
     newFixedCost(fixedCostInput: FixedCostInput): FixedCost
     newOtherCost(otherCostInput: OtherCostInput): OtherCost
     newFixedCostBill(fixedCostBillInput: FixedCostBillInput): FixedCostBill
+    userLogin(email: String!, password: String!): Authenticate
+    staffLogin(uuid: String!, password: String!): Authenticate
 #     deleteProduct(productID: Int): String
     deleteSellOrder(sellOrderID: Int): String
     deletePlan(planID: Int): String
