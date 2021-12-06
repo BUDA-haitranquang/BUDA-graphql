@@ -216,6 +216,27 @@ type OtherCost{
      description: String 
      status: Status 
 }
+type ExpenseByTimeStatistics{
+     timePeriod: String 
+     expense: Float
+}
+type AgeGroupStatistics{
+     ageGroup: AgeGroup 
+     totalSpend: Float
+}
+type GenderStatistics{
+     gender: Gender 
+     totalSpend: Float
+}
+type ProductStatistics{
+     productID: Int
+     name: String 
+     totalRevenue: Float
+}
+type RevenueByTimeStatistics{
+     timePeriod: String 
+     revenue: Float
+}
 enum StaffPosition{
     MANAGER, 
     BASIC
@@ -250,8 +271,8 @@ enum DiscountType {
     BOTH
 }
 input ProductInput{
-    productID: Int
-    name: String
+    productID: Int!
+    name: String!
     description: String
     userID: Int
     pictureID: Int
@@ -264,7 +285,7 @@ input ProductInput{
     productLeftLogs: [ProductLeftLogInput]
 }
 input SellOrderItemInput{
-     sellOrderItemID: Int
+     sellOrderItemID: Int!
      sellOrder: SellOrderInput
      product: ProductInput
      quantity: Int
@@ -277,17 +298,17 @@ input SellOrderItemInput{
      costPerUnit: Float
 }
 input ProductLeftLogInput{
-     productLeftLogID: Int
+     productLeftLogID: Int!
      product: ProductInput 
-     amountLeftChange: Int 
+     amountLeftChange: Int!
      creationTime: String
      staffID: Int
      message: String 
      userID: Int
 }
 input IngredientInput{
-     ingredientID: Int
-     name: String 
+     ingredientID: Int!
+     name: String! 
      description: String 
      amountLeft: Int = 0
      price: Float = 0
@@ -297,58 +318,58 @@ input IngredientInput{
      buyOrderItems: [BuyOrderItemInput]
 }
 input BuyOrderItemInput{
-     buyOrderItemID: Int
+     buyOrderItemID: Int!
      buyOrder: BuyOrderInput 
      ingredient: IngredientInput 
      quantity: Int = 0
      pricePerUnit: Float = 0
      creationTime: String
      userID: Int
-     supplierID: Int
+     supplierID: Int!
 }
 input PurchaseInput{
-     purchaseID: Int
+     purchaseID: Int!
      user: UserInput
      plan: PlanInput
      creationTime: String
-     expiryDate: String
+     expiryDate: String!
      message: String
      totalCost: Float = 0
 }
 input UserInput{
-     userID: Int
-     userUUID: String 
-     userName: String 
-     password: String 
-     email: String 
-     phoneNumber: String 
-     lastName: String 
-     firstName: String 
-     pictureID: Int
+     userID: Int!
+     userUUID: String !
+     userName: String! 
+     password: String !
+     email: String !
+     phoneNumber: String! 
+     lastName: String !
+     firstName: String !
+     pictureID: Int 
      purchases: [PurchaseInput] 
 }
 input StaffInput{
-    staffID: Int
-    name: String 
+    staffID: Int!
+    name: String !
     phoneNumber: String 
-    password: String 
+    password: String !
     address: String 
     userID: Int  
     staffPosition: StaffPosition
-    staffUUID: String
+    staffUUID: String!
     salary: Float = 0
 }
 input BuyOrderInput {
-     buyOrderID: Int
+     buyOrderID: Int!
      supplier: SupplierInput
      creationTime: String
-     status: Status
+     status: Status!
      totalCost: Float = 0
      userID: Int
      buyOrderItems: [BuyOrderItemInput]
 }
 input SellOrderInput{
-     sellOrderID: Int
+     sellOrderID: Int!
      customer: CustomerInput
      discount: DiscountInput
      creationTime: String
@@ -430,23 +451,23 @@ input FixedCostInput{
      fixedCostBills: [FixedCostBillInput] 
 }
 input FixedCostBillInput{
-     fixedCostBillID: Int
+     fixedCostBillID: Int!
      fixedCost: FixedCostInput 
      userID: Int
-     totalSpend: Float
+     totalSpend: Float!
      message: String 
      creationTime: String
-     dueTime: String
-     status: Status
+     dueTime: String!
+     status: Status!
 }
 input OtherCostInput{
-     otherCostID: Int
+     otherCostID: Int!
      userID: Int
-     totalCost: Float
+     totalCost: Float!
      creationTime: String
-     name: String 
+     name: String! 
      description: String 
-     status: Status 
+     status: Status! 
 }
 type Authenticate {
   accessToken: String!
@@ -457,16 +478,24 @@ type Query{
 #     ingredientsByName(ingredientName: String): [Ingredient]
     ingredientsByUser: [Ingredient]
     hiddenIngredients: [Ingredient]
-    hideIngredient(ingredientID: Int): Ingredient 
     productsByUser: [Product] 
     product(productID: Int): Product
     productsByGroup(productGroupID: Int): [Product] 
     hiddenProducts: [Product]
-    hideProduct(productID: Int): Product
     buyOrdersByUser: [BuyOrder]
     buyOrdersBySupplier(supplierID: Int): [BuyOrder]
+    buyOrdersLastXDaysByUser(X: Int): [BuyOrder]
+    incompletedBuyOrdersByUser: [BuyOrder]
+    buyOrdersByStatusAndUser(status: Status): [BuyOrder]
+    buyOrderExpenseWeekly: [ExpenseByTimeStatistics]
+    buyOrderExpenseMonthly: [ExpenseByTimeStatistics]
+    buyOrderExpenseThisMonth: [ExpenseByTimeStatistics]
     sellOrdersByUser: [SellOrder]
     sellOrdersByCustomer(customerID: Int): [SellOrder]
+    sellOrder(sellOrderID: Int): SellOrder
+    incompletedSellOrdersByUser: [SellOrder]
+    sellOrdersXDaysByUser(X: Int): [SellOrder]
+    sellOrdersByStatusAndUser(status: Status): [SellOrder]
     customersByUser: [Customer]
 #     customerByPhone(phoneNumber: String): Customer 
     discountsByUser: [Discount]
@@ -484,6 +513,13 @@ type Query{
     fixedCostBillsByFixedCost(fixedCostID: Int): [FixedCostBill]   
     fixedCostBillsXDaysByUser(X: Int): [FixedCostBill] 
     incompletedFixedCostBillsByUser: [FixedCostBill]
+    totalSpendAgeGroupByUser: [AgeGroupStatistics]
+    totalSpendGenderByUser: [GenderStatistics]
+    totalRevenueProductByUser: [ProductStatistics]
+    revenueWeekly: [RevenueByTimeStatistics]
+    revenueMonthly: [RevenueByTimeStatistics]
+    revenueWeekdays: [RevenueByTimeStatistics]
+    revenueDaysThisMonth: [RevenueByTimeStatistics]
 }
 
 type Mutation{
@@ -508,8 +544,11 @@ type Mutation{
     deletePlan(planID: Int): String
     deletePicture(pictureID: Int): String
     deleteFixedCost(fixedCostID: Int): String
+    deleteBuyOrder(buyOrderID: Int): String
     updatePicture(picture: PictureInput): Picture
     updateSellOrder(sellOrder: SellOrderInput): SellOrder
     updateFixedCost(fixedCost: FixedCostInput): FixedCost
+    hideProduct(productID: Int): Product
+    hideIngredient(ingredientID: Int): Ingredient 
 }
 `;

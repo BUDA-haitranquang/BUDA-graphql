@@ -15,9 +15,6 @@ module.exports.resolvers = {
         hiddenIngredients: async (_, args, { dataSources }) => {
             return dataSources.buda.hiddenIngredients(args.userID);
         },
-        hideIngredient: async (_, args, { dataSources }) => {
-            return dataSources.buda.hideIngredient(args.ingredientID)
-        },
         product: async (_, args, { dataSources }) => {
             return dataSources.buda.product(args.productID);
         },
@@ -30,20 +27,47 @@ module.exports.resolvers = {
         hiddenProducts: async (_, args, { dataSources }) => {
             return dataSources.buda.hiddenProducts(args.userID);
         },
-        hideProduct: async (_, args, { dataSources }) => {
-            return dataSources.buda.hideProduct(args.productID);
-        },
         buyOrdersByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.buyOrdersByUser(args.userID);
         },
         buyOrdersBySupplier: async (_, args, { dataSources }) => {
             return dataSources.buda.buyOrdersBySupplier(args.supplierID);
         },
+        buyOrdersLastXDaysByUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.buyOrdersLastXDaysByUser(args.X);
+        },
+        incompletedBuyOrdersByUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.incompletedBuyOrdersByUser(args);
+        },
+        buyOrdersByStatusAndUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.buyOrdersByStatusAndUser(args.status);
+        },
+        buyOrderExpenseWeekly: async (_, args, { dataSources }) => {
+            return dataSources.buda.buyOrderExpenseWeekly(args);
+        },
+        buyOrderExpenseMonthly: async (_, args, { dataSources }) => {
+            return dataSources.buda.buyOrderExpenseMonthly(args);
+        },
+        buyOrderExpenseThisMonth: async (_, args, { dataSources }) => {
+            return dataSources.buda.buyOrderExpenseThisMonth(args);
+        },
         sellOrdersByUser: async (_, args, { dataSources }) =>{
             return dataSources.buda.sellOrdersByUser(args.userID);
         },
         sellOrdersByCustomer: async (_, args, { dataSources }) => {
             return dataSources.buda.sellOrdersByCustomer(args.customerID);
+        },
+        sellOrder: async (_, args, { dataSources }) => {
+            return dataSources.buda.sellOrder(args.sellOrderID);
+        },
+        incompletedSellOrdersByUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.incompletedSellOrdesrByUser(args);
+        },
+        sellOrdersXDaysByUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.sellOrdersXDaysByUser(args.X);
+        },
+        sellOrdersByStatusAndUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.sellOrdersByStatusAndUser(args.status);
         },
         customersByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.customersByUser(args.userID);
@@ -94,7 +118,28 @@ module.exports.resolvers = {
             return dataSources.buda.fixedCostBillsXDaysByUser(args.X);
         },
         incompletedFixedCostBillsByUser: async (_, args, { dataSources }) => {
-            return dataSources.buda.incompletedFixedCostBillsByUser(args)
+            return dataSources.buda.incompletedFixedCostBillsByUser(args);
+        },
+        totalSpendAgeGroupByUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.totalSpendAgeGroupByUser(args);
+        },
+        totalSpendGenderByUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.totalSpendGenderByUser(args);
+        },
+        totalRevenueProductByUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.totalRevenueProductByUser(args);
+        },
+        revenueWeekly: async (_, args, { dataSources }) => {
+            return dataSources.buda.revenueWeekly(args);
+        },
+        revenueMonthly: async (_, args, { dataSources }) => {
+            return dataSources.buda.revenueMonthly(args);
+        },
+        revenueWeekdays: async (_, args, { dataSources }) => {
+            return dataSources.buda.revenueWeekdays(args);
+        },
+        revenueDaysThisMonth: async (_, args, { dataSources }) => {
+            return dataSources.buda.revenueDaysThisMonth(args);
         }
     },
     Mutation: {
@@ -161,6 +206,9 @@ module.exports.resolvers = {
         deleteFixedCost: async (_, args, { dataSources }) => {
             return dataSources.buda.deleteFixedCost(args.fixedCostID);
         },
+        deleteBuyOrder: async (_, args, { dataSources }) => {
+            return dataSources.buda.deleteBuyOrder(args.buyOrderID);
+        },
         updatePicture: async (_, args, { dataSources }) => {
             return dataSources.buda.updatePicture(args.picture);
         },
@@ -169,6 +217,12 @@ module.exports.resolvers = {
         },
         updateFixedCost: async (_, args, { dataSources }) => {
             return dataSources.buda.updateFixedCost(args.fixedCost);
+        },
+        hideProduct: async (_, args, { dataSources }) => {
+            return dataSources.buda.hideProduct(args.productID);
+        },
+        hideIngredient: async (_, args, { dataSources }) => {
+            return dataSources.buda.hideIngredient(args.ingredientID);
         }
         // cleanCache: async (_, __, { dataSources }) => {
         //     return dataSources.buda.cleanCache();
