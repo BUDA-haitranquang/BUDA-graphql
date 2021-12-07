@@ -271,7 +271,7 @@ enum DiscountType {
     BOTH
 }
 input ProductInput{
-#     productID: Int!
+    productID: Int
     name: String!
     description: String
     userID: Int
@@ -285,7 +285,7 @@ input ProductInput{
     productLeftLogs: [ProductLeftLogInput]
 }
 input SellOrderItemInput{
-     # sellOrderItemID: Int!
+     sellOrderItemID: Int
      sellOrder: SellOrderInput
      product: ProductInput
      quantity: Int
@@ -298,7 +298,7 @@ input SellOrderItemInput{
      costPerUnit: Float
 }
 input ProductLeftLogInput{
-     # productLeftLogID: Int!
+     productLeftLogID: Int
      product: ProductInput 
      amountLeftChange: Int!
      creationTime: String
@@ -307,7 +307,7 @@ input ProductLeftLogInput{
      userID: Int
 }
 input IngredientInput{
-     # ingredientID: Int!
+     ingredientID: Int
      name: String! 
      description: String 
      amountLeft: Int = 0
@@ -318,7 +318,7 @@ input IngredientInput{
      buyOrderItems: [BuyOrderItemInput]
 }
 input BuyOrderItemInput{
-     # buyOrderItemID: Int!
+     buyOrderItemID: Int
      buyOrder: BuyOrderInput 
      ingredient: IngredientInput 
      quantity: Int = 0
@@ -328,7 +328,7 @@ input BuyOrderItemInput{
      supplierID: Int!
 }
 input PurchaseInput{
-     # purchaseID: Int!
+     purchaseID: Int
      user: UserInput
      plan: PlanInput
      creationTime: String
@@ -337,7 +337,7 @@ input PurchaseInput{
      totalCost: Float = 0
 }
 input UserInput{
-     # userID: Int!
+     userID: Int
      userUUID: String !
      userName: String! 
      password: String !
@@ -349,7 +349,7 @@ input UserInput{
      purchases: [PurchaseInput] 
 }
 input StaffInput{
-#     staffID: Int!
+    staffID: Int
     name: String !
     phoneNumber: String 
     password: String !
@@ -360,7 +360,7 @@ input StaffInput{
     salary: Float = 0
 }
 input BuyOrderInput {
-     # buyOrderID: Int!
+     buyOrderID: Int
      supplier: SupplierInput
      creationTime: String
      status: Status!
@@ -369,7 +369,7 @@ input BuyOrderInput {
      buyOrderItems: [BuyOrderItemInput]
 }
 input SellOrderInput{
-     # sellOrderID: Int!
+     sellOrderID: Int
      customer: CustomerInput
      discount: DiscountInput
      creationTime: String
@@ -385,7 +385,7 @@ input SellOrderInput{
      sellOrderItems: [SellOrderItemInput]
 }
 input CustomerInput{
-     # customerID: Int
+     customerID: Int
      ageGroup: AgeGroup 
      gender: Gender 
      totalSpend: Float = 0
@@ -397,7 +397,7 @@ input CustomerInput{
      sellOrders: [SellOrderInput]
 }
 input DiscountInput{
-     # discountID: Int
+     discountID: Int
      name: String 
      description: String 
      cash: Float = 0
@@ -412,7 +412,7 @@ input DiscountInput{
      discountType: DiscountType
 }
 input SupplierInput{
-     # supplierID: Int
+     supplierID: Int
      email: String 
      pictureID: Int
      name: String
@@ -421,7 +421,7 @@ input SupplierInput{
      userID: Int
 }
 input MembershipTypeInput{
-     # membershipTypeID: Int
+     membershipTypeID: Int
      membershipName: String 
      description: String 
      userID: Int
@@ -429,7 +429,7 @@ input MembershipTypeInput{
      minimumSpend: Float = 0
 }
 input PlanInput{
-#     planID: Int
+    planID: Int
     purchases: [PurchaseInput]
     name: String 
     price: Float = 0
@@ -438,11 +438,11 @@ input PlanInput{
     description: String
 }
 input PictureInput{
-#     pictureID: Int
+    pictureID: Int
     pictureLink: String
 }
 input FixedCostInput{
-     # fixedCostID: Int
+     fixedCostID: Int
      name: String
      description: String 
      moneyAmount: Float
@@ -451,7 +451,7 @@ input FixedCostInput{
      fixedCostBills: [FixedCostBillInput] 
 }
 input FixedCostBillInput{
-     # fixedCostBillID: Int!
+     fixedCostBillID: Int!
      fixedCost: FixedCostInput 
      userID: Int
      totalSpend: Float!
@@ -461,7 +461,7 @@ input FixedCostBillInput{
      status: Status!
 }
 input OtherCostInput{
-     # otherCostID: Int!
+     otherCostID: Int!
      userID: Int
      totalCost: Float!
      creationTime: String
