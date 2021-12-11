@@ -101,6 +101,7 @@ type Staff{
     staffPosition: StaffPosition
     staffUUID: String
     salary: Float
+    roles: [Role]
 }
 type StaffLogin{
     uuid: String 
@@ -215,6 +216,24 @@ type OtherCost{
      name: String 
      description: String 
      status: Status 
+}
+type SalaryLog{
+     salaryLogID: Int
+     staffID: Int
+     salary: Float
+     creationTime: String
+     userID: Int
+}
+type StaffNote{
+     staffNoteID: Int
+     userID: Int
+     staffID: Int
+     noteDate: String
+     message: String 
+}
+type Role{
+     roleID: Int
+     name: String
 }
 type ExpenseByTimeStatistics{
      timePeriod: String 
@@ -356,8 +375,9 @@ input StaffInput{
     address: String 
     userID: Int  
     staffPosition: StaffPosition
-    staffUUID: String!
+    staffUUID: String
     salary: Float = 0
+#     roles: [RoleInput]
 }
 input BuyOrderInput {
      buyOrderID: Int
@@ -390,9 +410,9 @@ input CustomerInput{
      gender: Gender 
      totalSpend: Float = 0
      membershipID: Int
-     name: String
+     name: String!
      address: String 
-     phoneNumber: String 
+     phoneNumber: String! 
      userID: Int
      sellOrders: [SellOrderInput]
 }
@@ -413,11 +433,11 @@ input DiscountInput{
 }
 input SupplierInput{
      supplierID: Int
-     email: String 
+     email: String !
      pictureID: Int
      name: String
      address: String 
-     phoneNumber: String 
+     phoneNumber: String! 
      userID: Int
 }
 input MembershipTypeInput{
@@ -469,6 +489,24 @@ input OtherCostInput{
      description: String 
      status: Status! 
 }
+input SalaryLogInput{
+     salaryLogID: Int
+     staffID: Int
+     salary: Float
+     creationTime: String
+     userID: Int
+}
+input StaffNoteInput{
+     staffNoteID: Int
+     userID: Int
+     staffID: Int
+     noteDate: String
+     message: String 
+}
+input RoleInput{
+     roleID: Int
+     name: String
+}
 type Authenticate {
   accessToken: String!
   refreshToken: String!
@@ -513,6 +551,16 @@ type Query{
     fixedCostBillsByFixedCost(fixedCostID: Int): [FixedCostBill]   
     fixedCostBillsXDaysByUser(X: Int): [FixedCostBill] 
     incompletedFixedCostBillsByUser: [FixedCostBill]
+    staffsByUser: [Staff]
+#     salaryLog(salaryLogId: Int): SalaryLog
+#     salaryLogsByUser: [SalaryLog]
+    salaryLogsByStaff: [SalaryLog]
+    salaryLogExpenseThisMonth: [ExpenseByTimeStatistics]
+    salaryLogExpenseMonthly: [ExpenseByTimeStatistics]
+#     staffNotesByUser: [StaffNote]
+    staffNotesByStaff(staffID: Int): [StaffNote]
+    unseenStaffNotesByStaff(staffID: Int): [StaffNote]
+    staffNote(staffNoteID: Int): StaffNote  
     totalSpendAgeGroupByUser: [AgeGroupStatistics]
     totalSpendGenderByUser: [GenderStatistics]
     totalRevenueProductByUser: [ProductStatistics]
@@ -537,6 +585,8 @@ type Mutation{
     newFixedCost(fixedCostInput: FixedCostInput): FixedCost
     newOtherCost(otherCostInput: OtherCostInput): OtherCost
     newFixedCostBill(fixedCostBillInput: FixedCostBillInput): FixedCostBill
+#     newSalaryLog(salaryLogInput: SalaryLogInput): SalaryLog
+    newStaffNote(staffNoteInput: StaffNoteInput): StaffNote
     userLogin(email: String!, password: String!): Authenticate
     staffLogin(uuid: String!, password: String!): Authenticate
 #     deleteProduct(productID: Int): String
@@ -545,9 +595,15 @@ type Mutation{
     deletePicture(pictureID: Int): String
     deleteFixedCost(fixedCostID: Int): String
     deleteBuyOrder(buyOrderID: Int): String
+    deleteStaff(staffID: Int): String
+    deleteSalaryLog(salaryLogID: Int): String
+    deleteStaffNote(staffNoteID: Int): String
     updatePicture(picture: PictureInput): Picture
     updateSellOrder(sellOrder: SellOrderInput): SellOrder
     updateFixedCost(fixedCost: FixedCostInput): FixedCost
+#     updateStaff(staffID: Int, name: String, address: String, phoneNumber: String, staffPosition: StaffPosition, staffUUID: String, password: String, salary: Float, account: String): Staff
+    updateStaffNote(staffNote: StaffNoteInput): StaffNote
+    editProduct(productID: Int, product: ProductInput): Product
     hideProduct(productID: Int): Product
     hideIngredient(ingredientID: Int): Ingredient 
 }

@@ -122,6 +122,36 @@ class Budabackend extends RESTDataSource {
     async incompletedFixedCostBillsByUser(){
         return this.get(`api/fixed-cost-bill/all/incompleted`);
     }
+    async staffsByUser(){
+        return this.get(`api/staff/userID/all`);
+    }
+    // async salaryLog(){
+    //     return this.get(`api/salary-log`);
+    // }
+    // async salaryLogsByUser(){
+    //     return this.get(`api/salary-log/`);
+    // }
+    async salaryLogsByStaff(staffID){
+        return this.get(`api/salary-log/staffID/${staffID}/all`);
+    }
+    async salaryLogExpenseThisMonth(){
+        return this.get(`api/salary-log/expense/this-month`);
+    }
+    async salaryLogExpenseMonthly(){
+        return this.get(`api/salary-log/expense/monthly`);
+    }
+    // async staffNotesByUser(){
+    //     return this.get(`api/staff-note/userID/{userID}/all`);
+    // }
+    async staffNotesByStaff(staffID){
+        return this.get(`api/staff-note/staffID/${staffID}/all`);
+    }
+    async unseenStaffNotesByStaff(staffID){
+        return this.get(`api/staff-note/staffID/${staffID}/all/unseen`);
+    }
+    async staffNote(staffNoteID){
+        return this.get(`api/staff-note/noteID/${staffNoteID}`);
+    }
     async totalSpendAgeGroupByUser(){
         return this.get(`api/statistics/age-group/total`);
     }
@@ -168,6 +198,10 @@ class Budabackend extends RESTDataSource {
         const userRegisterJson = JSON.parse(JSON.stringify(userRegister));
         return this.post(`api/user/register`, userRegisterJson);
     }
+    // async newSalaryLog(salaryLogInput){
+    //     const salaryLogInputJson = JSON.parse(JSON.stringify(salaryLogInput));
+    //     return this.post(`api/salary-log`, salaryLogInputJson);
+    // }
     async userLogin(email, password) {
         return this.post('api/user/login', {
             email: email,
@@ -220,6 +254,10 @@ class Budabackend extends RESTDataSource {
         const fixedCostBillInputJson = JSON.parse(JSON.stringify(fixedCostBillInput));
         return this.post(`api/fixed-cost-bill/new`, fixedCostBillInputJson);
     }
+    async newStaffNote(staffNoteInput){
+        const staffNoteJson = JSON.parse(JSON.stringify(staffNoteInput));
+        return this.post(`api/staff-note/register`, staffNoteJson);
+    }
     // async deleteProduct(productID){
     //     return this.delete(`api/product/productID/${productID}`);
     // }
@@ -238,6 +276,15 @@ class Budabackend extends RESTDataSource {
     async deleteBuyOrder(buyOrderID){
         return this.delete(`api/buy-order/${buyOrderID}`);
     }
+    async deleteStaff(staffID){
+        return this.delete(`api/staff/id/${staffID}`);
+    }
+    async deleteSalaryLog(salaryLogID){
+        return this.delete(`api/salary-log/salary-logID/${salaryLogID}`);
+    }
+    async deleteStaffNote(staffNoteID){
+        return this.delete(`api/staff-note/noteID/${staffNoteID}`);
+    }
     async updatePicture(picture){
         const pictureJson = JSON.parse(JSON.stringify(picture));
         return this.put(`api/picture`,pictureJson);
@@ -249,6 +296,17 @@ class Budabackend extends RESTDataSource {
     async updateFixedCost(fixedCost){
         const fixedCostJson = JSON.parse(JSON.stringify(fixedCost));
         return this.put(`api/fixed-cost/update`, fixedCostJson);
+    }
+    // async updateStaff(staffID, name, address, phoneNumber, staffPosition, staffUUID, password, salary, account) {
+    //     return this.put(`api/staff/id/${staffID}`);
+    // }
+    async updateStaffNote(staffNote){
+        const staffNoteJson = JSON.parse(JSON.stringify(staffNote));
+        return this.put(`api/staff-note/noteID/${staffNoteID}`, staffNoteJson);
+    }
+    async editProduct(productID, product){
+        const productJson=JSON.parse(JSON.stringify(product));
+        return this.post(`api/product//edit/${productID}`, productJson);
     }
     async hideIngredient(ingredientID){
         return this.get(`api/ingredient/hide/${ingredientID}`);
