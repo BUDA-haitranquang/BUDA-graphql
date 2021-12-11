@@ -304,9 +304,9 @@ class Budabackend extends RESTDataSource {
         const staffNoteJson = JSON.parse(JSON.stringify(staffNote));
         return this.put(`api/staff-note/noteID/${staffNoteID}`, staffNoteJson);
     }
-    async editProduct(productID, product){
+    async updateProduct(productID, product){
         const productJson=JSON.parse(JSON.stringify(product));
-        return this.post(`api/product//edit/${productID}`, productJson);
+        return this.put(`api/product/edit/${productID}`, productJson);
     }
     async hideIngredient(ingredientID){
         return this.get(`api/ingredient/hide/${ingredientID}`);

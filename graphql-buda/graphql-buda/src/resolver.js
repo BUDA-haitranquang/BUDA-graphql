@@ -275,8 +275,8 @@ module.exports.resolvers = {
         hideIngredient: async (_, args, { dataSources }) => {
             return dataSources.buda.hideIngredient(args.ingredientID);
         },
-        editProduct: async (_, args, { dataSources }) => {
-            return dataSources.buda.editProduct(args.productID, args.product);
+        updateProduct: async (_, args, { dataSources }) => {
+            return dataSources.buda.updateProduct(args.productID, args.product);
         }
         // cleanCache: async (_, __, { dataSources }) => {
         //     return dataSources.buda.cleanCache();

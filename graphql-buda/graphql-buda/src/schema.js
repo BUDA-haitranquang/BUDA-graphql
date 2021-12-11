@@ -603,7 +603,7 @@ type Mutation{
     updateFixedCost(fixedCost: FixedCostInput): FixedCost
 #     updateStaff(staffID: Int, name: String, address: String, phoneNumber: String, staffPosition: StaffPosition, staffUUID: String, password: String, salary: Float, account: String): Staff
     updateStaffNote(staffNote: StaffNoteInput): StaffNote
-    editProduct(productID: Int, product: ProductInput): Product
+    updateProduct(productID: Int, product: ProductInput): Product
     hideProduct(productID: Int): Product
     hideIngredient(ingredientID: Int): Ingredient 
 }
