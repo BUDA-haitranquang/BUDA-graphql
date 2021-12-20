@@ -43,6 +43,7 @@ type Ingredient{
      description: String 
      amountLeft: Int
      price: Float
+     visible: Boolean
      userID: Int
      pictureID: Int
      alertAmountLeft: Int
@@ -66,6 +67,7 @@ type Purchase{
      expiryDate: String
      message: String
      totalCost: Float
+     status: Status
 }
 type User{
      userID: Int
@@ -76,6 +78,7 @@ type User{
      phoneNumber: String 
      lastName: String 
      firstName: String 
+     enabled: Boolean
      pictureID: Int
      purchases: [Purchase] 
 }
@@ -95,16 +98,17 @@ type Staff{
     staffID: Int
     name: String 
     phoneNumber: String 
-    password: String 
+    password: String
     address: String 
     userID: Int  
     staffPosition: StaffPosition
     staffUUID: String
     salary: Float
-    roles: [Role]
+    account: String!
+    email: String
 }
 type StaffLogin{
-    uuid: String 
+    account: String 
     password: String 
 }
 type BuyOrder{
@@ -142,6 +146,7 @@ type Customer{
      address: String 
      phoneNumber: String 
      userID: Int
+     visible: Boolean
      sellOrders: [SellOrder]
 }
 type Discount{
@@ -167,6 +172,7 @@ type Supplier{
      address: String 
      phoneNumber: String 
      userID: Int
+     visible: Boolean
 }
 type Plan{
     planID: Int
@@ -188,6 +194,7 @@ type MembershipType{
 type Picture{
     pictureID: Int
     pictureLink: String
+    userID: Int
 }
 type FixedCost{
      fixedCostID: Int
@@ -196,6 +203,7 @@ type FixedCost{
      moneyAmount: Float
      period: Int
      userID: Int
+     visible: Boolean
      fixedCostBills: [FixedCostBill] 
 }
 type FixedCostBill{
@@ -216,6 +224,7 @@ type OtherCost{
      name: String 
      description: String 
      status: Status 
+     visible: Boolean
 }
 type SalaryLog{
      salaryLogID: Int
@@ -230,6 +239,24 @@ type StaffNote{
      staffID: Int
      noteDate: String
      message: String 
+     seen: Boolean
+}
+type Notification{
+    notificationID: Int
+    userID: Int
+    creationTime: String
+    message: String
+    seen: Boolean
+}
+type WarrantyOrder{
+     warrantyOrderID: Int
+     userID: Int
+     product: Product
+     sellOrder: SellOrder
+     customer: Customer
+     customerMessage: String 
+     creationTime: String 
+     status: Status 
 }
 type Role{
      roleID: Int
@@ -278,6 +305,7 @@ enum AgeGroup{
 }
 enum Status{
     FINISHED, 
+    PREPARING,
     DELIVERING, 
     PACKAGING, 
     RECEIVING, 
@@ -331,6 +359,7 @@ input IngredientInput{
      description: String 
      amountLeft: Int = 0
      price: Float = 0
+     visible: Boolean 
      userID: Int
      pictureID: Int
      alertAmountLeft: Int = 0
@@ -354,6 +383,7 @@ input PurchaseInput{
      expiryDate: String!
      message: String
      totalCost: Float = 0
+     status: Status
 }
 input UserInput{
      userID: Int
@@ -364,6 +394,7 @@ input UserInput{
      phoneNumber: String! 
      lastName: String !
      firstName: String !
+     enabled: Boolean
      pictureID: Int 
      purchases: [PurchaseInput] 
 }
@@ -377,7 +408,8 @@ input StaffInput{
     staffPosition: StaffPosition
     staffUUID: String
     salary: Float = 0
-#     roles: [RoleInput]
+    account: String
+    email: String
 }
 input BuyOrderInput {
      buyOrderID: Int
@@ -414,6 +446,7 @@ input CustomerInput{
      address: String 
      phoneNumber: String! 
      userID: Int
+     visible: Boolean
      sellOrders: [SellOrderInput]
 }
 input DiscountInput{
@@ -439,6 +472,7 @@ input SupplierInput{
      address: String 
      phoneNumber: String! 
      userID: Int
+     visible: Boolean
 }
 input MembershipTypeInput{
      membershipTypeID: Int
@@ -460,6 +494,7 @@ input PlanInput{
 input PictureInput{
     pictureID: Int
     pictureLink: String
+    userID: Int
 }
 input FixedCostInput{
      fixedCostID: Int
@@ -468,6 +503,7 @@ input FixedCostInput{
      moneyAmount: Float
      period: Int
      userID: Int
+     visible: Boolean
      fixedCostBills: [FixedCostBillInput] 
 }
 input FixedCostBillInput{
@@ -488,6 +524,7 @@ input OtherCostInput{
      name: String! 
      description: String 
      status: Status! 
+     visible: Boolean
 }
 input SalaryLogInput{
      salaryLogID: Int
@@ -502,6 +539,7 @@ input StaffNoteInput{
      staffID: Int
      noteDate: String
      message: String 
+     seen: Boolean
 }
 input RoleInput{
      roleID: Int
@@ -510,6 +548,9 @@ input RoleInput{
 type Authenticate {
   accessToken: String!
   refreshToken: String!
+}
+input JwtSimple{
+     token: String
 }
 type Query{
     ingredient(ingredientID:Int): Ingredient
@@ -551,6 +592,9 @@ type Query{
     fixedCostBillsByFixedCost(fixedCostID: Int): [FixedCostBill]   
     fixedCostBillsXDaysByUser(X: Int): [FixedCostBill] 
     incompletedFixedCostBillsByUser: [FixedCostBill]
+    fixedCostBillExpenseWeekly: [ExpenseByTimeStatistics]
+    fixedCostBillExpenseThisMonth: [ExpenseByTimeStatistics]
+    fixedCostBillExpenseMonthly: [ExpenseByTimeStatistics]
     staffsByUser: [Staff]
 #     salaryLog(salaryLogId: Int): SalaryLog
 #     salaryLogsByUser: [SalaryLog]
@@ -561,6 +605,13 @@ type Query{
     staffNotesByStaff(staffID: Int): [StaffNote]
     unseenStaffNotesByStaff(staffID: Int): [StaffNote]
     staffNote(staffNoteID: Int): StaffNote  
+    notiByUser: [Notification]
+    pendingNotiByUser: [Notification]
+    warrantyOrdersByUser: [WarrantyOrder]
+    warrantyOrdersByCustomer(customerID: Int): [WarrantyOrder]
+    warrantyOrdersByProduct(productID: Int): [WarrantyOrder]
+    buyOrderItemsByBuyOrder(buyOrderID: Int): [BuyOrderItem]
+    buyOrderItemsByIngredient(ingredientID: Int): [BuyOrderItem]
     totalSpendAgeGroupByUser: [AgeGroupStatistics]
     totalSpendGenderByUser: [GenderStatistics]
     totalRevenueProductByUser: [ProductStatistics]
@@ -587,8 +638,9 @@ type Mutation{
     newFixedCostBill(fixedCostBillInput: FixedCostBillInput): FixedCostBill
 #     newSalaryLog(salaryLogInput: SalaryLogInput): SalaryLog
     newStaffNote(staffNoteInput: StaffNoteInput): StaffNote
+    newAccessToken(jwtSimple: JwtSimple): Authenticate
     userLogin(email: String!, password: String!): Authenticate
-    staffLogin(uuid: String!, password: String!): Authenticate
+    staffLogin(account: String!, password: String!): Authenticate
 #     deleteProduct(productID: Int): String
     deleteSellOrder(sellOrderID: Int): String
     deletePlan(planID: Int): String
@@ -598,13 +650,16 @@ type Mutation{
     deleteStaff(staffID: Int): String
     deleteSalaryLog(salaryLogID: Int): String
     deleteStaffNote(staffNoteID: Int): String
+    deleteBuyOrderItem(buyOrderItemID: Int): String
     updatePicture(picture: PictureInput): Picture
     updateSellOrder(sellOrder: SellOrderInput): SellOrder
     updateFixedCost(fixedCost: FixedCostInput): FixedCost
-#     updateStaff(staffID: Int, name: String, address: String, phoneNumber: String, staffPosition: StaffPosition, staffUUID: String, password: String, salary: Float, account: String): Staff
+#     updateStaff(staff: StaffInput): Staff
     updateStaffNote(staffNote: StaffNoteInput): StaffNote
     updateProduct(productID: Int, product: ProductInput): Product
+    updateCustomer(customer: CustomerInput): Customer
     hideProduct(productID: Int): Product
     hideIngredient(ingredientID: Int): Ingredient 
+    hideCustomer(customerID: Int): Customer
 }
 `;
