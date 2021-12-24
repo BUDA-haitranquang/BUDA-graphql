@@ -258,6 +258,10 @@ type WarrantyOrder{
      creationTime: String 
      status: Status 
 }
+type QuantityLog{
+    amountLeftChange: Int
+    message: String
+}
 type Role{
      roleID: Int
      name: String
@@ -541,6 +545,10 @@ input StaffNoteInput{
      message: String 
      seen: Boolean
 }
+input QuantityLogInput{
+     amountLeftChange: Int
+     message: String
+}
 input RoleInput{
      roleID: Int
      name: String
@@ -557,6 +565,7 @@ type Query{
 #     ingredientsByName(ingredientName: String): [Ingredient]
     ingredientsByUser: [Ingredient]
     hiddenIngredients: [Ingredient]
+    alertIngredients: [Ingredient]
     productsByUser: [Product] 
     product(productID: Int): Product
     productsByGroup(productGroupID: Int): [Product] 
@@ -579,15 +588,21 @@ type Query{
 #     customerByPhone(phoneNumber: String): Customer 
     discountsByUser: [Discount]
     discount(discountID: Int): Discount
+    supplier(supplierID: Int): Supplier
     suppliersByUser: [Supplier]
 #     supplierByPhone(phoneNumber: String): Supplier
     plan(planID: Int): Plan 
     plans: [Plan]
     picture(pictureID: Int): Picture
     fixedCostsByUser: [FixedCost]
+    hiddenFixedCosts: [FixedCost]
     otherCostsByUser: [OtherCost]
     incompletedOtherCostsByUser: [OtherCost]
-    otherCostsXDaysByUser(X: Int): [OtherCost]  
+    otherCostsXDaysByUser(X: Int): [OtherCost] 
+    hiddenOtherCosts: [OtherCost]
+    otherCostExpenseWeekly: [ExpenseByTimeStatistics]
+    otherCostExpenseThisMonth: [ExpenseByTimeStatistics]
+    otherCostExpenseMonthly: [ExpenseByTimeStatistics] 
     fixedCostBillsByUser: [FixedCostBill]
     fixedCostBillsByFixedCost(fixedCostID: Int): [FixedCostBill]   
     fixedCostBillsXDaysByUser(X: Int): [FixedCostBill] 
@@ -597,11 +612,11 @@ type Query{
     fixedCostBillExpenseMonthly: [ExpenseByTimeStatistics]
     staffsByUser: [Staff]
 #     salaryLog(salaryLogId: Int): SalaryLog
-#     salaryLogsByUser: [SalaryLog]
+    salaryLogsByUser: [SalaryLog]
     salaryLogsByStaff: [SalaryLog]
     salaryLogExpenseThisMonth: [ExpenseByTimeStatistics]
     salaryLogExpenseMonthly: [ExpenseByTimeStatistics]
-#     staffNotesByUser: [StaffNote]
+    staffNotesByUser: [StaffNote]
     staffNotesByStaff(staffID: Int): [StaffNote]
     unseenStaffNotesByStaff(staffID: Int): [StaffNote]
     staffNote(staffNoteID: Int): StaffNote  
@@ -612,6 +627,9 @@ type Query{
     warrantyOrdersByProduct(productID: Int): [WarrantyOrder]
     buyOrderItemsByBuyOrder(buyOrderID: Int): [BuyOrderItem]
     buyOrderItemsByIngredient(ingredientID: Int): [BuyOrderItem]
+    user(userID: Int): User
+    currentUser: User
+    userByUUID(UUID: Int): User
     totalSpendAgeGroupByUser: [AgeGroupStatistics]
     totalSpendGenderByUser: [GenderStatistics]
     totalRevenueProductByUser: [ProductStatistics]
@@ -636,11 +654,13 @@ type Mutation{
     newFixedCost(fixedCostInput: FixedCostInput): FixedCost
     newOtherCost(otherCostInput: OtherCostInput): OtherCost
     newFixedCostBill(fixedCostBillInput: FixedCostBillInput): FixedCostBill
-#     newSalaryLog(salaryLogInput: SalaryLogInput): SalaryLog
+    newSalaryLog(salaryLogInput: SalaryLogInput): SalaryLog
     newStaffNote(staffNoteInput: StaffNoteInput): StaffNote
     newAccessToken(jwtSimple: JwtSimple): Authenticate
+    confirmRegister(token: String): Authenticate
     userLogin(email: String!, password: String!): Authenticate
     staffLogin(account: String!, password: String!): Authenticate
+    loginGoogle(jwtSimple: JwtSimple): Authenticate
 #     deleteProduct(productID: Int): String
     deleteSellOrder(sellOrderID: Int): String
     deletePlan(planID: Int): String
@@ -651,9 +671,13 @@ type Mutation{
     deleteSalaryLog(salaryLogID: Int): String
     deleteStaffNote(staffNoteID: Int): String
     deleteBuyOrderItem(buyOrderItemID: Int): String
+    deleteUser(userID: Int): String
     updatePicture(picture: PictureInput): Picture
     updateSellOrder(sellOrder: SellOrderInput): SellOrder
     updateFixedCost(fixedCost: FixedCostInput): FixedCost
+    updateSupplier(supplier: SupplierInput): Supplier
+    editIngredientQuantity(ingredientID: Int, quantityLog: QuantityLogInput): Ingredient
+    editIngredient(ingredientID: Int, ingredient: IngredientInput): Ingredient
 #     updateStaff(staff: StaffInput): Staff
     updateStaffNote(staffNote: StaffNoteInput): StaffNote
     updateProduct(productID: Int, product: ProductInput): Product
@@ -661,5 +685,8 @@ type Mutation{
     hideProduct(productID: Int): Product
     hideIngredient(ingredientID: Int): Ingredient 
     hideCustomer(customerID: Int): Customer
+    hideFixedCost(fixedCostID: Int): FixedCost
+    hideSupplier(supplierID: Int): Supplier
+    hideOtherCost(otherCostID: Int): OtherCost
 }
 `;

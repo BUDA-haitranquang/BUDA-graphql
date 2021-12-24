@@ -15,6 +15,9 @@ module.exports.resolvers = {
         hiddenIngredients: async (_, args, { dataSources }) => {
             return dataSources.buda.hiddenIngredients(args.userID);
         },
+        alertIngredients: async (_, args, { dataSources }) => {
+            return dataSources.buda.alertIngredients(args);
+        },
         product: async (_, args, { dataSources }) => {
             return dataSources.buda.product(args.productID);
         },
@@ -84,6 +87,9 @@ module.exports.resolvers = {
         suppliersByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.suppliersByUser(args.userID);
         },
+        supplier: async (_, args, { dataSources }) => {
+            return dataSources.buda.supplier(args.supplierID);
+        },
         // supplierByPhone: async (_, args, { dataSources }) => {
         //     return dataSources.buda.supplierByPhone(args.phoneNumber);
         // },
@@ -99,6 +105,9 @@ module.exports.resolvers = {
         fixedCostsByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.fixedCostsByUser(args.userID);
         },
+        hiddenFixedCosts: async (_, args, { dataSources }) => {
+            return dataSources.buda.hiddenFixedCosts(args);
+        },
         otherCostsByUser: async (_, args, { dataSources}) => {
             return dataSources.buda.otherCostsByUser(args.userID);
         },
@@ -107,6 +116,18 @@ module.exports.resolvers = {
         },
         otherCostsXDaysByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.otherCostsXDaysByUser(args.X);
+        },
+        hiddenOtherCosts: async (_, args, { dataSources }) => {
+            return dataSources.buda.hiddenOtherCosts(args);
+        },
+        otherCostExpenseWeekly: async (_, args, { dataSources }) => {
+            return dataSources.buda.otherCostExpenseWeekly(args);
+        },
+        otherCostExpenseThisMonth: async (_, args, { dataSources }) => {
+            return dataSources.buda.otherCostExpenseThisMonth(args);
+        },
+        otherCostExpenseMonthly: async (_, args, { dataSources }) => {
+            return dataSources.buda.otherCostExpenseMonthly(args);
         },
         fixedCostBillsByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.fixedCostBillsByUser(args);
@@ -135,9 +156,9 @@ module.exports.resolvers = {
         // salaryLog: async (_, args, { dataSources }) => {
         //     return dataSources.salaryLog(args.salaryLogID);
         // },
-        // salaryLogsByUser: async (_, args, { dataSources }) =>{
-        //     return dataSources.salaryLogsByUser(args);
-        // },
+        salaryLogsByUser: async (_, args, { dataSources }) =>{
+            return dataSources.salaryLogsByUser(args);
+        },
         salaryLogsByStaff: async (_, args, { dataSources }) => {
             return dataSources.salaryLogsByStaff(args.staffID);
         },
@@ -147,9 +168,9 @@ module.exports.resolvers = {
         salaryLogExpenseMonthly: async (_, args, { dataSources }) => {
             return dataSources.buda.salaryLogExpenseMonthly(args);
         },
-        // staffNotesByUser: async (_, args, { dataSources }) => {
-        //     return dataSources.buda.staffNotesByUser(args);
-        // },
+        staffNotesByUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.staffNotesByUser(args);
+        },
         staffNotesByStaff: async (_, args, { dataSources }) => {
             return dataSources.buda.staffNotesByStaff(args.staffID);
         },
@@ -179,6 +200,15 @@ module.exports.resolvers = {
         },
         buyOrderItemsByIngredient: async (_, args, { dataSources }) => {
             return dataSources.buda.buyOrderItemsByIngredient(args.ingredientID);
+        },
+        user: async (_, args, { dataSources }) => {
+            return dataSources.buda.user(args.userID);
+        },
+        currentUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.currentUser(args);
+        },
+        userByUUID: async (_, args, { dataSources }) => {
+            return dataSources.buda.userByUUID(args.UUID);
         },
         totalSpendAgeGroupByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.totalSpendAgeGroupByUser(args);
@@ -245,20 +275,26 @@ module.exports.resolvers = {
         newFixedCostBill: async (_, args, { dataSources }) => {
             return dataSources.buda.newFixedCostBill(args.fixedCostBillInput);
         },
-        // newSalaryLog: async (_, args, { dataSources }) => {
-        //     return dataSources.buda.newSalaryLog(args.salaryLogInput);
-        // },
+        newSalaryLog: async (_, args, { dataSources }) => {
+            return dataSources.buda.newSalaryLog(args.salaryLogInput);
+        },
         newStaffNote: async (_, args, { dataSources }) => {
             return dataSources.buda.newStaffNote(args.staffNoteInput);
         },
         newAccessToken: async (_, args, { dataSources }) => {
             return dataSources.buda.newAccessToken(args.jwtSimple);
         },
+        confirmRegister: async (_, args, { dataSources }) => {
+            return dataSources.buda.confirmRegister(args.token);
+        },
         userLogin: async (_, args, { dataSources }) => {
             return dataSources.buda.userLogin(args.email, args.password);
         },
         staffLogin: async (_, args, { dataSources }) => {
             return dataSources.buda.staffLogin(args.uuid, args.password);
+        },
+        loginGoogle: async (_, args, { dataSources }) => {
+            return dataSources.buda.loginGoogle(args.jwtSimple);
         },
         // deleteProduct: async (_, args, { dataSources }) => {
         //     return dataSources.buda.deleteProduct(args.productID);
@@ -290,6 +326,9 @@ module.exports.resolvers = {
         deleteBuyOrderItem: async (_, args, { dataSources }) => {
             return dataSources.buda.deleteBuyOrderItem(args.buyOrderItemID);
         },
+        deleteUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.deleteUser(args.userID);
+        },
         updatePicture: async (_, args, { dataSources }) => {
             return dataSources.buda.updatePicture(args.picture);
         },
@@ -311,6 +350,15 @@ module.exports.resolvers = {
         updateProduct: async (_, args, { dataSources }) => {
             return dataSources.buda.updateProduct(args.productID, args.product);
         },
+        editIngredientQuantity: async (_, args, { dataSources }) => {
+            return dataSources.buda.editIngredientQuantity(args.ingredientID, args.quantityLog);
+        },
+        editIngredient: async (_, args, { dataSources }) => {
+            return dataSources.buda.editIngredient(args.ingredientID, args.ingredient);
+        },
+        updateSupplier: async (_, args, { dataSources }) => {
+            return dataSources.buda.updateSupplier(args.supplier);
+        },
         hideProduct: async (_, args, { dataSources }) => {
             return dataSources.buda.hideProduct(args.productID);
         },
@@ -319,6 +367,15 @@ module.exports.resolvers = {
         },
         hideCustomer: async (_, args, { dataSources }) => {
             return dataSources.buda.hideCustomer(args.customerID);
+        },
+        hideFixedCost: async (_, args, { dataSources }) => {
+            return dataSources.buda.hideFixedCost(args.fixedCostID);
+        },
+        hideSupplier: async (_, args, { dataSources }) => {
+            return dataSources.buda.hideSupplier(args.supplierID);
+        },
+        hideOtherCost: async (_, args, { dataSources }) => {
+            return dataSources.buda.hideOtherCost(args.otherCostID);
         }
         // cleanCache: async (_, __, { dataSources }) => {
         //     return dataSources.buda.cleanCache();
