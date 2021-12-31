@@ -6,6 +6,7 @@ type Product{
     name: String
     description: String
     userID: Int
+    visible: Boolean
     pictureID: Int
     sellingPrice: Float
     alertAmount: Int
@@ -182,6 +183,7 @@ type Plan{
     duration: Int
     pictureID: Int
     description: String
+    planType: PlanType
 }
 type MembershipType{
      membershipTypeID: Int
@@ -262,6 +264,29 @@ type QuantityLog{
     amountLeftChange: Int
     message: String
 }
+type ProductGroup{
+     productGroupID: Int
+     name: String
+     userID: Int
+     products: [Product]
+}
+type ProductComponent{
+     productComponentID: Int
+     ingredient: Ingredient 
+     product: Product
+     requiredQuantity: Int
+     userID: Int
+     totalCost: Float
+}
+type IngredientLeftLog{
+     ingredientLeftLogID: Int
+     ingredient: Ingredient
+     amountLeftChange: Int
+     creationTime: String
+     staffID: Int
+     message: String
+     userID: Int
+}
 type Role{
      roleID: Int
      name: String
@@ -321,11 +346,17 @@ enum DiscountType {
     PERCENTAGE_ONLY, 
     BOTH
 }
+enum PlanType {
+     BASIC, 
+     PRO, 
+     PREMIUM
+}
 input ProductInput{
     productID: Int
     name: String!
     description: String
     userID: Int
+    visible: Boolean
     pictureID: Int
     sellingPrice: Float = 0
     alertAmount: Int = 0
@@ -494,6 +525,7 @@ input PlanInput{
     duration: Int = 0
     pictureID: Int
     description: String
+    planType: PlanType
 }
 input PictureInput{
     pictureID: Int
@@ -549,6 +581,29 @@ input QuantityLogInput{
      amountLeftChange: Int
      message: String
 }
+input ProductGroupInput{
+     productGroupID: Int
+     name: String
+     userID: Int
+     products: [ProductInput]
+}
+input ProductComponentInput{
+     productComponentID: Int
+     ingredient: IngredientInput 
+     product: ProductInput
+     requiredQuantity: Int
+     userID: Int
+     totalCost: Float
+}
+input IngredientLeftLogInput{
+     ingredientLeftLogID: Int
+     ingredient: IngredientInput
+     amountLeftChange: Int
+     creationTime: String
+     staffID: Int
+     message: String
+     userID: Int
+}
 input RoleInput{
      roleID: Int
      name: String
@@ -570,6 +625,7 @@ type Query{
     product(productID: Int): Product
     productsByGroup(productGroupID: Int): [Product] 
     hiddenProducts: [Product]
+    alertProducts: [Product]
     buyOrdersByUser: [BuyOrder]
     buyOrdersBySupplier(supplierID: Int): [BuyOrder]
     buyOrdersLastXDaysByUser(X: Int): [BuyOrder]
@@ -591,7 +647,6 @@ type Query{
     supplier(supplierID: Int): Supplier
     suppliersByUser: [Supplier]
 #     supplierByPhone(phoneNumber: String): Supplier
-    plan(planID: Int): Plan 
     plans: [Plan]
     picture(pictureID: Int): Picture
     fixedCostsByUser: [FixedCost]
@@ -630,6 +685,23 @@ type Query{
     user(userID: Int): User
     currentUser: User
     userByUUID(UUID: Int): User
+    membershipType(membershipTypeID: Int): MembershipType
+    membershipTypeByUser: [MembershipType]
+    purchaseByUser: [Purchase]
+    componentsByProduct(productID: Int): [ProductComponent]
+    productContainIngredient(ingredientID: Int): [Product] 
+    productGroupsByUser: [ProductGroup]
+    productsByProductGroup(productGroupID: Int): [Product]
+    sellOrderItemsBySellOrder(sellOrderID: Int): [SellOrderItem]
+    sellOrderItemsByProduct(productID: Int): [SellOrderItem] 
+    productLeftLog(productLeftLogID: Int): ProductLeftLog
+    productLeftLogsByProduct(productID: Int): [ProductLeftLog]
+    productLeftLogsByUser: [ProductLeftLog]
+    productLeftLogsByStaff(staffID: Int): [ProductLeftLog]
+    ingredientLeftLog(ingredientLeftLogID: Int): IngredientLeftLog
+    ingredientLeftLogsByIngredient(ingredientID: Int): [IngredientLeftLog]
+    ingredientLeftLogsByUser: [IngredientLeftLog]
+    ingredientLeftLogsByStaff(staffID: Int): [IngredientLeftLog]
     totalSpendAgeGroupByUser: [AgeGroupStatistics]
     totalSpendGenderByUser: [GenderStatistics]
     totalRevenueProductByUser: [ProductStatistics]
@@ -656,6 +728,10 @@ type Mutation{
     newFixedCostBill(fixedCostBillInput: FixedCostBillInput): FixedCostBill
     newSalaryLog(salaryLogInput: SalaryLogInput): SalaryLog
     newStaffNote(staffNoteInput: StaffNoteInput): StaffNote
+    newMembershipType(membershipTypeInput: MembershipTypeInput): MembershipType
+    newPurchase(purchaseInput: PurchaseInput): Purchase
+    newSellOrderItem(sellOrderItemInput: SellOrderItemInput): SellOrderItem
+    newProductGroup(productGroupInput: ProductGroupInput): ProductGroup
     newAccessToken(jwtSimple: JwtSimple): Authenticate
     confirmRegister(token: String): Authenticate
     userLogin(email: String!, password: String!): Authenticate
@@ -672,21 +748,31 @@ type Mutation{
     deleteStaffNote(staffNoteID: Int): String
     deleteBuyOrderItem(buyOrderItemID: Int): String
     deleteUser(userID: Int): String
+    deleteSellOrderItem(sellOrderItemID: Int): String
+    deleteProductGroup(productGroupID: Int): String
     updatePicture(picture: PictureInput): Picture
     updateSellOrder(sellOrder: SellOrderInput): SellOrder
     updateFixedCost(fixedCost: FixedCostInput): FixedCost
     updateSupplier(supplier: SupplierInput): Supplier
     editIngredientQuantity(ingredientID: Int, quantityLog: QuantityLogInput): Ingredient
     editIngredient(ingredientID: Int, ingredient: IngredientInput): Ingredient
-#     updateStaff(staff: StaffInput): Staff
-    updateStaffNote(staffNote: StaffNoteInput): StaffNote
+    editProductQuantity(productID: Int, quantityLog: QuantityLogInput): Product
+    editProduct(productID: Int, product: ProductInput): Product
+    updateStaff(staffID: Int, staff: StaffInput): Staff
+    updateStaffNote(staffNoteID: Int, staffNote: StaffNoteInput): StaffNote
     updateProduct(productID: Int, product: ProductInput): Product
     updateCustomer(customer: CustomerInput): Customer
+    updateUser(user: UserInput): User
+    updateSellOrderItem(sellOrderItemID: Int, sellOrderItem: SellOrderItemInput): SellOrderItem
     hideProduct(productID: Int): Product
     hideIngredient(ingredientID: Int): Ingredient 
     hideCustomer(customerID: Int): Customer
     hideFixedCost(fixedCostID: Int): FixedCost
     hideSupplier(supplierID: Int): Supplier
     hideOtherCost(otherCostID: Int): OtherCost
+    addIngredientToProduct(productID: Int, ingredientID: Int): ProductComponent
+    removeIngredientFromProduct(productID: Int, ingredientID: Int): String
+    addProductToProductGroup(productGroupID: Int, productID: Int): ProductGroup
+    removeProductFromProductGroup(productGroupID: Int, productID: Int): String
 }
 `;
