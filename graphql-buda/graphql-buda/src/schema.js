@@ -287,6 +287,51 @@ type IngredientLeftLog{
      message: String
      userID: Int
 }
+type MailConfirmationToken{
+     id: Int
+     token: String
+     createdAt: String
+     expiredAt: String
+     confirmedAt: String
+     mailTokenType: MailTokenType 
+     targetEmail: String 
+     user: User 
+}
+type PaySlip{
+     paySlipID: Int
+     supplier: Supplier 
+     receiverName: String 
+     receiverContact: String
+     creationTime: String
+     message: String 
+     totalCost: Int
+     userID: Int
+}
+type ProductCombo{
+     productComboID: Int
+     name: String 
+     description: String 
+     userID: Int
+     productComboItems: [ProductComboItem]
+}
+type ProductComboItem{
+     id: Int
+     userID: Int
+     productCombo: ProductCombo 
+     product: Product 
+     quantity: Int
+     pricePerUnit: Float
+}
+type Receipt{
+     receiptID: Int
+     totalCost: Int
+     customer: Customer 
+     senderName: String 
+     senderContact: String 
+     creationTime: String
+     message: String
+     userID: Int
+}
 type Role{
      roleID: Int
      name: String
@@ -351,6 +396,12 @@ enum PlanType {
      PRO, 
      PREMIUM
 }
+enum MailTokenType{
+    REGISTER, 
+    UPDATE_INFO, 
+    UPDATE_PASSWORD 
+}
+
 input ProductInput{
     productID: Int
     name: String!
@@ -577,6 +628,16 @@ input StaffNoteInput{
      message: String 
      seen: Boolean
 }
+input WarrantyOrderInput{
+     warrantyOrderID: Int
+     userID: Int
+     product: ProductInput
+     sellOrder: SellOrderInput
+     customer: CustomerInput
+     customerMessage: String 
+     creationTime: String 
+     status: Status 
+}
 input QuantityLogInput{
      amountLeftChange: Int
      message: String
@@ -617,12 +678,19 @@ input JwtSimple{
 }
 type Query{
     ingredient(ingredientID:Int): Ingredient
-#     ingredientsByName(ingredientName: String): [Ingredient]
     ingredientsByUser: [Ingredient]
     hiddenIngredients: [Ingredient]
     alertIngredients: [Ingredient]
+    ingredientLeftLog(ingredientLeftLogID: Int): IngredientLeftLog
+    ingredientLeftLogsByIngredient(ingredientID: Int): [IngredientLeftLog]
+    ingredientLeftLogsByUser: [IngredientLeftLog]
+    ingredientLeftLogsByStaff(staffID: Int): [IngredientLeftLog]
     productsByUser: [Product] 
     product(productID: Int): Product
+    productLeftLog(productLeftLogID: Int): ProductLeftLog
+    productLeftLogsByProduct(productID: Int): [ProductLeftLog]
+    productLeftLogsByUser: [ProductLeftLog]
+    productLeftLogsByStaff(staffID: Int): [ProductLeftLog]
     productsByGroup(productGroupID: Int): [Product] 
     hiddenProducts: [Product]
     alertProducts: [Product]
@@ -631,9 +699,6 @@ type Query{
     buyOrdersLastXDaysByUser(X: Int): [BuyOrder]
     incompletedBuyOrdersByUser: [BuyOrder]
     buyOrdersByStatusAndUser(status: Status): [BuyOrder]
-    buyOrderExpenseWeekly: [ExpenseByTimeStatistics]
-    buyOrderExpenseMonthly: [ExpenseByTimeStatistics]
-    buyOrderExpenseThisMonth: [ExpenseByTimeStatistics]
     sellOrdersByUser: [SellOrder]
     sellOrdersByCustomer(customerID: Int): [SellOrder]
     sellOrder(sellOrderID: Int): SellOrder
@@ -641,13 +706,14 @@ type Query{
     sellOrdersXDaysByUser(X: Int): [SellOrder]
     sellOrdersByStatusAndUser(status: Status): [SellOrder]
     customersByUser: [Customer]
-#     customerByPhone(phoneNumber: String): Customer 
+    membershipType(membershipTypeID: Int): MembershipType
+    membershipTypeByUser: [MembershipType]
     discountsByUser: [Discount]
     discount(discountID: Int): Discount
     supplier(supplierID: Int): Supplier
     suppliersByUser: [Supplier]
-#     supplierByPhone(phoneNumber: String): Supplier
     plans: [Plan]
+    purchaseByUser: [Purchase]
     picture(pictureID: Int): Picture
     fixedCostsByUser: [FixedCost]
     hiddenFixedCosts: [FixedCost]
@@ -655,22 +721,14 @@ type Query{
     incompletedOtherCostsByUser: [OtherCost]
     otherCostsXDaysByUser(X: Int): [OtherCost] 
     hiddenOtherCosts: [OtherCost]
-    otherCostExpenseWeekly: [ExpenseByTimeStatistics]
-    otherCostExpenseThisMonth: [ExpenseByTimeStatistics]
-    otherCostExpenseMonthly: [ExpenseByTimeStatistics] 
     fixedCostBillsByUser: [FixedCostBill]
     fixedCostBillsByFixedCost(fixedCostID: Int): [FixedCostBill]   
     fixedCostBillsXDaysByUser(X: Int): [FixedCostBill] 
     incompletedFixedCostBillsByUser: [FixedCostBill]
-    fixedCostBillExpenseWeekly: [ExpenseByTimeStatistics]
-    fixedCostBillExpenseThisMonth: [ExpenseByTimeStatistics]
-    fixedCostBillExpenseMonthly: [ExpenseByTimeStatistics]
     staffsByUser: [Staff]
 #     salaryLog(salaryLogId: Int): SalaryLog
     salaryLogsByUser: [SalaryLog]
     salaryLogsByStaff: [SalaryLog]
-    salaryLogExpenseThisMonth: [ExpenseByTimeStatistics]
-    salaryLogExpenseMonthly: [ExpenseByTimeStatistics]
     staffNotesByUser: [StaffNote]
     staffNotesByStaff(staffID: Int): [StaffNote]
     unseenStaffNotesByStaff(staffID: Int): [StaffNote]
@@ -685,30 +743,32 @@ type Query{
     user(userID: Int): User
     currentUser: User
     userByUUID(UUID: Int): User
-    membershipType(membershipTypeID: Int): MembershipType
-    membershipTypeByUser: [MembershipType]
-    purchaseByUser: [Purchase]
     componentsByProduct(productID: Int): [ProductComponent]
     productContainIngredient(ingredientID: Int): [Product] 
     productGroupsByUser: [ProductGroup]
     productsByProductGroup(productGroupID: Int): [Product]
     sellOrderItemsBySellOrder(sellOrderID: Int): [SellOrderItem]
     sellOrderItemsByProduct(productID: Int): [SellOrderItem] 
-    productLeftLog(productLeftLogID: Int): ProductLeftLog
-    productLeftLogsByProduct(productID: Int): [ProductLeftLog]
-    productLeftLogsByUser: [ProductLeftLog]
-    productLeftLogsByStaff(staffID: Int): [ProductLeftLog]
-    ingredientLeftLog(ingredientLeftLogID: Int): IngredientLeftLog
-    ingredientLeftLogsByIngredient(ingredientID: Int): [IngredientLeftLog]
-    ingredientLeftLogsByUser: [IngredientLeftLog]
-    ingredientLeftLogsByStaff(staffID: Int): [IngredientLeftLog]
     totalSpendAgeGroupByUser: [AgeGroupStatistics]
+    totalSpendAgeGroupThisMonthByUser: [AgeGroupStatistics]
     totalSpendGenderByUser: [GenderStatistics]
+    totalSpendGenderThisMonthByUser: [GenderStatistics]
     totalRevenueProductByUser: [ProductStatistics]
     revenueWeekly: [RevenueByTimeStatistics]
     revenueMonthly: [RevenueByTimeStatistics]
     revenueWeekdays: [RevenueByTimeStatistics]
     revenueDaysThisMonth: [RevenueByTimeStatistics]
+    otherCostExpenseWeekly: [ExpenseByTimeStatistics]
+    otherCostExpenseThisMonth: [ExpenseByTimeStatistics]
+    otherCostExpenseMonthly: [ExpenseByTimeStatistics] 
+    fixedCostBillExpenseWeekly: [ExpenseByTimeStatistics]
+    fixedCostBillExpenseThisMonth: [ExpenseByTimeStatistics]
+    fixedCostBillExpenseMonthly: [ExpenseByTimeStatistics]
+    salaryLogExpenseThisMonth: [ExpenseByTimeStatistics]
+    salaryLogExpenseMonthly: [ExpenseByTimeStatistics]
+    buyOrderExpenseWeekly: [ExpenseByTimeStatistics]
+    buyOrderExpenseMonthly: [ExpenseByTimeStatistics]
+    buyOrderExpenseThisMonth: [ExpenseByTimeStatistics]
 }
 
 type Mutation{
@@ -719,19 +779,20 @@ type Mutation{
     newBuyOrder(buyOrderInput: BuyOrderInput): BuyOrder
     newSellOrder(sellOrderInput: SellOrderInput): SellOrder
     newCustomer(customerInput: CustomerInput): Customer
+    newMembershipType(membershipTypeInput: MembershipTypeInput): MembershipType
     newDiscount(discountInput: DiscountInput): Discount
     newSupplier(supplierInput: SupplierInput): Supplier
     newPlan(planInput: PlanInput): Plan
+    newPurchase(purchaseInput: PurchaseInput): Purchase
     newPicture(pictureInput: PictureInput): Picture
     newFixedCost(fixedCostInput: FixedCostInput): FixedCost
     newOtherCost(otherCostInput: OtherCostInput): OtherCost
     newFixedCostBill(fixedCostBillInput: FixedCostBillInput): FixedCostBill
     newSalaryLog(salaryLogInput: SalaryLogInput): SalaryLog
     newStaffNote(staffNoteInput: StaffNoteInput): StaffNote
-    newMembershipType(membershipTypeInput: MembershipTypeInput): MembershipType
-    newPurchase(purchaseInput: PurchaseInput): Purchase
     newSellOrderItem(sellOrderItemInput: SellOrderItemInput): SellOrderItem
     newProductGroup(productGroupInput: ProductGroupInput): ProductGroup
+    newWarrantyOrder(warrantyOrderInput: WarrantyOrderInput): WarrantyOrder
     newAccessToken(jwtSimple: JwtSimple): Authenticate
     confirmRegister(token: String): Authenticate
     userLogin(email: String!, password: String!): Authenticate

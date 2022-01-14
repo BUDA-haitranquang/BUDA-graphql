@@ -6,9 +6,6 @@ module.exports.resolvers = {
         ingredient: async (_, args, { dataSources }) => {
             return dataSources.buda.ingredient(args.ingredientID)
         },
-        // ingredientsByName: async (_, args, { dataSources }) => {
-        //     return dataSources.buda.ingredientsByName(args.ingredientName)
-        // },
         ingredientsByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.ingredientsByUser(args)
         },
@@ -17,6 +14,18 @@ module.exports.resolvers = {
         },
         alertIngredients: async (_, args, { dataSources }) => {
             return dataSources.buda.alertIngredients(args)
+        },
+        ingredientLeftLog: async (_, args, { dataSources }) => {
+            return dataSources.buda.ingredientLeftLog(args.ingredientLeftLogID)
+        },
+        ingredientLeftLogsByIngredient: async (_, args, { dataSources }) => {
+            return dataSources.buda.ingredientLeftLogsByIngredient(args.ingredientID)
+        },
+        ingredientLeftLogsByUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.ingredientLeftLogsByUser(args)
+        },
+        ingredientLeftLogsByStaff: async (_, args, { dataSources }) => {
+            return dataSources.buda.ingredientLeftLogsByStaff(args.staffID)
         },
         product: async (_, args, { dataSources }) => {
             return dataSources.buda.product(args.productID)
@@ -33,6 +42,18 @@ module.exports.resolvers = {
         alertProducts: async (_, args, { dataSources }) => {
             return dataSources.buda.alertProducts(args)
         },
+        productLeftLog: async (_, args, { dataSources }) => {
+            return dataSources.buda.productsLeftLog(args.productLeftLogID)
+        },
+        productLeftLogsByProduct: async (_, args, { dataSources }) => {
+            return dataSources.buda.productLeftLogsByProduct(args.productID)
+        },
+        productLeftLogsByUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.productLeftLogsByUser(args)
+        },
+        productLeftLogsByStaff: async (_, args, { dataSources }) => {
+            return dataSources.buda.productLeftLogsByStaff(args.staffID)
+        },
         buyOrdersByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.buyOrdersByUser(args)
         },
@@ -47,15 +68,6 @@ module.exports.resolvers = {
         },
         buyOrdersByStatusAndUser: async (_, args, { dataSources }) => {
             return dataSources.buda.buyOrdersByStatusAndUser(args.status)
-        },
-        buyOrderExpenseWeekly: async (_, args, { dataSources }) => {
-            return dataSources.buda.buyOrderExpenseWeekly(args)
-        },
-        buyOrderExpenseMonthly: async (_, args, { dataSources }) => {
-            return dataSources.buda.buyOrderExpenseMonthly(args)
-        },
-        buyOrderExpenseThisMonth: async (_, args, { dataSources }) => {
-            return dataSources.buda.buyOrderExpenseThisMonth(args)
         },
         sellOrdersByUser: async (_, args, { dataSources }) =>{
             return dataSources.buda.sellOrdersByUser(args)
@@ -78,9 +90,12 @@ module.exports.resolvers = {
         customersByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.customersByUser(args)
         },
-        // customerByPhone: async (_, args, { dataSources })=> {
-        //     return dataSources.buda.customerByPhone(args.phoneNumber)
-        // },
+        membershipType: async (_, args, { dataSources }) => {
+            return dataSources.buda.membershipType(args.membershipTypeID)
+        },
+        membershipTypeByUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.membershipTypeByUser(args)
+        },
         discountsByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.discountsByUser(args)
         },
@@ -93,11 +108,11 @@ module.exports.resolvers = {
         supplier: async (_, args, { dataSources }) => {
             return dataSources.buda.supplier(args.supplierID)
         },
-        // supplierByPhone: async (_, args, { dataSources }) => {
-        //     return dataSources.buda.supplierByPhone(args.phoneNumber)
-        // },
         plans: async (_, args, { dataSources }) => {
             return dataSources.buda.plans(args)
+        },
+        purchaseByUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.purchaseByUser(args)
         },
         picture: async (_, args, { dataSources }) => {
             return dataSources.buda.picture(args.pictureID)
@@ -120,15 +135,6 @@ module.exports.resolvers = {
         hiddenOtherCosts: async (_, args, { dataSources }) => {
             return dataSources.buda.hiddenOtherCosts(args)
         },
-        otherCostExpenseWeekly: async (_, args, { dataSources }) => {
-            return dataSources.buda.otherCostExpenseWeekly(args)
-        },
-        otherCostExpenseThisMonth: async (_, args, { dataSources }) => {
-            return dataSources.buda.otherCostExpenseThisMonth(args)
-        },
-        otherCostExpenseMonthly: async (_, args, { dataSources }) => {
-            return dataSources.buda.otherCostExpenseMonthly(args)
-        },
         fixedCostBillsByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.fixedCostBillsByUser(args)
         },
@@ -137,15 +143,6 @@ module.exports.resolvers = {
         },
         fixedCostBillsXDaysByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.fixedCostBillsXDaysByUser(args.X)
-        },
-        fixedCostBillExpenseWeekly: async (_, args, { dataSources }) => {
-            return dataSources.buda.fixedCostBillExpenseWeekly(args)
-        },
-        fixedCostBillExpenseThisMonth: async (_, args, { dataSources }) => {
-            return dataSources.buda.fixedCostBillExpenseThisMonth(args)
-        },
-        fixedCostBillExpenseMonthly: async (_, args, { dataSources }) =>{
-            return dataSources.buda.fixedCostBillExpenseMonthly(args)
         },
         incompletedFixedCostBillsByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.incompletedFixedCostBillsByUser(args)
@@ -161,12 +158,6 @@ module.exports.resolvers = {
         },
         salaryLogsByStaff: async (_, args, { dataSources }) => {
             return dataSources.salaryLogsByStaff(args.staffID)
-        },
-        salaryLogExpenseThisMonth: async (_, args, { dataSources }) => {
-            return dataSources.buda.salaryLogExpenseThisMonth(args)
-        },
-        salaryLogExpenseMonthly: async (_, args, { dataSources }) => {
-            return dataSources.buda.salaryLogExpenseMonthly(args)
         },
         staffNotesByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.staffNotesByUser(args)
@@ -210,15 +201,6 @@ module.exports.resolvers = {
         userByUUID: async (_, args, { dataSources }) => {
             return dataSources.buda.userByUUID(args.UUID)
         },
-        membershipType: async (_, args, { dataSources }) => {
-            return dataSources.buda.membershipType(args.membershipTypeID)
-        },
-        membershipTypeByUser: async (_, args, { dataSources }) => {
-            return dataSources.buda.membershipTypeByUser(args)
-        },
-        purchaseByUser: async (_, args, { dataSources }) => {
-            return dataSources.buda.purchaseByUser(args)
-        },
         componentsByProduct: async (_, args, { dataSources }) => {
             return dataSources.buda.componentsByProduct(args.productID)
         },
@@ -237,35 +219,17 @@ module.exports.resolvers = {
         productsByProductGroup: async (_, args, { dataSources }) => {
             return dataSources.buda.productsByProductGroup(args.productGroupID)
         },
-        productLeftLog: async (_, args, { dataSources }) => {
-            return dataSources.buda.productsLeftLog(args.productLeftLogID)
-        },
-        productLeftLogsByProduct: async (_, args, { dataSources }) => {
-            return dataSources.buda.productLeftLogsByProduct(args.productID)
-        },
-        productLeftLogsByUser: async (_, args, { dataSources }) => {
-            return dataSources.buda.productLeftLogsByUser(args)
-        },
-        productLeftLogsByStaff: async (_, args, { dataSources }) => {
-            return dataSources.buda.productLeftLogsByStaff(args.staffID)
-        },
-        ingredientLeftLog: async (_, args, { dataSources }) => {
-            return dataSources.buda.ingredientLeftLog(args.ingredientLeftLogID)
-        },
-        ingredientLeftLogsByIngredient: async (_, args, { dataSources }) => {
-            return dataSources.buda.ingredientLeftLogsByIngredient(args.ingredientID)
-        },
-        ingredientLeftLogsByUser: async (_, args, { dataSources }) => {
-            return dataSources.buda.ingredientLeftLogsByUser(args)
-        },
-        ingredientLeftLogsByStaff: async (_, args, { dataSources }) => {
-            return dataSources.buda.ingredientLeftLogsByStaff(args.staffID)
-        },
         totalSpendAgeGroupByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.totalSpendAgeGroupByUser(args)
         },
+        totalSpendAgeGroupThisMonthByUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.totalSpendAgeGroupThisMonthByUser(args)
+        },
         totalSpendGenderByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.totalSpendGenderByUser(args)
+        },
+        totalSpendGenderThisMonthByUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.totalSpendGenderThisMonthByUser(args)
         },
         totalRevenueProductByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.totalRevenueProductByUser(args)
@@ -281,6 +245,39 @@ module.exports.resolvers = {
         },
         revenueDaysThisMonth: async (_, args, { dataSources }) => {
             return dataSources.buda.revenueDaysThisMonth(args)
+        },
+        otherCostExpenseWeekly: async (_, args, { dataSources }) => {
+            return dataSources.buda.otherCostExpenseWeekly(args)
+        },
+        otherCostExpenseThisMonth: async (_, args, { dataSources }) => {
+            return dataSources.buda.otherCostExpenseThisMonth(args)
+        },
+        otherCostExpenseMonthly: async (_, args, { dataSources }) => {
+            return dataSources.buda.otherCostExpenseMonthly(args)
+        },
+        fixedCostBillExpenseWeekly: async (_, args, { dataSources }) => {
+            return dataSources.buda.fixedCostBillExpenseWeekly(args)
+        },
+        fixedCostBillExpenseThisMonth: async (_, args, { dataSources }) => {
+            return dataSources.buda.fixedCostBillExpenseThisMonth(args)
+        },
+        fixedCostBillExpenseMonthly: async (_, args, { dataSources }) =>{
+            return dataSources.buda.fixedCostBillExpenseMonthly(args)
+        },
+        salaryLogExpenseThisMonth: async (_, args, { dataSources }) => {
+            return dataSources.buda.salaryLogExpenseThisMonth(args)
+        },
+        salaryLogExpenseMonthly: async (_, args, { dataSources }) => {
+            return dataSources.buda.salaryLogExpenseMonthly(args)
+        },
+        buyOrderExpenseWeekly: async (_, args, { dataSources }) => {
+            return dataSources.buda.buyOrderExpenseWeekly(args)
+        },
+        buyOrderExpenseMonthly: async (_, args, { dataSources }) => {
+            return dataSources.buda.buyOrderExpenseMonthly(args)
+        },
+        buyOrderExpenseThisMonth: async (_, args, { dataSources }) => {
+            return dataSources.buda.buyOrderExpenseThisMonth(args)
         }
     },
     Mutation: {
@@ -305,6 +302,9 @@ module.exports.resolvers = {
         newCustomer: async (_, args, { dataSources }) => {
             return dataSources.buda.newCustomer(args.customerInput)
         },
+        newMembershipType: async (_, args, { dataSources }) => {
+            return dataSources.buda.newMembershipType(args.membershipTypeInput)
+        },
         newDiscount: async (_, args, { dataSources }) => {
             return dataSources.buda.newDiscount(args.discountInput)
         },
@@ -313,6 +313,9 @@ module.exports.resolvers = {
         },
         newPlan: async (_, args, { dataSources }) => {
             return dataSources.buda.newPlan(args.planInput)
+        },
+        newPurchase: async (_, args, { dataSources }) => {
+            return dataSources.buda.newPurchase(args.purchaseInput)
         },
         newPicture: async (_, args, { dataSources }) => {
             return dataSources.buda.newPicture(args.pictureInput)
@@ -332,17 +335,14 @@ module.exports.resolvers = {
         newStaffNote: async (_, args, { dataSources }) => {
             return dataSources.buda.newStaffNote(args.staffNoteInput)
         },
-        newMembershipType: async (_, args, { dataSources }) => {
-            return dataSources.buda.newMembershipType(args.membershipTypeInput)
-        },
-        newPurchase: async (_, args, { dataSources }) => {
-            return dataSources.buda.newPurchase(args.purchaseInput)
-        },
         newSellOrderItem: async (_, args, { dataSources }) => {
             return dataSources.buda.newSellOrderItem(args.sellOrderItemInput)
         },
         newProductGroup: async (_, args, { dataSources }) => {
             return dataSources.buda.newProductGroup(args.productGroupInput)
+        },
+        newWarrantyOrder: async (_, args, { dataSources }) => {
+            return dataSources.buda.newWarrantyOrder(args.warrantyOrderInput)
         },
         newAccessToken: async (_, args, { dataSources }) => {
             return dataSources.buda.newAccessToken(args.jwtSimple)

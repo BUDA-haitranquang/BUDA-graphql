@@ -9,34 +9,55 @@ class Budabackend extends RESTDataSource {
         //this.baseURL = 'http://localhost:8080/'
     }
     async ingredient(ingredientID) {
-        return this.get(`api/ingredient/ingredientID/${ingredientID}`)
+        return this.get(`api/ingredient/crud/ingredientID/${ingredientID}`)
     }
-    // async ingredientsByName(ingredientName) {
-    //     return this.get(`api/ingredient/${ingredientName}`)
-    // }
     async ingredientsByUser(){
-        return this.get(`api/ingredient/all`)
+        return this.get(`api/ingredient/crud/all`)
     }
     async hiddenIngredients(){
-        return this.get(`api/ingredient/hidden/all`)
+        return this.get(`api/ingredient/crud/hidden/all`)
     }
     async alertIngredients(){
-        return this.get(`api/ingredient/alert`)
+        return this.get(`api/ingredient/crud/alert`)
+    }
+    async ingredientLeftLog(ingredientLeftLogID){
+        return this.get(`api/ingredient/quantity-log/${ingredientLeftLogID}`)
+    }
+    async ingredientLeftLogsByIngredient(ingredientID){
+        return this.get(`api/ingredient/quantity-log/${ingredientID}/all`)
+    }
+    async ingredientLeftLogsByUser(){
+        return this.get(`api/ingredient/quantity-log/all`)
+    }
+    async ingredientLeftLogsByStaff(staffID){
+        return this.get(`api/ingredient/quantity-log/staff/${staffID}/all`)
     }
     async product(productID) {
-        return this.get(`api/product/productID/${productID}`)
+        return this.get(`api/product/crud/productID/${productID}`)
     }
     async productsByUser() {
-        return this.get(`api/product/all`)
+        return this.get(`api/product/crud/all`)
     }
     async productsByGroup(productGroupID) {
-        return this.get(`api/product/group/${productGroupID}/all`)
+        return this.get(`api/product/crud/group/${productGroupID}/all`)
     }
     async hiddenProducts(){
-        return this.get(`api/product/hidden/all`)
+        return this.get(`api/product/crud/hidden/all`)
     }
     async alertProducts(){
-        return this.get(`api/product/alert`)
+        return this.get(`api/product/crud/alert`)
+    }
+    async productLeftLog(productLeftLogID){
+        return this.get(`api/product/quantity-log/id/${productLeftLogID}`)
+    }
+    async productLeftLogsByProduct(productID){
+        return this.get(`api/product/quantity-log/product/${productID}/all`)
+    }
+    async productLeftLogsByUser(){
+        return this.get(`api/product/quantity-log/all`)
+    }
+    async productLeftLogsByStaff(staffID){
+        return this.get(`api/product/quantity-log/staff/${staffID}/all`)
     }
     async buyOrdersByUser(){
         return this.get(`api/buy-order/user/all/`)
@@ -53,39 +74,33 @@ class Budabackend extends RESTDataSource {
     async buyOrdersByStatusAndUser(status){
         return this.get(`api/buy-order/all/status/${status}`)
     }
-    async buyOrderExpenseWeekly(){
-        return this.get(`api/buy-order/expense/weekly`)
-    }
-    async buyOrderExpenseMonthly(){
-        return this.get(`api/buy-order/expense/monthly`)
-    }
-    async buyOrderExpenseThisMonth(){
-        return this.get(`api/buy-order/expense/this-month`)
-    }
     async sellOrdersByUser() {
-        return this.get(`api/sell-order/all`)
+        return this.get(`api/business/sell/neworder/all`)
     }
     async sellOrdersByCustomer(customerID) {
-        return this.get(`api/sell-order/customer/${customerID}/all`)
+        return this.get(`api/business/sell/neworder/customer/${customerID}/all`)
     }
     async sellOrder(sellOrderID) {
-        return this.get(`api/sell-order/${sellOrderID}`)
+        return this.get(`api/business/sell/neworder/${sellOrderID}`)
     }
     async incompletedSellOrdersByUser(){
-        return this.get(`api/sell-order/all/incompleted`)
+        return this.get(`api/business/sell/neworder/all/incompleted`)
     }
     async sellOrdersXDaysByUser(X){
-        return this.get(`api/sell-order/all/last-x-days/${X}`)
+        return this.get(`api/business/sell/neworder/all/last-x-days/${X}`)
     }
     async sellOrdersByStatusAndUser(status){
-        return this.get(`api/sell-order/all/status/${status}`)
+        return this.get(`api/business/sell/neworder/all/status/${status}`)
     }
     async customersByUser(){
-        return this.get(`api/customer/all`)
+        return this.get(`api/customer/crud/all`)
     }
-    // async customerByPhone(phoneNumber){
-    //     return this.get(`api/customer/byphone`)
-    // }
+    async membershipType(membershipTypeID) {
+        return this.get(`api/customer/membership/membershipTypeID/${membershipTypeID}`)
+    }
+    async membershipTypeByUser(){
+        return this.get(`api/customer/membership/all`)
+    }
     async discountsByUser(){
         return this.get(`api/discount/all`)
     }
@@ -93,97 +108,73 @@ class Budabackend extends RESTDataSource {
         return this.get(`api/discount/discountID/${discountID}`)
     }
     async supplier(supplierID){
-        return this.get(`api/supplier/${supplierID}`)
+        return this.get(`api/supplier/crud/${supplierID}`)
     }
     async suppliersByUser(){
-        return this.get(`api/supplier/all`)
+        return this.get(`api/supplier/crud/all`)
     }
-    // async supplierByPhone(phoneNumber){
-    //     return this.get(`api/supplier/byphone`)
-    // }
     async plans(){
-        return this.get(`api/plan/all`)
+        return this.get(`api/plan/view/all`)
+    }
+    async purchaseByUser(){
+        return this.get(`api/plan/purchase/all`)
     }
     async picture(pictureID){
         return this.get(`api/picture/${pictureID}`)
     }
     async fixedCostsByUser(){
-        return this.get(`api/fixed-cost/all`)
+        return this.get(`api/fixed-cost/crud/all`)
     }
     async hiddenFixedCosts(){
-        return this.get(`api/fixed-cost/all/hidden`)
+        return this.get(`api/fixed-cost/crud/all/hidden`)
     }
     async otherCostsByUser(){
-        return this.get(`api/other-cost/all`)
+        return this.get(`api/other-cost/crud/all`)
     }
     async incompletedOtherCostsByUser(){
-        return this.get(`api/other-cost/all/incompleted`)
+        return this.get(`api/other-cost/crud/all/incompleted`)
     }   
     async otherCostsXDaysByUser(X){
-        return this.get(`api/other-cost/all/last-x-days/${X}`)
+        return this.get(`api/other-cost/crud/all/last-x-days/${X}`)
     }
     async hiddenOtherCosts(){
-        return this.get(`api/other-cost/all/hidden`)
-    }
-    async otherCostExpenseWeekly(){
-        return this.get(`api/other-cost/expense/weekly`)
-    }
-    async otherCostExpenseThisMonth(){
-        return this.get(`api/other-cost/expense/this-month`)
-    }
-    async otherCostExpenseMonthly(){
-        return this.get(`api/other-cost/expense/monthly`)
+        return this.get(`api/other-cost/crud/all/hidden`)
     }
     async fixedCostBillsByUser(){
-        return this.get(`api/fixed-cost-bill/all`)
+        return this.get(`api/cost/fixed-cost/bill/all`)
     }
     async fixedCostBillsByFixedCost(fixedCostID){
-        return this.get(`api/fixed-cost-bill/fixedCostID/${fixedCostID}/all`)
+        return this.get(`api/cost/fixed-cost/bill/fixedCostID/${fixedCostID}/all`)
     }
     async fixedCostBillsXDaysByUser(X){
-        return this.get(`api/fixed-cost-bill/all/last-x-days/${X}`)
-    }
-    async fixedCostBillExpenseWeekly(){
-        return this.get(`api/fixed-cost-bill/expense/weekly`)
-    }
-    async fixedCostBillExpenseThisMonth(){
-        return this.get(`api/fixed-cost-bill/expense/this-month`)
-    }
-    async fixedCostBillExpenseMonthly(){
-        return this.get(`api/fixed-cost-bill/expense/monthly`)
+        return this.get(`api/cost/fixed-cost/bill/all/last-x-days/${X}`)
     }
     async incompletedFixedCostBillsByUser(){
-        return this.get(`api/fixed-cost-bill/all/incompleted`)
+        return this.get(`api/cost/fixed-cost/bill/all/incompleted`)
     }
     async staffsByUser(){
-        return this.get(`api/staff/userID/all`)
+        return this.get(`api/staff/crud/userID/all`)
+    }
+    async staffNotesByUser(){
+        return this.get(`api/staff/notification/userID/all`)
+    }
+    async staffNotesByStaff(staffID){
+        return this.get(`api/staff/notification/staffID/${staffID}/all`)
+    }
+    async unseenStaffNotesByStaff(staffID){
+        return this.get(`api/staff/notification/staffID/${staffID}/all/unseen`)
+    }
+    async staffNote(staffNoteID){
+        return this.get(`api/staff/notification/noteID/${staffNoteID}`)
     }
     // async salaryLog(){
     //     return this.get(`api/salary-log`)
     // }
     async salaryLogsByUser(){
-        return this.get(`api/salary-log/userID/all`)
+        return this.get(`api/staff/salary/userID/all`)
     }
     async salaryLogsByStaff(staffID){
-        return this.get(`api/salary-log/staffID/${staffID}/all`)
-    }
-    async salaryLogExpenseThisMonth(){
-        return this.get(`api/salary-log/expense/this-month`)
-    }
-    async salaryLogExpenseMonthly(){
-        return this.get(`api/salary-log/expense/monthly`)
-    }
-    async staffNotesByUser(){
-        return this.get(`api/staff-note/userID/all`)
-    }
-    async staffNotesByStaff(staffID){
-        return this.get(`api/staff-note/staffID/${staffID}/all`)
-    }
-    async unseenStaffNotesByStaff(staffID){
-        return this.get(`api/staff-note/staffID/${staffID}/all/unseen`)
-    }
-    async staffNote(staffNoteID){
-        return this.get(`api/staff-note/noteID/${staffNoteID}`)
+        return this.get(`api/staff/salary/staffID/${staffID}/all`)
     }
     async notiByUser(){
         return this.get(`api/notification/all`)
@@ -192,13 +183,13 @@ class Budabackend extends RESTDataSource {
         return this.get(`api/notification/all/new`)
     }
     async warrantyOrdersByUser(){
-        return this.get(`api/warranty-order/all`)
+        return this.get(`api/warranty-order/crud/all`)
     }
     async warrantyOrdersByProduct(productID){
-        return this.get(`api/warranty-order/product/${productID}/all`)
+        return this.get(`api/warranty-order/crud/product/${productID}/all`)
     }
     async warrantyOrdersByCustomer(customerID){
-        return this.get(`api/warranty-order/customer/${customerID}/all`)
+        return this.get(`api/warranty-order/crud/customer/${customerID}/all`)
     }
     async buyOrderItemsByBuyOrder(buyOrderID){
         return this.get(`api/buy-order-item/buy-order/${buyOrderID}`)
@@ -210,19 +201,10 @@ class Budabackend extends RESTDataSource {
         return this.get(`api/user/id/${userID}`)
     }
     async currentUser(){
-        return this.get(`api/user/me`)
+        return this.get(`api/user/view/me`)
     }
     async userByUUID(UUID) {
         return this.get(`api/user/uuid/${UUID}`)
-    }
-    async membershipType(membershipTypeID) {
-        return this.get(`api/membership-type/${membershipTypeID}`)
-    }
-    async membershipTypeByUser(){
-        return this.get(`api/membership-type/all`)
-    }
-    async purchaseByUser(){
-        return this.get(`api/purchase/all`)
     }
     async componentsByProduct(productID){
         return this.get(`api/product-component/product/${productID}`)
@@ -242,50 +224,65 @@ class Budabackend extends RESTDataSource {
     async productsByProductGroupID(productGroupID){
         return this.get(`api/product-group/${productGroupID}/products`)
     }
-    async productLeftLog(productLeftLogID){
-        return this.get(`api/product-left-log/id/${productLeftLogID}`)
-    }
-    async productLeftLogsByProduct(productID){
-        return this.get(`api/product-left-log/product/${productID}/all`)
-    }
-    async productLeftLogsByUser(){
-        return this.get(`api/product-left-log/all`)
-    }
-    async productLeftLogsByStaff(staffID){
-        return this.get(`api/product-left-log/staff/${staffID}/all`)
-    }
-    async ingredientLeftLog(ingredientLeftLogID){
-        return this.get(`api/ingredient-left-log/${ingredientLeftLogID}`)
-    }
-    async ingredientLeftLogsByIngredient(ingredientID){
-        return this.get(`api/ingredient-left-log/ingredient/${ingredientID}/all`)
-    }
-    async ingredientLeftLogsByUser(){
-        return this.get(`api/ingredient-left-log/all`)
-    }
-    async ingredientLeftLogsByStaff(staffID){
-        return this.get(`api/ingredient-left-log/staff/${staffID}/all`)
-    }
     async totalSpendAgeGroupByUser(){
         return this.get(`api/statistics/age-group/total`)
     }
+    async totalSpendAgeGroupThisMonthByUser(){
+        return this.get(`api/statistics/age-group/this-month`)
+    }
     async totalSpendGenderByUser(){
         return this.get(`api/statistics/gender/total`)
+    }
+    async totalSpendGenderThisMonthByUser(){
+        return this.get(`api/statistics/gender/this-month`)
     }
     async totalRevenueProductByUser(){
         return this.get(`api/statistics/product/all`)
     }
     async revenueMonthly(){
-        return this.get(`api/statistics/revenue/monthly`)
+        return this.get(`api/statistics/revenue/sell-order/monthly`)
     }
     async revenueWeekly(){
-        return this.get(`api/statistics/revenue/weekly`)
+        return this.get(`api/statistics/revenue/sell-order/weekly`)
     }
     async revenueWeekdays(){
-        return this.get(`api/statistics/revenue/weekday`)
+        return this.get(`api/statistics/revenue/sell-order/weekday`)
     }
     async revenueDaysThisMonth(){
-        return this.get(`api/statistics/revenue/this-month/daily`)
+        return this.get(`api/statistics/revenue/sell-order/this-month/daily`)
+    }
+    async otherCostExpenseWeekly(){
+        return this.get(`api/statistics/expense/other-cost/weekly`)
+    }
+    async otherCostExpenseThisMonth(){
+        return this.get(`api/statistics/expense/other-cost/this-month`)
+    }
+    async otherCostExpenseMonthly(){
+        return this.get(`api/statistics/expense/other-cost/monthly`)
+    }
+    async fixedCostBillExpenseWeekly(){
+        return this.get(`api/statistics/expense/fixed-cost/weekly`)
+    }
+    async fixedCostBillExpenseThisMonth(){
+        return this.get(`api/statistics/expense/fixed-cost/this-month`)
+    }
+    async fixedCostBillExpenseMonthly(){
+        return this.get(`api/statistics/expense/fixed-cost/monthly`)
+    }
+    async salaryLogExpenseThisMonth(){
+        return this.get(`api/statistics/expense/salary/this-month`)
+    }
+    async salaryLogExpenseMonthly(){
+        return this.get(`api/statistics/expense/salary/monthly`)
+    }
+    async buyOrderExpenseWeekly(){
+        return this.get(`api/statistics/expense/buy-order/weekly`)
+    }
+    async buyOrderExpenseMonthly(){
+        return this.get(`api/statistics/expense/buy-order/monthly`)
+    }
+    async buyOrderExpenseThisMonth(){
+        return this.get(`api/statistics/expense/buy-order/this-month`)
     }
     async cleanCache() {
         try {
@@ -298,15 +295,15 @@ class Budabackend extends RESTDataSource {
     }
     async newProduct(productInput) {
         const productInputJson = JSON.parse(JSON.stringify(productInput))
-        return this.post(`api/product/new`, productInputJson)
+        return this.post(`api/product/crud/new`, productInputJson)
     }
     async newIngredient(ingredientInput) {
         const ingredientInputJson = JSON.parse(JSON.stringify(ingredientInput))
-        return this.post(`api/ingredient/new`, ingredientInputJson)
+        return this.post(`api/ingredient/crud/new`, ingredientInputJson)
     }
     async newStaff(staffInput){
         const staffInputJson = JSON.parse(JSON.stringify(staffInput))
-        return this.post(`api/staff/register`, staffInputJson)
+        return this.post(`api/staff/crud/new`, staffInputJson)
     }
     async newUser(userRegister){
         const userRegisterJson = JSON.parse(JSON.stringify(userRegister))
@@ -314,7 +311,7 @@ class Budabackend extends RESTDataSource {
     }
     async newSalaryLog(salaryLogInput){
         const salaryLogInputJson = JSON.parse(JSON.stringify(salaryLogInput))
-        return this.post(`api/salary-log/register`, salaryLogInputJson)
+        return this.post(`api/staff/salary/new`, salaryLogInputJson)
     }
     async newBuyOrder(buyOrderInput) {
         const buyOrderInputJson = JSON.parse(JSON.stringify(buyOrderInput))
@@ -322,11 +319,11 @@ class Budabackend extends RESTDataSource {
     }
     async newSellOrder(sellOrderInput) {
         const sellOrderInputJson = JSON.parse(JSON.stringify(sellOrderInput))
-        return this.post(`api/sell-order/new`, sellOrderInputJson)
+        return this.post(`api/business/sell/neworder/new`, sellOrderInputJson)
     }
     async newCustomer(customerInput){
         const customerInputJson = JSON.parse(JSON.stringify(customerInput))
-        return this.post(`api/customer/new`, customerInputJson)
+        return this.post(`api/customer/crud/new`, customerInputJson)
     }
     async newDiscount(discountInput){
         const discountInputJson = JSON.parse(JSON.stringify(discountInput))
@@ -334,7 +331,7 @@ class Budabackend extends RESTDataSource {
     }
     async newSupplier(supplierInput){
         const supplierInputJson = JSON.parse(JSON.stringify(supplierInput))
-        return this.post(`api/supplier/new`, supplierInputJson)
+        return this.post(`api/supplier/crud/new`, supplierInputJson)
     }
     async newPlan(planInput){
         const planInputJson = JSON.parse(JSON.stringify(planInput))
@@ -346,27 +343,27 @@ class Budabackend extends RESTDataSource {
     }
     async newFixedCost(fixedCostInput){
         const fixedCostInputJson = JSON.parse(JSON.stringify(fixedCostInput))
-        return this.post(`api/fixed-cost/new`, fixedCostInputJson)
+        return this.post(`api/fixed-cost/crud/new`, fixedCostInputJson)
     }
     async newOtherCost(otherCostInput){
         const otherCostInputJson = JSON.parse(JSON.stringify(otherCostInput))
-        return this.post(`api/other-cost/new`, otherCostInputJson)
+        return this.post(`api/other-cost/crud/new`, otherCostInputJson)
     }
     async newFixedCostBill(fixedCostBillInput){
         const fixedCostBillInputJson = JSON.parse(JSON.stringify(fixedCostBillInput))
-        return this.post(`api/fixed-cost-bill/new`, fixedCostBillInputJson)
+        return this.post(`api/cost/fixed-cost/bill/new`, fixedCostBillInputJson)
     }
     async newStaffNote(staffNoteInput){
         const staffNoteJson = JSON.parse(JSON.stringify(staffNoteInput))
-        return this.post(`api/staff-note/register`, staffNoteJson)
+        return this.post(`api/staff/notification/new`, staffNoteJson)
     }
     async newMembershipType(membershipTypeInput){
         const membershipTypeInputJson = JSON.parse(JSON.stringify(membershipTypeInput))
-        return this.post(`api/membership-type/new`, membershipTypeInputJson)
+        return this.post(`api/customer/membership/new`, membershipTypeInputJson)
     }
     async newPurchase(purchaseInput){
         const purchaseInputJson = JSON.parse(JSON.stringify(purchaseInput))
-        return this.post(`api/purchase/new`, purchaseInputJson)
+        return this.post(`api/plan/purchase/new`, purchaseInputJson)
     }
     async newSellOrderItem(sellOrderItemInput){
         const sellOrderItemInputJson = JSON.parse(JSON.stringify(sellOrderItemInput))
@@ -375,6 +372,10 @@ class Budabackend extends RESTDataSource {
     async newProductGroup(productGroupInput){
         const productGroupInputJson= JSON.parse(JSON.stringify(productGroupInput))
         return this.post(`api/product-group/new`, productGroupInputJson)
+    }
+    async newWarrantyOrder(warrantyOrderInput){
+        const warrantyOrderInputJson = JSON.parse(JSON.stringify(warrantyOrderInput))
+        return this.post(`api/warranty-order/crud/new`, warrantyOrderInputJson)
     }
     async userLogin(email, password) {
         return this.post('api/user/login', {
@@ -404,7 +405,7 @@ class Budabackend extends RESTDataSource {
     //     return this.delete(`api/product/productID/${productID}`)
     // }
     async deleteSellOrder(sellOrderID){
-        return this.delete(`api/sell-order/${sellOrderID}`)
+        return this.delete(`api/business/sell/neworder/${sellOrderID}`)
     }
     async deletePlan(planID){
         return this.delete(`api/plan/${planID}`)
@@ -413,19 +414,19 @@ class Budabackend extends RESTDataSource {
         return this.delete(`api/picture/${pictureID}`)
     }
     async deleteFixedCost(fixedCostID){
-        return this.delete(`api/fixed-cost/${fixedCostID}`)
+        return this.delete(`api/fixed-cost/crud/${fixedCostID}`)
     }
     async deleteBuyOrder(buyOrderID){
         return this.delete(`api/buy-order/${buyOrderID}`)
     }
     async deleteStaff(staffID){
-        return this.delete(`api/staff/id/${staffID}`)
+        return this.delete(`api/staff/crud/id/${staffID}`)
     }
     async deleteSalaryLog(salaryLogID){
-        return this.delete(`api/salary-log/salary-logID/${salaryLogID}`)
+        return this.delete(`api/staff/salary/salary-logID/${salaryLogID}`)
     }
     async deleteStaffNote(staffNoteID){
-        return this.delete(`api/staff-note/noteID/${staffNoteID}`)
+        return this.delete(`api/staff/notification/noteID/${staffNoteID}`)
     }
     async deleteBuyOrderItem(buyOrderItemID){
         return this.delete(`api/buy-order-item/${buyOrderItemID}`)
@@ -445,31 +446,31 @@ class Budabackend extends RESTDataSource {
     }
     async updateSellOrder(sellOrder){
         const sellOrderJson = JSON.parse(JSON.stringify(sellOrder))
-        return this.put(`api/sell-order/update`, sellOrderJson)   
+        return this.put(`api/business/sell/neworder/update`, sellOrderJson)   
     }
     async updateFixedCost(fixedCost){
         const fixedCostJson = JSON.parse(JSON.stringify(fixedCost))
-        return this.put(`api/fixed-cost/update`, fixedCostJson)
+        return this.put(`api/fixed-cost/crud/update`, fixedCostJson)
     }
     async updateStaff(staffID, staff) {
         const staffJson = JSON.parse(JSON.stringify(staff))
-        return this.put(`api/staff/update/${staffID}`, staffJson)
+        return this.put(`api/staff/crud/update/${staffID}`, staffJson)
     }
     async updateStaffNote(staffNoteID, staffNote){
         const staffNoteJson = JSON.parse(JSON.stringify(staffNote))
-        return this.put(`api/staff-note/noteID/${staffNoteID}`, staffNoteJson)
+        return this.put(`api/staff/notification/noteID/${staffNoteID}`, staffNoteJson)
     }
     async updateProduct(productID, product){
         const productJson=JSON.parse(JSON.stringify(product))
-        return this.put(`api/product/edit/${productID}`, productJson)
+        return this.put(`api/product/crud/edit/${productID}`, productJson)
     }
     async updateCustomer(customer){
         const customerJson=JSON.parse(JSON.stringify(customer))
-        return this.put(`api/customer/update`, customerJson)
+        return this.put(`api/customer/crud/update`, customerJson)
     }
     async updateSupplier(supplier){
         const supplierJson=JSON.parse(JSON.stringify(supplier))
-        return this.put(`api/supplier/update`, supplierJson)
+        return this.put(`api/supplier/crud/update`, supplierJson)
     }
     async updateUser(user){
         const userJson=JSON.parse(JSON.stringify(user))
@@ -481,37 +482,37 @@ class Budabackend extends RESTDataSource {
     }
     async editIngredientQuantity(ingredientID, quantityLog){
         const quantityLogJson = JSON.parse(JSON.stringify(quantityLog))
-        return this.put(`api/ingredient/edit/quantity/${ingredientID}`, quantityLogJson)
+        return this.put(`api/ingredient/crud/edit/quantity/${ingredientID}`, quantityLogJson)
     }
     async editIngredient(ingredientID, ingredient){
         const ingredientJson = JSON.parse(JSON.stringify(ingredient))
-        return this.put(`api/ingredient/edit/${ingredientID}`, ingredientJson)
+        return this.put(`api/ingredient/crud/edit/${ingredientID}`, ingredientJson)
     }
     async editProductQuantity(productID, quantityLog){
         const quantityLogJson = JSON.parse(JSON.stringify(quantityLog))
-        return this.put(`api/product/edit/quantity/${productID}`, quantityLogJson)
+        return this.put(`api/product/crud/edit/quantity/${productID}`, quantityLogJson)
     }
     async editProduct(productID, product){
         const productJson = JSON.parse(JSON.stringify(product))
-        return this.put(`api/product/edit/${productID}`, productJson)
+        return this.put(`api/product/crud/edit/${productID}`, productJson)
     }
     async hideIngredient(ingredientID){
-        return this.get(`api/ingredient/hide/${ingredientID}`)
+        return this.get(`api/ingredient/crud/hide/${ingredientID}`)
     }
     async hideProduct(productID) {
-        return this.get(`api/product/hide/${productID}`)
+        return this.get(`api/product/crud/hide/${productID}`)
     }
     async hideCustomer(customerID) {
-        return this.get(`api/customer/hide/${customerID}`)
+        return this.get(`api/customer/crud/hide/${customerID}`)
     }
     async hideFixedCost(fixedCostID){
-        return this.get(`api/fixed-cost/hide/${fixedCostID}`)
+        return this.get(`api/fixed-cost/crud/hide/${fixedCostID}`)
     }
     async hideSupplier(supplierID){
-        return this.get(`api/supplier/hide/${supplierID}`)
+        return this.get(`api/supplier/crud/hide/${supplierID}`)
     }
     async hideOtherCost(otherCostID){
-        return this.get(`api/other-cost/hide/${otherCostID}`)
+        return this.get(`api/other-cost/crud/hide/${otherCostID}`)
     }
     async addIngredientToProduct(productID, ingredientID){
         return this.post(`api/product-component/${productID}/add/${ingredientID}`)
