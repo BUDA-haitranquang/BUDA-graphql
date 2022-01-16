@@ -153,7 +153,7 @@ class Budabackend extends RESTDataSource {
         return this.get(`api/cost/fixed-cost/bill/all/incompleted`)
     }
     async staffsByUser(){
-        return this.get(`api/staff/crud/userID/all`)
+        return this.get(`api/staff/crud/all`)
     }
     async staffNotesByUser(){
         return this.get(`api/staff/notification/userID/all`)
