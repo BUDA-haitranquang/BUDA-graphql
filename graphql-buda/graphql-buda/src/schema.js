@@ -741,6 +741,7 @@ type Query{
     fixedCostBillsXDaysByUser(X: Int): [FixedCostBill] 
     incompletedFixedCostBillsByUser: [FixedCostBill]
     staffsByUser: [Staff]
+    staff(staffID: Int): Staff
 #     salaryLog(salaryLogId: Int): SalaryLog
     salaryLogsByUser: [SalaryLog]
     salaryLogsByStaff: [SalaryLog]

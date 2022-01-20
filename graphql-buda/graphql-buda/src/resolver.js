@@ -150,6 +150,9 @@ module.exports.resolvers = {
         staffsByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.staffsByUser(args)
         },
+        staff: async (_, args, { dataSources }) => {
+            return dataSources.buda.staff(args.staffID)
+        },
         // salaryLog: async (_, args, { dataSources }) => {
         //     return dataSources.salaryLog(args.salaryLogID)
         // },
