@@ -69,6 +69,12 @@ module.exports.resolvers = {
         buyOrdersByStatusAndUser: async (_, args, { dataSources }) => {
             return dataSources.buda.buyOrdersByStatusAndUser(args.status)
         },
+        buyOrderItemsByBuyOrder: async (_, args, { dataSources }) => {
+            return dataSources.buda.buyOrderItemsByBuyOrder(args.buyOrderID)
+        },
+        buyOrderItemsByIngredient: async (_, args, { dataSources }) => {
+            return dataSources.buda.buyOrderItemsByIngredient(args.ingredientID)
+        },
         sellOrdersByUser: async (_, args, { dataSources }) =>{
             return dataSources.buda.sellOrdersByUser(args)
         },
@@ -86,6 +92,12 @@ module.exports.resolvers = {
         },
         sellOrdersByStatusAndUser: async (_, args, { dataSources }) => {
             return dataSources.buda.sellOrdersByStatusAndUser(args.status)
+        },
+        sellOrderItemsBySellOrder: async (_, args, { dataSources }) => {
+            return dataSources.buda.sellOrderItemsBySellOrder(args.sellOrderID)
+        },
+        sellOrderItemsByProduct: async (_, args, { dataSources }) => {
+            return dataSources.buda.sellOrderItemsByProduct(args.productID)
         },
         customersByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.customersByUser(args)
@@ -189,12 +201,6 @@ module.exports.resolvers = {
         warrantyOrdersByProduct: async (_, args, { dataSources }) => {
             return dataSources.buda.warrantyOrdersByProduct(args.productID)
         },
-        buyOrderItemsByBuyOrder: async (_, args, { dataSources }) => {
-            return dataSources.buda.buyOrderItemsByBuyOrder(args.buyOrderID)
-        },
-        buyOrderItemsByIngredient: async (_, args, { dataSources }) => {
-            return dataSources.buda.buyOrderItemsByIngredient(args.ingredientID)
-        },
         user: async (_, args, { dataSources }) => {
             return dataSources.buda.user(args.userID)
         },
@@ -209,12 +215,6 @@ module.exports.resolvers = {
         },
         productContainIngredient: async (_, args, { dataSources }) => {
             return dataSources.buda.productContainIngredient(args.ingredientID)
-        },
-        sellOrderItemsBySellOrder: async (_, args, { dataSources }) => {
-            return dataSources.buda.sellOrderItemsBySellOrder(args.sellOrderID)
-        },
-        sellOrderItemsByProduct: async (_, args, { dataSources }) => {
-            return dataSources.buda.sellOrderItemsByProduct(args.productID)
         },
         productGroupsByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.productGroupsByUser(args)
@@ -338,9 +338,9 @@ module.exports.resolvers = {
         newStaffNote: async (_, args, { dataSources }) => {
             return dataSources.buda.newStaffNote(args.staffNoteInput)
         },
-        newSellOrderItem: async (_, args, { dataSources }) => {
-            return dataSources.buda.newSellOrderItem(args.sellOrderItemInput)
-        },
+        // newSellOrderItem: async (_, args, { dataSources }) => {
+        //     return dataSources.buda.newSellOrderItem(args.sellOrderItemInput)
+        // },
         newProductGroup: async (_, args, { dataSources }) => {
             return dataSources.buda.newProductGroup(args.productGroupInput)
         },
@@ -368,6 +368,9 @@ module.exports.resolvers = {
         deleteSellOrder: async (_, args, { dataSources }) => {
             return dataSources.buda.deleteSellOrder(args.sellOrderID)
         },
+        deleteSellOrderItem: async (_, args, { dataSources }) => {
+            return dataSources.buda.deleteSellOrderItem(args.sellOrderItemID)
+        },
         deletePlan: async (_, args, { dataSources }) => {
             return dataSources.buda.deletePlan(args.planID)
         },
@@ -380,6 +383,9 @@ module.exports.resolvers = {
         deleteBuyOrder: async (_, args, { dataSources }) => {
             return dataSources.buda.deleteBuyOrder(args.buyOrderID)
         },
+        deleteBuyOrderItem: async (_, args, { dataSources }) => {
+            return dataSources.buda.deleteBuyOrderItem(args.buyOrderItemID)
+        },
         deleteStaff: async (_, args, { dataSources }) => {
             return dataSources.buda.deleteStaff(args.staffID)
         },
@@ -389,14 +395,8 @@ module.exports.resolvers = {
         deleteStaffNote: async (_, args, { dataSources }) => {
             return dataSources.buda.deleteStaffNote(args.staffNoteID)
         },
-        deleteBuyOrderItem: async (_, args, { dataSources }) => {
-            return dataSources.buda.deleteBuyOrderItem(args.buyOrderItemID)
-        },
         deleteUser: async (_, args, { dataSources }) => {
             return dataSources.buda.deleteUser(args.userID)
-        },
-        deleteSellOrderItem: async (_, args, { dataSources }) => {
-            return dataSources.buda.deleteSellOrderItem(args.sellOrderItemID)
         },
         deleteProductGroup: async (_, args, { dataSources }) => {
             return dataSources.buda.deleteProductGroup(args.productGroupID)

@@ -74,6 +74,12 @@ class Budabackend extends RESTDataSource {
     async buyOrdersByStatusAndUser(status){
         return this.get(`api/business/buy/new-order/status/${status}`)
     }
+    async buyOrderItemsByBuyOrder(buyOrderID){
+        return this.get(`api/business/buy/item/buy-order/${buyOrderID}`)
+    }
+    async buyOrderItemsByIngredient(ingredientID){
+        return this.get(`api/business/buy/item/ingredient/${ingredientID}`)
+    }
     async sellOrdersByUser() {
         return this.get(`api/business/sell/new-order/all`)
     }
@@ -91,6 +97,12 @@ class Budabackend extends RESTDataSource {
     }
     async sellOrdersByStatusAndUser(status){
         return this.get(`api/business/sell/new-order/all/status/${status}`)
+    }
+    async sellOrderItemsBySellOrder(sellOrderID){
+        return this.get(`api/business/sell/item/sell-order-id/${sellOrderID}`)
+    }
+    async sellOrderItemsByProduct(productID){
+        return this.get(`api/business/sell/item/product/${productID}`)
     }
     async customersByUser(){
         return this.get(`api/customer/crud/all`)
@@ -194,12 +206,6 @@ class Budabackend extends RESTDataSource {
     async warrantyOrdersByCustomer(customerID){
         return this.get(`api/warranty-order/crud/customer/${customerID}/all`)
     }
-    async buyOrderItemsByBuyOrder(buyOrderID){
-        return this.get(`api/buy-order-item/buy-order/${buyOrderID}`)
-    }
-    async buyOrderItemsByIngredient(ingredientID){
-        return this.get(`api/buy-order-item/all/ingredient/${ingredientID}`)
-    }
     async user(userID){
         return this.get(`api/user/id/${userID}`)
     }
@@ -214,12 +220,6 @@ class Budabackend extends RESTDataSource {
     }
     async productContainIngredient(ingredientID){
         return this.get(`api/product-component/contains/ingredient/${ingredientID}`)
-    }
-    async sellOrderItemsBySellOrder(sellOrderID){
-        return this.get(`api/sell-order-item/sell-order-id/${sellOrderID}`)
-    }
-    async sellOrderItemsByProduct(productID){
-        return this.get(`api/sell-order-item/product/${productID}`)
     }
     async productGroupsByUser(){
         return this.get(`api/product-group/all`)
@@ -368,10 +368,10 @@ class Budabackend extends RESTDataSource {
         const purchaseInputJson = JSON.parse(JSON.stringify(purchaseInput))
         return this.post(`api/plan/purchase/new`, purchaseInputJson)
     }
-    async newSellOrderItem(sellOrderItemInput){
-        const sellOrderItemInputJson = JSON.parse(JSON.stringify(sellOrderItemInput))
-        return this.post(`api/sell-order-item/register`, sellOrderItemInputJson)
-    }
+    // async newSellOrderItem(sellOrderItemInput){
+    //     const sellOrderItemInputJson = JSON.parse(JSON.stringify(sellOrderItemInput))
+    //     return this.post(`api/sell-order-item/register`, sellOrderItemInputJson)
+    // }
     async newProductGroup(productGroupInput){
         const productGroupInputJson= JSON.parse(JSON.stringify(productGroupInput))
         return this.post(`api/product-group/new`, productGroupInputJson)
@@ -409,6 +409,9 @@ class Budabackend extends RESTDataSource {
     async deleteSellOrder(sellOrderID){
         return this.delete(`api/business/sell/new-order/${sellOrderID}`)
     }
+    async deleteSellOrderItem(sellOrderItemID){
+        return this.delete(`api/business/sell/item/${sellOrderItemID}`)
+    }
     async deletePlan(planID){
         return this.delete(`api/plan/${planID}`)
     }
@@ -421,6 +424,9 @@ class Budabackend extends RESTDataSource {
     async deleteBuyOrder(buyOrderID){
         return this.delete(`api/business/buy/new-order/${buyOrderID}`)
     }
+    async deleteBuyOrderItem(buyOrderItemID){
+        return this.delete(`api/business/buy/item/${buyOrderItemID}`)
+    }
     async deleteStaff(staffID){
         return this.delete(`api/staff/crud/id/${staffID}`)
     }
@@ -430,14 +436,8 @@ class Budabackend extends RESTDataSource {
     async deleteStaffNote(staffNoteID){
         return this.delete(`api/staff/notification/noteID/${staffNoteID}`)
     }
-    async deleteBuyOrderItem(buyOrderItemID){
-        return this.delete(`api/buy-order-item/${buyOrderItemID}`)
-    }
     async deleteUser(userID){
         return this.delete(`api/user/${userID}`)
-    }
-    async deleteSellOrderItem(sellOrderItemID){
-        return this.delete(`api/sell-order-item/${sellOrderItemID}`)
     }
     async deleteProductGroup(productGroupID){
         return this.delete(`api/product-group/remove/${productGroupID}`)
@@ -498,7 +498,7 @@ class Budabackend extends RESTDataSource {
     }
     async updateSellOrderItem(sellOrderItemID, sellOrderItem){
         const sellOrderItemJson=JSON.parse(JSON.stringify(sellOrderItem))
-        return this.put(`api/sell-order-item/update/${sellOrderItemID}`, sellOrderItemJson)
+        return this.put(`api/business/sell/item/update/${sellOrderItemID}`, sellOrderItemJson)
     }
     async editIngredientQuantity(ingredientID, quantityLog){
         const quantityLogJson = JSON.parse(JSON.stringify(quantityLog))

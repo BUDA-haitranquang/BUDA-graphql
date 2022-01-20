@@ -533,14 +533,17 @@ input Value{
      value: Int
 }
 input newSellOrder{
-     customer: CustomerInput
+     customer:  CustomerInput
      discountID: Int
-     customer_message: String 
+     customerMessage: String 
      address: String 
-     status: Status!
-     productIDList: [Int]
-     numberProductList: [Int]
-     pricePerUnitList: [Float]
+     status: Status
+     sellOrderItemDTOs: [SellOrderItemDTO]
+}
+input SellOrderItemDTO{
+     productID: Int
+     quantity: Int
+     pricePerUnit: Float
 }
 input CustomerInput{
      customerID: Int
@@ -715,12 +718,16 @@ type Query{
     buyOrdersLastXDaysByUser(X: Int): [BuyOrder]
     incompletedBuyOrdersByUser: [BuyOrder]
     buyOrdersByStatusAndUser(status: Status): [BuyOrder]
+    buyOrderItemsByBuyOrder(buyOrderID: Int): [BuyOrderItem]
+    buyOrderItemsByIngredient(ingredientID: Int): [BuyOrderItem]
     sellOrdersByUser: [SellOrder]
     sellOrdersByCustomer(customerID: Int): [SellOrder]
     sellOrder(sellOrderID: Int): SellOrder
     incompletedSellOrdersByUser: [SellOrder]
     sellOrdersXDaysByUser(X: Int): [SellOrder]
     sellOrdersByStatusAndUser(status: Status): [SellOrder]
+    sellOrderItemsBySellOrder(sellOrderID: Int): [SellOrderItem]
+    sellOrderItemsByProduct(productID: Int): [SellOrderItem] 
     customersByUser: [Customer]
     membershipType(membershipTypeID: Int): MembershipType
     membershipTypeByUser: [MembershipType]
@@ -755,8 +762,6 @@ type Query{
     warrantyOrdersByUser: [WarrantyOrder]
     warrantyOrdersByCustomer(customerID: Int): [WarrantyOrder]
     warrantyOrdersByProduct(productID: Int): [WarrantyOrder]
-    buyOrderItemsByBuyOrder(buyOrderID: Int): [BuyOrderItem]
-    buyOrderItemsByIngredient(ingredientID: Int): [BuyOrderItem]
     user(userID: Int): User
     currentUser: User
     userByUUID(UUID: Int): User
@@ -764,8 +769,6 @@ type Query{
     productContainIngredient(ingredientID: Int): [Product] 
     productGroupsByUser: [ProductGroup]
     productsByProductGroup(productGroupID: Int): [Product]
-    sellOrderItemsBySellOrder(sellOrderID: Int): [SellOrderItem]
-    sellOrderItemsByProduct(productID: Int): [SellOrderItem] 
     totalSpendAgeGroupByUser: [AgeGroupStatistics]
     totalSpendAgeGroupThisMonthByUser: [AgeGroupStatistics]
     totalSpendGenderByUser: [GenderStatistics]
@@ -807,7 +810,7 @@ type Mutation{
     newFixedCostBill(fixedCostBillInput: FixedCostBillInput): FixedCostBill
     newSalaryLog(salaryLogInput: SalaryLogInput): SalaryLog
     newStaffNote(staffNoteInput: StaffNoteInput): StaffNote
-    newSellOrderItem(sellOrderItemInput: SellOrderItemInput): SellOrderItem
+#     newSellOrderItem(sellOrderItemInput: SellOrderItemInput): SellOrderItem
     newProductGroup(productGroupInput: ProductGroupInput): ProductGroup
     newWarrantyOrder(warrantyOrderInput: WarrantyOrderInput): WarrantyOrder
     newAccessToken(jwtSimple: JwtSimple): Authenticate
@@ -817,16 +820,16 @@ type Mutation{
     loginGoogle(jwtSimple: JwtSimple): Authenticate
 #     deleteProduct(productID: Int): String
     deleteSellOrder(sellOrderID: Int): String
+    deleteSellOrderItem(sellOrderItemID: Int): String
     deletePlan(planID: Int): String
     deletePicture(pictureID: Int): String
     deleteFixedCost(fixedCostID: Int): String
     deleteBuyOrder(buyOrderID: Int): String
+    deleteBuyOrderItem(buyOrderItemID: Int): String
     deleteStaff(staffID: Int): String
     deleteSalaryLog(salaryLogID: Int): String
     deleteStaffNote(staffNoteID: Int): String
-    deleteBuyOrderItem(buyOrderItemID: Int): String
     deleteUser(userID: Int): String
-    deleteSellOrderItem(sellOrderItemID: Int): String
     deleteProductGroup(productGroupID: Int): String
     updatePicture(picture: PictureInput): Picture
     updateSellOrder(sellOrder: SellOrderInput): SellOrder
