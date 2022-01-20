@@ -422,6 +422,21 @@ module.exports.resolvers = {
         updateUser: async (_, args, { dataSources }) => {
             return dataSources.buda.updateUser(args.user)
         },
+        updateUserPassword: async (_, args, { dataSources }) => {
+            return dataSources.buda.updateUserPassword(args.updateUserPassword)
+        },
+        forgotPassword: async (_, args, { dataSources }) => {
+            return dataSources.buda.forgotPassword(args.email)
+        },
+        updateForgotPassword: async (_, args, { dataSources }) => {
+            return dataSources.buda.forgotPassword(args.token, args.updateUserPassword)
+        },
+        updateUserEmail: async (_, args, { dataSources }) => {
+            return dataSources.buda.updateUserEmail(args.updateUserEmail)
+        },
+        confirmUpdateEmail: async (_, args, { dataSources }) => {
+            return dataSources.buda.confirmUpdateEmail(args.token)
+        },
         editIngredientQuantity: async (_, args, { dataSources }) => {
             return dataSources.buda.editIngredientQuantity(args.ingredientID, args.quantityLog)
         },

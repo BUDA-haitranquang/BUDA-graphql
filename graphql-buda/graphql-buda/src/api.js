@@ -60,37 +60,37 @@ class Budabackend extends RESTDataSource {
         return this.get(`api/product/quantity-log/staff/${staffID}/all`)
     }
     async buyOrdersByUser(){
-        return this.get(`api/buy-order/user/all/`)
+        return this.get(`api/business/buy/new-order/all/`)
     }
     async buyOrdersBySupplier(supplierID) {
-        return this.get(`api/buy-order/supplier/${supplierID}/all`)
+        return this.get(`api/business/buy/new-order/supplier/${supplierID}/all`)
     }
     async buyOrdersLastXDaysByUser(X){
-        return this.get(`api/buy-order/all/last-x-days/${X}`)
+        return this.get(`api/business/buy/new-order/all/last-x-days/${X}`)
     }
     async incompletedBuyOrdersByUser(){
-        return this.get(`api/buy-order/all/incompleted`)
+        return this.get(`api/business/buy/new-order/all/incompleted`)
     }
     async buyOrdersByStatusAndUser(status){
-        return this.get(`api/buy-order/all/status/${status}`)
+        return this.get(`api/business/buy/new-order/status/${status}`)
     }
     async sellOrdersByUser() {
-        return this.get(`api/business/sell/neworder/all`)
+        return this.get(`api/business/sell/new-order/all`)
     }
     async sellOrdersByCustomer(customerID) {
-        return this.get(`api/business/sell/neworder/customer/${customerID}/all`)
+        return this.get(`api/business/sell/new-order/customer/${customerID}/all`)
     }
     async sellOrder(sellOrderID) {
-        return this.get(`api/business/sell/neworder/${sellOrderID}`)
+        return this.get(`api/business/sell/new-order/${sellOrderID}`)
     }
     async incompletedSellOrdersByUser(){
-        return this.get(`api/business/sell/neworder/all/incompleted`)
+        return this.get(`api/business/sell/new-order/all/incompleted`)
     }
     async sellOrdersXDaysByUser(X){
-        return this.get(`api/business/sell/neworder/all/last-x-days/${X}`)
+        return this.get(`api/business/sell/new-order/all/last-x-days/${X}`)
     }
     async sellOrdersByStatusAndUser(status){
-        return this.get(`api/business/sell/neworder/all/status/${status}`)
+        return this.get(`api/business/sell/new-order/all/status/${status}`)
     }
     async customersByUser(){
         return this.get(`api/customer/crud/all`)
@@ -315,11 +315,11 @@ class Budabackend extends RESTDataSource {
     }
     async newBuyOrder(buyOrderInput) {
         const buyOrderInputJson = JSON.parse(JSON.stringify(buyOrderInput))
-        return this.post(`api/buy-order/new`, buyOrderInputJson)
+        return this.post(`api/business/buy/new-order/new`, buyOrderInputJson)
     }
     async newSellOrder(sellOrderInput) {
         const sellOrderInputJson = JSON.parse(JSON.stringify(sellOrderInput))
-        return this.post(`api/business/sell/neworder/new`, sellOrderInputJson)
+        return this.post(`api/business/sell/new-order/new`, sellOrderInputJson)
     }
     async newCustomer(customerInput){
         const customerInputJson = JSON.parse(JSON.stringify(customerInput))
@@ -378,13 +378,13 @@ class Budabackend extends RESTDataSource {
         return this.post(`api/warranty-order/crud/new`, warrantyOrderInputJson)
     }
     async userLogin(email, password) {
-        return this.post('api/user/login', {
+        return this.post(`api/user/login`, {
             email: email,
             password: password,
         })
     }
     async staffLogin(uuid, password) {
-        return this.post('api/staff/login', {
+        return this.post(`api/staff/login`, {
             uuid: uuid,
             password: password,
         })
@@ -394,18 +394,17 @@ class Budabackend extends RESTDataSource {
         return this.post('api/user/refresh-token', jwtSimpleJson)
     }
     async confirmRegister(token) {
-        const tokenJson = JSON.parse(JSON.stringify(token))
-        return this.get('api/user/register/confirm', tokenJson)
+        return this.get(`api/user/register/confirm/?token=${token}`)
     }
     async loginGoogle(jwtSimple){
         const jwtSimpleJson = JSON.parse(JSON.stringify(jwtSimple))
-        return this.post('api/user/login/google', jwtSimpleJson)
+        return this.post(`api/user/login/google`, jwtSimpleJson)
     }
     // async deleteProduct(productID){
     //     return this.delete(`api/product/productID/${productID}`)
     // }
     async deleteSellOrder(sellOrderID){
-        return this.delete(`api/business/sell/neworder/${sellOrderID}`)
+        return this.delete(`api/business/sell/new-order/${sellOrderID}`)
     }
     async deletePlan(planID){
         return this.delete(`api/plan/${planID}`)
@@ -417,7 +416,7 @@ class Budabackend extends RESTDataSource {
         return this.delete(`api/fixed-cost/crud/${fixedCostID}`)
     }
     async deleteBuyOrder(buyOrderID){
-        return this.delete(`api/buy-order/${buyOrderID}`)
+        return this.delete(`api/business/buy/new-order/${buyOrderID}`)
     }
     async deleteStaff(staffID){
         return this.delete(`api/staff/crud/id/${staffID}`)
@@ -446,7 +445,7 @@ class Budabackend extends RESTDataSource {
     }
     async updateSellOrder(sellOrder){
         const sellOrderJson = JSON.parse(JSON.stringify(sellOrder))
-        return this.put(`api/business/sell/neworder/update`, sellOrderJson)   
+        return this.put(`api/business/sell/new-order/update`, sellOrderJson)   
     }
     async updateFixedCost(fixedCost){
         const fixedCostJson = JSON.parse(JSON.stringify(fixedCost))
@@ -474,7 +473,25 @@ class Budabackend extends RESTDataSource {
     }
     async updateUser(user){
         const userJson=JSON.parse(JSON.stringify(user))
-        return this.put(`api/user/update`, userJson)
+        return this.put(`api/user/update-info`, userJson)
+    }
+    async updateUserPassword(updateUserPassword){
+        const updateUserPasswordJson=JSON.parse(JSON.stringify(updateUserPassword))
+        return this.put(`api/user/password/update`, updateUserPasswordJson)
+    }
+    async forgotPassword(email){
+        return this.get(`api/user/password/forgot/?email=${email}`)
+    }
+    async updateForgotPassword(token, updateUserPassword){
+        const updateUserPasswordJson=JSON.parse(JSON.stringify(updateUserPassword))
+        return this.put(`api/user/password/forgot/confirm/?token=${token}`, updateUserPasswordJson)
+    }
+    async updateUserEmail(updateUserEmail){
+        const updateUserEmailJson=JSON.parse(JSON.stringify(updateUserEmail))
+        return this.put(`api/user/update-info/email`, updateUserEmailJson)
+    }
+    async confirmUpdateEmail(token){
+        return this.get(`api/user/update-info/email/confirm/?token=${token}`)
     }
     async updateSellOrderItem(sellOrderItemID, sellOrderItem){
         const sellOrderItemJson=JSON.parse(JSON.stringify(sellOrderItem))

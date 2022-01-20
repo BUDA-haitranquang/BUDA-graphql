@@ -83,18 +83,6 @@ type User{
      pictureID: Int
      purchases: [Purchase] 
 }
-type UserLogin{
-    email: String 
-    password: String 
-}
-input UserRegister{
-    username: String
-    phoneNumber: String
-    password: String
-    email: String
-    firstName: String
-    lastName: String
-}
 type Staff{
     staffID: Int
     name: String 
@@ -332,6 +320,10 @@ type Receipt{
      message: String
      userID: Int
 }
+type UserLogin{
+    email: String 
+    password: String 
+}
 type Role{
      roleID: Int
      name: String
@@ -401,7 +393,22 @@ enum MailTokenType{
     UPDATE_INFO, 
     UPDATE_PASSWORD 
 }
-
+input UserRegister{
+    username: String
+    phoneNumber: String
+    password: String
+    email: String
+    firstName: String
+    lastName: String
+}
+input UpdateUserPassword{
+    currentPassword: String! 
+    newPassword: String!
+    confirmNewPassword: String!
+}
+input UpdateEmail{
+     email: String!
+}
 input ProductInput{
     productID: Int
     name: String!
@@ -441,7 +448,7 @@ input ProductLeftLogInput{
 }
 input IngredientInput{
      ingredientID: Int
-     name: String! 
+     name: String
      description: String 
      amountLeft: Int = 0
      price: Float = 0
@@ -522,13 +529,25 @@ input SellOrderInput{
      status: Status
      sellOrderItems: [SellOrderItemInput]
 }
+input Value{
+     value: Int
+}
+input newSellOrder{
+     customer: CustomerInput
+     discountID: Int
+     customer_message: String 
+     address: String 
+     status: Status!
+     productIDList: [Int]
+     numberProductList: [Int]
+}
 input CustomerInput{
      customerID: Int
      ageGroup: AgeGroup 
      gender: Gender 
      totalSpend: Float = 0
      membershipID: Int
-     name: String!
+     name: String
      address: String 
      phoneNumber: String! 
      userID: Int
@@ -552,11 +571,11 @@ input DiscountInput{
 }
 input SupplierInput{
      supplierID: Int
-     email: String !
+     email: String 
      pictureID: Int
      name: String
      address: String 
-     phoneNumber: String! 
+     phoneNumber: String
      userID: Int
      visible: Boolean
 }
@@ -629,14 +648,10 @@ input StaffNoteInput{
      seen: Boolean
 }
 input WarrantyOrderInput{
-     warrantyOrderID: Int
-     userID: Int
-     product: ProductInput
-     sellOrder: SellOrderInput
-     customer: CustomerInput
-     customerMessage: String 
-     creationTime: String 
-     status: Status 
+    productID: Int!
+    sellOrderID: Int!
+    customerID: Int!
+    customerMessage: String
 }
 input QuantityLogInput{
      amountLeftChange: Int
@@ -775,9 +790,9 @@ type Mutation{
     newProduct(productInput: ProductInput): Product
     newIngredient(ingredientInput: IngredientInput): Ingredient
     newStaff(staffInput: StaffInput): Staff
-    newUser(userRegister: UserRegister): Authenticate
+    newUser(userRegister: UserRegister): String
     newBuyOrder(buyOrderInput: BuyOrderInput): BuyOrder
-    newSellOrder(sellOrderInput: SellOrderInput): SellOrder
+    newSellOrder(sellOrderInput: newSellOrder): SellOrder
     newCustomer(customerInput: CustomerInput): Customer
     newMembershipType(membershipTypeInput: MembershipTypeInput): MembershipType
     newDiscount(discountInput: DiscountInput): Discount
@@ -794,7 +809,7 @@ type Mutation{
     newProductGroup(productGroupInput: ProductGroupInput): ProductGroup
     newWarrantyOrder(warrantyOrderInput: WarrantyOrderInput): WarrantyOrder
     newAccessToken(jwtSimple: JwtSimple): Authenticate
-    confirmRegister(token: String): Authenticate
+    confirmRegister(token: String): User
     userLogin(email: String!, password: String!): Authenticate
     staffLogin(account: String!, password: String!): Authenticate
     loginGoogle(jwtSimple: JwtSimple): Authenticate
@@ -824,6 +839,11 @@ type Mutation{
     updateProduct(productID: Int, product: ProductInput): Product
     updateCustomer(customer: CustomerInput): Customer
     updateUser(user: UserInput): User
+    updateUserPassword(updateUserPassword: UpdateUserPassword): String
+    forgotPassword(email: String): String
+    updateForgotPassword(token: String, updateUserPassword:UpdateUserPassword): String
+    updateUserEmail(updateUserEmail: UpdateEmail): String
+    confirmUpdateEmail(token: String): User
     updateSellOrderItem(sellOrderItemID: Int, sellOrderItem: SellOrderItemInput): SellOrderItem
     hideProduct(productID: Int): Product
     hideIngredient(ingredientID: Int): Ingredient 
