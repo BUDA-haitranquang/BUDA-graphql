@@ -540,6 +540,7 @@ input newSellOrder{
      status: Status!
      productIDList: [Int]
      numberProductList: [Int]
+     pricePerUnitList: [Float]
 }
 input CustomerInput{
      customerID: Int
