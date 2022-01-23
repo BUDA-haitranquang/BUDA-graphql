@@ -9,16 +9,16 @@ class Budabackend extends RESTDataSource {
         //this.baseURL = 'http://localhost:8080/'
     }
     async ingredient(ingredientID) {
-        return this.get(`api/ingredient/crud/ingredientID/${ingredientID}`)
+        return this.get(`api/ingredient/view/ingredientID/${ingredientID}`)
     }
     async ingredientsByUser(){
-        return this.get(`api/ingredient/crud/all`)
+        return this.get(`api/ingredient/view/all`)
     }
     async hiddenIngredients(){
-        return this.get(`api/ingredient/crud/hidden/all`)
+        return this.get(`api/ingredient/view/hidden/all`)
     }
     async alertIngredients(){
-        return this.get(`api/ingredient/crud/alert`)
+        return this.get(`api/ingredient/view/alert`)
     }
     async ingredientLeftLog(ingredientLeftLogID){
         return this.get(`api/ingredient/quantity-log/${ingredientLeftLogID}`)
@@ -33,19 +33,19 @@ class Budabackend extends RESTDataSource {
         return this.get(`api/ingredient/quantity-log/staff/${staffID}/all`)
     }
     async product(productID) {
-        return this.get(`api/product/crud/productID/${productID}`)
+        return this.get(`api/product/view/productID/${productID}`)
     }
     async productsByUser() {
-        return this.get(`api/product/crud/all`)
+        return this.get(`api/product/view/all`)
     }
     async productsByGroup(productGroupID) {
-        return this.get(`api/product/crud/group/${productGroupID}/all`)
+        return this.get(`api/product/view/group/${productGroupID}/all`)
     }
     async hiddenProducts(){
-        return this.get(`api/product/crud/hidden/all`)
+        return this.get(`api/product/view/hidden/all`)
     }
     async alertProducts(){
-        return this.get(`api/product/crud/alert`)
+        return this.get(`api/product/view/alert`)
     }
     async productLeftLog(productLeftLogID){
         return this.get(`api/product/quantity-log/id/${productLeftLogID}`)
@@ -228,19 +228,31 @@ class Budabackend extends RESTDataSource {
         return this.get(`api/product-group/${productGroupID}/products`)
     }
     async totalSpendAgeGroupByUser(){
-        return this.get(`api/statistics/age-group/total`)
+        return this.get(`api/statistics/customer/age-group/total`)
     }
     async totalSpendAgeGroupThisMonthByUser(){
-        return this.get(`api/statistics/age-group/this-month`)
+        return this.get(`api/statistics/customer/age-group/this-month`)
     }
     async totalSpendGenderByUser(){
-        return this.get(`api/statistics/gender/total`)
+        return this.get(`api/statistics/customer/gender/total`)
     }
     async totalSpendGenderThisMonthByUser(){
-        return this.get(`api/statistics/gender/this-month`)
+        return this.get(`api/statistics/customer/gender/this-month`)
     }
     async totalRevenueProductByUser(){
-        return this.get(`api/statistics/product/all`)
+        return this.get(`api/statistics/product/overall`)
+    }
+    async totalRevenueByDiscount(discountID){
+        return this.get(`api/statistics/discount/total-revenue/id/${discountID}`)
+    }
+    async receiptRevenueWeekly(){
+        return this.get(`api/statistics/revenue/receipt/weekly`)
+    }
+    async receiptRevenueMonthly(){
+        return this.get(`api/statistics/revenue/receipt/monthly`)
+    }
+    async receiptRevenueThisMonth(){
+        return this.get(`api/statistics/revenue/receipt/this-month`)
     }
     async revenueMonthly(){
         return this.get(`api/statistics/revenue/sell-order/monthly`)
@@ -287,6 +299,15 @@ class Budabackend extends RESTDataSource {
     async buyOrderExpenseThisMonth(){
         return this.get(`api/statistics/expense/buy-order/this-month`)
     }
+    async paySlipExpenseWeekly(){
+        return this.get(`api/statistics/expense/pay-slip/weekly`)
+    }
+    async paySlipExpenseMonthly(){
+        return this.get(`api/statistics/expense/pay-slip/monthly`)
+    }
+    async paySlipExpenseThisMonth(){
+        return this.get(`api/statistics/expense/pay-slip/this-month`)
+    }
     async cleanCache() {
         try {
             await this.httpCache.keyValueCache.wrapped.client.flushdb()
@@ -298,11 +319,11 @@ class Budabackend extends RESTDataSource {
     }
     async newProduct(productInput) {
         const productInputJson = JSON.parse(JSON.stringify(productInput))
-        return this.post(`api/product/crud/new`, productInputJson)
+        return this.post(`api/product/create`, productInputJson)
     }
     async newIngredient(ingredientInput) {
         const ingredientInputJson = JSON.parse(JSON.stringify(ingredientInput))
-        return this.post(`api/ingredient/crud/new`, ingredientInputJson)
+        return this.post(`api/ingredient/create`, ingredientInputJson)
     }
     async newStaff(staffInput){
         const staffInputJson = JSON.parse(JSON.stringify(staffInput))
@@ -368,10 +389,6 @@ class Budabackend extends RESTDataSource {
         const purchaseInputJson = JSON.parse(JSON.stringify(purchaseInput))
         return this.post(`api/plan/purchase/new`, purchaseInputJson)
     }
-    // async newSellOrderItem(sellOrderItemInput){
-    //     const sellOrderItemInputJson = JSON.parse(JSON.stringify(sellOrderItemInput))
-    //     return this.post(`api/sell-order-item/register`, sellOrderItemInputJson)
-    // }
     async newProductGroup(productGroupInput){
         const productGroupInputJson= JSON.parse(JSON.stringify(productGroupInput))
         return this.post(`api/product-group/new`, productGroupInputJson)
@@ -403,9 +420,9 @@ class Budabackend extends RESTDataSource {
         const jwtSimpleJson = JSON.parse(JSON.stringify(jwtSimple))
         return this.post(`api/user/login/google`, jwtSimpleJson)
     }
-    // async deleteProduct(productID){
-    //     return this.delete(`api/product/productID/${productID}`)
-    // }
+    async deleteProduct(productID){
+        return this.delete(`api/product/delete/productID/${productID}`)
+    }
     async deleteSellOrder(sellOrderID){
         return this.delete(`api/business/sell/new-order/${sellOrderID}`)
     }
@@ -441,6 +458,9 @@ class Budabackend extends RESTDataSource {
     }
     async deleteProductGroup(productGroupID){
         return this.delete(`api/product-group/remove/${productGroupID}`)
+    }
+    async deleteIngredient(ingredientID){
+        return this.delete(`api/ingredient/delete/ingredientID/${ingredientID}`)
     }
     async updatePicture(picture){
         const pictureJson = JSON.parse(JSON.stringify(picture))
@@ -502,25 +522,25 @@ class Budabackend extends RESTDataSource {
     }
     async editIngredientQuantity(ingredientID, quantityLog){
         const quantityLogJson = JSON.parse(JSON.stringify(quantityLog))
-        return this.put(`api/ingredient/crud/edit/quantity/${ingredientID}`, quantityLogJson)
+        return this.put(`api/ingredient/update/quantity/${ingredientID}`, quantityLogJson)
     }
     async editIngredient(ingredientID, ingredient){
         const ingredientJson = JSON.parse(JSON.stringify(ingredient))
-        return this.put(`api/ingredient/crud/edit/${ingredientID}`, ingredientJson)
+        return this.put(`api/ingredient/update/${ingredientID}`, ingredientJson)
     }
     async editProductQuantity(productID, quantityLog){
         const quantityLogJson = JSON.parse(JSON.stringify(quantityLog))
-        return this.put(`api/product/crud/edit/quantity/${productID}`, quantityLogJson)
+        return this.put(`api/product/update/quantity/${productID}`, quantityLogJson)
     }
     async editProduct(productID, product){
         const productJson = JSON.parse(JSON.stringify(product))
-        return this.put(`api/product/crud/edit/${productID}`, productJson)
+        return this.put(`api/product/update/${productID}`, productJson)
     }
     async hideIngredient(ingredientID){
-        return this.get(`api/ingredient/crud/hide/${ingredientID}`)
+        return this.get(`api/ingredient/view/hide/${ingredientID}`)
     }
     async hideProduct(productID) {
-        return this.get(`api/product/crud/hide/${productID}`)
+        return this.get(`api/product/view/hide/${productID}`)
     }
     async hideCustomer(customerID) {
         return this.get(`api/customer/crud/hide/${customerID}`)

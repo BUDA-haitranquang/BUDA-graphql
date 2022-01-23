@@ -774,6 +774,10 @@ type Query{
     totalSpendGenderByUser: [GenderStatistics]
     totalSpendGenderThisMonthByUser: [GenderStatistics]
     totalRevenueProductByUser: [ProductStatistics]
+    totalRevenueByDiscount(discountID: Int): Float
+    receiptRevenueWeekly: [RevenueByTimeStatistics]
+    receiptRevenueMonthly: [RevenueByTimeStatistics]
+    receiptRevenueThisMonth: [RevenueByTimeStatistics]
     revenueWeekly: [RevenueByTimeStatistics]
     revenueMonthly: [RevenueByTimeStatistics]
     revenueWeekdays: [RevenueByTimeStatistics]
@@ -789,6 +793,9 @@ type Query{
     buyOrderExpenseWeekly: [ExpenseByTimeStatistics]
     buyOrderExpenseMonthly: [ExpenseByTimeStatistics]
     buyOrderExpenseThisMonth: [ExpenseByTimeStatistics]
+    paySlipExpenseMonthly: [ExpenseByTimeStatistics]
+    paySlipExpenseWeekly: [ExpenseByTimeStatistics]
+    paySlipExpenseThisMonth: [ExpenseByTimeStatistics]
 }
 
 type Mutation{
@@ -810,7 +817,6 @@ type Mutation{
     newFixedCostBill(fixedCostBillInput: FixedCostBillInput): FixedCostBill
     newSalaryLog(salaryLogInput: SalaryLogInput): SalaryLog
     newStaffNote(staffNoteInput: StaffNoteInput): StaffNote
-#     newSellOrderItem(sellOrderItemInput: SellOrderItemInput): SellOrderItem
     newProductGroup(productGroupInput: ProductGroupInput): ProductGroup
     newWarrantyOrder(warrantyOrderInput: WarrantyOrderInput): WarrantyOrder
     newAccessToken(jwtSimple: JwtSimple): Authenticate
@@ -818,7 +824,7 @@ type Mutation{
     userLogin(email: String!, password: String!): Authenticate
     staffLogin(account: String!, password: String!): Authenticate
     loginGoogle(jwtSimple: JwtSimple): Authenticate
-#     deleteProduct(productID: Int): String
+    deleteProduct(productID: Int): String
     deleteSellOrder(sellOrderID: Int): String
     deleteSellOrderItem(sellOrderItemID: Int): String
     deletePlan(planID: Int): String
@@ -831,6 +837,7 @@ type Mutation{
     deleteStaffNote(staffNoteID: Int): String
     deleteUser(userID: Int): String
     deleteProductGroup(productGroupID: Int): String
+    deleteIngredient(ingredientID: Int): String
     updatePicture(picture: PictureInput): Picture
     updateSellOrder(sellOrder: SellOrderInput): SellOrder
     updateFixedCost(fixedCost: FixedCostInput): FixedCost
