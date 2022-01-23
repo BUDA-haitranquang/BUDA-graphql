@@ -867,5 +867,7 @@ type Mutation{
     removeIngredientFromProduct(productID: Int, ingredientID: Int): String
     addProductToProductGroup(productGroupID: Int, productID: Int): ProductGroup
     removeProductFromProductGroup(productGroupID: Int, productID: Int): String
+    delayFixedCostBill(fixedCostBillID: Int): FixedCostBill
+    payFixedCostBill(fixedCostBillID: Int): FixedCostBill
 }
 `;

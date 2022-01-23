@@ -120,10 +120,10 @@ class Budabackend extends RESTDataSource {
         return this.get(`api/discount/discountID/${discountID}`)
     }
     async supplier(supplierID){
-        return this.get(`api/supplier/crud/${supplierID}`)
+        return this.get(`api/supplier/view/${supplierID}`)
     }
     async suppliersByUser(){
-        return this.get(`api/supplier/crud/all`)
+        return this.get(`api/supplier/view/all`)
     }
     async plans(){
         return this.get(`api/plan/view/all`)
@@ -355,7 +355,7 @@ class Budabackend extends RESTDataSource {
     }
     async newSupplier(supplierInput){
         const supplierInputJson = JSON.parse(JSON.stringify(supplierInput))
-        return this.post(`api/supplier/crud/new`, supplierInputJson)
+        return this.post(`api/supplier/create`, supplierInputJson)
     }
     async newPlan(planInput){
         const planInputJson = JSON.parse(JSON.stringify(planInput))
@@ -488,11 +488,11 @@ class Budabackend extends RESTDataSource {
     }
     async updateCustomer(customer){
         const customerJson=JSON.parse(JSON.stringify(customer))
-        return this.put(`api/customer/crud/update`, customerJson)
+        return this.put(`api/customer/update`, customerJson)
     }
     async updateSupplier(supplier){
         const supplierJson=JSON.parse(JSON.stringify(supplier))
-        return this.put(`api/supplier/crud/update`, supplierJson)
+        return this.put(`api/supplier/update`, supplierJson)
     }
     async updateUser(user){
         const userJson=JSON.parse(JSON.stringify(user))
@@ -565,6 +565,12 @@ class Budabackend extends RESTDataSource {
     }
     async removeProductFromProductGroup(productGroupID, productID){
         return this.post(`api/product-group/${productGroupID}/remove/${productID}`)
+    }
+    async delayFixedCostBill(fixedCostBillID){
+        return this.put(`api/cost/fixed-cost/bill/delay/id/${fixedCostBillID}`)
+    }
+    async payFixedCostBill(fixedCostBillID){
+        return this.put(`api/cost/fixed-cost/bill/pay/id/${fixedCostBillID}`)
     }
 }
 module.exports = Budabackend

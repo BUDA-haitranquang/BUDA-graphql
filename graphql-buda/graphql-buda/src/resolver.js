@@ -508,6 +508,12 @@ module.exports.resolvers = {
         },
         removeProductFromProductGroup: async (_, args, { dataSources }) => {
             return dataSources.buda.removeProductFromProductGroup(args.productGroupID, args.productID)
+        },
+        delayFixedCostBill: async (_, args, { dataSources }) => {
+            return dataSources.buda.delayFixedCostBill(args.fixedCostBillID)
+        },
+        payFixedCostBill: async (_, args, { dataSources }) => {
+            return dataSources.buda.payFixedCostBill(args.fixedCostBillID)
         }
         // cleanCache: async (_, __, { dataSources }) => {
         //     return dataSources.buda.cleanCache()
