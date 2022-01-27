@@ -3,6 +3,7 @@ module.exports.typeDefs = gql`
 
 type Product{
     productID: Int
+    productSKU: String
     name: String
     description: String
     userID: Int
@@ -40,6 +41,7 @@ type ProductLeftLog{
 }
 type Ingredient{
      ingredientID: Int
+     ingredientSKU: String
      name: String 
      description: String 
      amountLeft: Int
@@ -393,25 +395,24 @@ enum MailTokenType{
     UPDATE_INFO, 
     UPDATE_PASSWORD 
 }
-input UserRegister{
-    username: String
-    phoneNumber: String
-    password: String
-    email: String
-    firstName: String
-    lastName: String
-}
-input UpdateUserPassword{
-    currentPassword: String! 
-    newPassword: String!
-    confirmNewPassword: String!
-}
-input UpdateEmail{
-     email: String!
-}
 input ProductInput{
     productID: Int
-    name: String!
+    name: String
+    description: String
+    userID: Int
+    visible: Boolean
+    pictureID: Int
+    sellingPrice: Float 
+    alertAmount: Int 
+    amountLeft: Int 
+    costPerUnit: Float 
+    groupID: Int
+    sellOrderItems: [SellOrderItemInput] 
+    productLeftLogs: [ProductLeftLogInput]
+}
+input UpdateProduct{
+    productID: Int
+    name: String
     description: String
     userID: Int
     visible: Boolean
@@ -424,19 +425,6 @@ input ProductInput{
     sellOrderItems: [SellOrderItemInput] 
     productLeftLogs: [ProductLeftLogInput]
 }
-input SellOrderItemInput{
-     sellOrderItemID: Int
-     sellOrder: SellOrderInput
-     product: ProductInput
-     quantity: Int
-     pricePerUnit: Float
-     userID: Int
-     creationTime: String
-     gender: Gender 
-     ageGroup: AgeGroup 
-     actualTotalSale: Float
-     costPerUnit: Float
-}
 input ProductLeftLogInput{
      productLeftLogID: Int
      product: ProductInput 
@@ -446,7 +434,30 @@ input ProductLeftLogInput{
      message: String 
      userID: Int
 }
-input IngredientInput{
+input ProductGroupInput{
+     productGroupID: Int
+     name: String
+     userID: Int
+     products: [ProductInput]
+}
+input AddProductComponentDTO{
+    productID: Int!
+    ingredientID: Int!
+    requiredQuantity: Int!
+}
+input RemoveProductComponentDTO{
+    productID: Int!
+    ingredientID: Int!
+}
+input AddProductToGroupDTO{
+     productID: Int!
+     productGroupID: Int!
+}
+input RemoveProductFromGroupDTO{
+     productID: Int!
+     productGroupID: Int!
+}
+input NewIngredient{
      ingredientID: Int
      name: String
      description: String 
@@ -458,6 +469,31 @@ input IngredientInput{
      alertAmountLeft: Int = 0
      buyOrderItems: [BuyOrderItemInput]
 }
+input UpdateIngredient{
+     ingredientID: Int
+     name: String
+     description: String 
+     amountLeft: Int 
+     price: Float 
+     visible: Boolean 
+     userID: Int
+     pictureID: Int
+     alertAmountLeft: Int 
+     buyOrderItems: [BuyOrderItemInput]
+}
+input QuantityLogInput{
+     amountLeftChange: Int!
+     message: String
+}
+input BuyOrderInput {
+     buyOrderID: Int
+     supplier: SupplierInput
+     creationTime: String
+     status: Status!
+     totalCost: Float = 0
+     userID: Int
+     buyOrderItems: [BuyOrderItemInput]
+}
 input BuyOrderItemInput{
      buyOrderItemID: Int
      buyOrder: BuyOrderInput 
@@ -467,6 +503,16 @@ input BuyOrderItemInput{
      creationTime: String
      userID: Int
      supplierID: Int!
+}
+input PlanInput{
+    planID: Int
+    purchases: [PurchaseInput]
+    name: String 
+    price: Float = 0
+    duration: Int = 0
+    pictureID: Int
+    description: String
+    planType: PlanType
 }
 input PurchaseInput{
      purchaseID: Int
@@ -491,27 +537,28 @@ input UserInput{
      pictureID: Int 
      purchases: [PurchaseInput] 
 }
-input StaffInput{
-    staffID: Int
-    name: String !
-    phoneNumber: String 
-    password: String !
-    address: String 
-    userID: Int  
-    staffPosition: StaffPosition
-    staffUUID: String
-    salary: Float = 0
-    account: String
-    email: String
+input UserRegister{
+    username: String!
+    phoneNumber: String!
+    password: String!
+    email: String!
+    firstName: String!
+    lastName: String!
 }
-input BuyOrderInput {
-     buyOrderID: Int
-     supplier: SupplierInput
-     creationTime: String
-     status: Status!
-     totalCost: Float = 0
-     userID: Int
-     buyOrderItems: [BuyOrderItemInput]
+input UpdateUserPassword{
+    currentPassword: String! 
+    newPassword: String!
+    confirmNewPassword: String!
+}
+input UpdateEmail{
+     email: String!
+}
+type Authenticate {
+     accessToken: String!
+     refreshToken: String!
+}
+input JwtSimple{
+     token: String
 }
 input SellOrderInput{
      sellOrderID: Int
@@ -520,30 +567,46 @@ input SellOrderInput{
      creationTime: String
      ageGroup: AgeGroup
      gender: Gender
-     actualDiscountCash: Float = 0
-     actualDiscountPercentage: Float = 0
-     realCost: Float = 0
-     finalCost: Float = 0
+     actualDiscountCash: Float 
+     actualDiscountPercentage: Float 
+     realCost: Float 
+     finalCost: Float 
      userID: Int
      customerMessage: String
      status: Status
      sellOrderItems: [SellOrderItemInput]
 }
-input Value{
-     value: Int
-}
-input newSellOrder{
+input NewSellOrder{
      customer:  CustomerInput
      discountID: Int
      customerMessage: String 
      address: String 
-     status: Status
-     sellOrderItemDTOs: [SellOrderItemDTO]
+     status: Status!
+     sellOrderItemDTOs: [SellOrderItemDTO]!
 }
 input SellOrderItemDTO{
      productID: Int
      quantity: Int
      pricePerUnit: Float
+}
+input SellOrderItemInput{
+     sellOrderItemID: Int
+     sellOrder: SellOrderInput
+     product: ProductInput
+     quantity: Int
+     pricePerUnit: Float
+     userID: Int
+     creationTime: String
+     gender: Gender 
+     ageGroup: AgeGroup 
+     actualTotalSale: Float
+     costPerUnit: Float
+}
+input WarrantyOrderInput{
+    productID: Int!
+    sellOrderID: Int!
+    customerID: Int!
+    customerMessage: String
 }
 input CustomerInput{
      customerID: Int
@@ -557,6 +620,14 @@ input CustomerInput{
      userID: Int
      visible: Boolean
      sellOrders: [SellOrderInput]
+}
+input MembershipTypeInput{
+     membershipTypeID: Int
+     membershipName: String 
+     description: String 
+     userID: Int
+     discount: DiscountInput
+     minimumSpend: Float = 0
 }
 input DiscountInput{
      discountID: Int
@@ -582,24 +653,6 @@ input SupplierInput{
      phoneNumber: String
      userID: Int
      visible: Boolean
-}
-input MembershipTypeInput{
-     membershipTypeID: Int
-     membershipName: String 
-     description: String 
-     userID: Int
-     discount: DiscountInput
-     minimumSpend: Float = 0
-}
-input PlanInput{
-    planID: Int
-    purchases: [PurchaseInput]
-    name: String 
-    price: Float = 0
-    duration: Int = 0
-    pictureID: Int
-    description: String
-    planType: PlanType
 }
 input PictureInput{
     pictureID: Int
@@ -636,6 +689,30 @@ input OtherCostInput{
      status: Status! 
      visible: Boolean
 }
+input NewStaff{
+    staffID: Int
+    name: String 
+    phoneNumber: String 
+    password: String !
+    address: String 
+    userID: Int  
+    staffPosition: StaffPosition
+    staffUUID: String
+    salary: Float = 0
+    account: String
+    email: String !
+}
+input UpdateStaff{
+    name: String 
+    phoneNumber: String 
+    address: String 
+    userID: Int  
+    staffPosition: StaffPosition
+    staffUUID: String
+    salary: Float = 0
+    account: String
+    email: String
+}
 input SalaryLogInput{
      salaryLogID: Int
      staffID: Int
@@ -650,50 +727,6 @@ input StaffNoteInput{
      noteDate: String
      message: String 
      seen: Boolean
-}
-input WarrantyOrderInput{
-    productID: Int!
-    sellOrderID: Int!
-    customerID: Int!
-    customerMessage: String
-}
-input QuantityLogInput{
-     amountLeftChange: Int
-     message: String
-}
-input ProductGroupInput{
-     productGroupID: Int
-     name: String
-     userID: Int
-     products: [ProductInput]
-}
-input ProductComponentInput{
-     productComponentID: Int
-     ingredient: IngredientInput 
-     product: ProductInput
-     requiredQuantity: Int
-     userID: Int
-     totalCost: Float
-}
-input IngredientLeftLogInput{
-     ingredientLeftLogID: Int
-     ingredient: IngredientInput
-     amountLeftChange: Int
-     creationTime: String
-     staffID: Int
-     message: String
-     userID: Int
-}
-input RoleInput{
-     roleID: Int
-     name: String
-}
-type Authenticate {
-  accessToken: String!
-  refreshToken: String!
-}
-input JwtSimple{
-     token: String
 }
 type Query{
     ingredient(ingredientID:Int): Ingredient
@@ -713,6 +746,8 @@ type Query{
     productsByGroup(productGroupID: Int): [Product] 
     hiddenProducts: [Product]
     alertProducts: [Product]
+    productComboByUser: [ProductCombo]
+    productComboIncludeProduct(productID: Int): [ProductCombo]
     buyOrdersByUser: [BuyOrder]
     buyOrdersBySupplier(supplierID: Int): [BuyOrder]
     buyOrdersLastXDaysByUser(X: Int): [BuyOrder]
@@ -728,6 +763,9 @@ type Query{
     sellOrdersByStatusAndUser(status: Status): [SellOrder]
     sellOrderItemsBySellOrder(sellOrderID: Int): [SellOrderItem]
     sellOrderItemsByProduct(productID: Int): [SellOrderItem] 
+    warrantyOrdersByUser: [WarrantyOrder]
+    warrantyOrdersByCustomer(customerID: Int): [WarrantyOrder]
+    warrantyOrdersByProduct(productID: Int): [WarrantyOrder]
     customersByUser: [Customer]
     membershipType(membershipTypeID: Int): MembershipType
     membershipTypeByUser: [MembershipType]
@@ -759,9 +797,6 @@ type Query{
     staffNote(staffNoteID: Int): StaffNote  
     notiByUser: [Notification]
     pendingNotiByUser: [Notification]
-    warrantyOrdersByUser: [WarrantyOrder]
-    warrantyOrdersByCustomer(customerID: Int): [WarrantyOrder]
-    warrantyOrdersByProduct(productID: Int): [WarrantyOrder]
     user(userID: Int): User
     currentUser: User
     userByUUID(UUID: Int): User
@@ -799,74 +834,78 @@ type Query{
 }
 
 type Mutation{
-    newProduct(productInput: ProductInput): Product
-    newIngredient(ingredientInput: IngredientInput): Ingredient
-    newStaff(staffInput: StaffInput): Staff
-    newUser(userRegister: UserRegister): String
-    newBuyOrder(buyOrderInput: BuyOrderInput): BuyOrder
-    newSellOrder(sellOrderInput: newSellOrder): SellOrder
-    newCustomer(customerInput: CustomerInput): Customer
-    newMembershipType(membershipTypeInput: MembershipTypeInput): MembershipType
-    newDiscount(discountInput: DiscountInput): Discount
-    newSupplier(supplierInput: SupplierInput): Supplier
-    newPlan(planInput: PlanInput): Plan
-    newPurchase(purchaseInput: PurchaseInput): Purchase
-    newPicture(pictureInput: PictureInput): Picture
-    newFixedCost(fixedCostInput: FixedCostInput): FixedCost
-    newOtherCost(otherCostInput: OtherCostInput): OtherCost
-    newFixedCostBill(fixedCostBillInput: FixedCostBillInput): FixedCostBill
-    newSalaryLog(salaryLogInput: SalaryLogInput): SalaryLog
-    newStaffNote(staffNoteInput: StaffNoteInput): StaffNote
-    newProductGroup(productGroupInput: ProductGroupInput): ProductGroup
-    newWarrantyOrder(warrantyOrderInput: WarrantyOrderInput): WarrantyOrder
-    newAccessToken(jwtSimple: JwtSimple): Authenticate
-    confirmRegister(token: String): User
-    userLogin(email: String!, password: String!): Authenticate
-    staffLogin(account: String!, password: String!): Authenticate
-    loginGoogle(jwtSimple: JwtSimple): Authenticate
+    newProduct(productInput: NewProduct): Product
+    hideProduct(productID: Int): Product
     deleteProduct(productID: Int): String
-    deleteSellOrder(sellOrderID: Int): String
-    deleteSellOrderItem(sellOrderItemID: Int): String
-    deletePlan(planID: Int): String
-    deletePicture(pictureID: Int): String
-    deleteFixedCost(fixedCostID: Int): String
-    deleteBuyOrder(buyOrderID: Int): String
-    deleteBuyOrderItem(buyOrderItemID: Int): String
-    deleteStaff(staffID: Int): String
-    deleteSalaryLog(salaryLogID: Int): String
-    deleteStaffNote(staffNoteID: Int): String
-    deleteUser(userID: Int): String
-    deleteProductGroup(productGroupID: Int): String
-    deleteIngredient(ingredientID: Int): String
-    updatePicture(picture: PictureInput): Picture
-    updateSellOrder(sellOrder: SellOrderInput): SellOrder
-    updateFixedCost(fixedCost: FixedCostInput): FixedCost
-    updateSupplier(supplier: SupplierInput): Supplier
-    editIngredientQuantity(ingredientID: Int, quantityLog: QuantityLogInput): Ingredient
-    editIngredient(ingredientID: Int, ingredient: IngredientInput): Ingredient
     editProductQuantity(productID: Int, quantityLog: QuantityLogInput): Product
-    editProduct(productID: Int, product: ProductInput): Product
-    updateStaff(staffID: Int, staff: StaffInput): Staff
+    editProduct(productID: Int, product: UpdateProduct): Product
+    newProductGroup(productGroupInput: ProductGroupInput): ProductGroup
+    deleteProductGroup(productGroupID: Int): String
+    addProductToGroup(addProductToGroup: AddProductToGroupDTO): ProductGroup
+    removeProductFromGroup(removeProductFromGroup: RemoveProductFromGroupDTO): String
+    newProductComponent(newProductComponent: AddProductComponent): ProductComponent
+    deleteProductComponent(deleteProductComponent: removeProductComponent): String
+    removeIngredientFromProduct(productID: Int, ingredientID: Int): String
+    newIngredient(ingredientInput: NewIngredient): Ingredient
+    hideIngredient(ingredientID: Int): Ingredient 
+    deleteIngredient(ingredientID: Int): String
+    editIngredientQuantity(ingredientID: Int, quantityLog: QuantityLogInput): Ingredient
+    editIngredient(ingredientID: Int, ingredient: UpdateIngredient): Ingredient
+    newStaff(staffInput: newStaff): Staff
+    staffLogin(account: String!, password: String!): Authenticate
+    updateStaff(staffID: Int, staff: UpdateStaff): Staff
+    deleteStaff(staffID: Int): String
+    newSalaryLog(salaryLogInput: SalaryLogInput): SalaryLog
+    deleteSalaryLog(salaryLogID: Int): String
+    newStaffNote(staffNoteInput: StaffNoteInput): StaffNote
     updateStaffNote(staffNoteID: Int, staffNote: StaffNoteInput): StaffNote
-    updateProduct(productID: Int, product: ProductInput): Product
-    updateCustomer(customer: CustomerInput): Customer
+    deleteStaffNote(staffNoteID: Int): String
+    newUser(userRegister: UserRegister): String
+    confirmRegister(token: String): User
+    deleteUser(userID: Int): String
+    userLogin(email: String!, password: String!): Authenticate
+    loginGoogle(jwtSimple: JwtSimple): Authenticate
+    newAccessToken(jwtSimple: JwtSimple): Authenticate
     updateUser(user: UserInput): User
     updateUserPassword(updateUserPassword: UpdateUserPassword): String
     forgotPassword(email: String): String
     updateForgotPassword(token: String, updateUserPassword:UpdateUserPassword): String
     updateUserEmail(updateUserEmail: UpdateEmail): String
     confirmUpdateEmail(token: String): User
+    newBuyOrder(buyOrderInput: BuyOrderInput): BuyOrder
+    deleteBuyOrder(buyOrderID: Int): String
+    deleteBuyOrderItem(buyOrderItemID: Int): String
+    newSellOrder(sellOrderInput: NewSellOrder): SellOrder
+    newPosSellOrder(sellOrderInput: NewSellOrder): SellOrder
+    updateSellOrder(sellOrder: SellOrderInput): SellOrder
+    deleteSellOrder(sellOrderID: Int): String
     updateSellOrderItem(sellOrderItemID: Int, sellOrderItem: SellOrderItemInput): SellOrderItem
-    hideProduct(productID: Int): Product
-    hideIngredient(ingredientID: Int): Ingredient 
+    deleteSellOrderItem(sellOrderItemID: Int): String
+    newWarrantyOrder(warrantyOrderInput: WarrantyOrderInput): WarrantyOrder
+    cancelSellOrder(sellOrderID: Int): SellOrder
+    returnSellOrder(sellOrderID: Int): SellOrder
+    newCustomer(customerInput: CustomerInput): Customer
+    updateCustomer(customer: CustomerInput): Customer
     hideCustomer(customerID: Int): Customer
-    hideFixedCost(fixedCostID: Int): FixedCost
+    newMembershipType(membershipTypeInput: MembershipTypeInput): MembershipType
+    newDiscount(discountInput: DiscountInput): Discount
+    deleteDiscount(discountID: Int): String
+    newSupplier(supplierInput: SupplierInput): Supplier
+    updateSupplier(supplier: SupplierInput): Supplier
     hideSupplier(supplierID: Int): Supplier
+    newPlan(planInput: PlanInput): Plan
+    deletePlan(planID: Int): String
+    newPurchase(purchaseInput: PurchaseInput): Purchase
+    newPicture(pictureInput: PictureInput): Picture
+    deletePicture(pictureID: Int): String
+    newFixedCost(fixedCostInput: FixedCostInput): FixedCost
+    updateFixedCost(fixedCost: FixedCostInput): FixedCost
+    hideFixedCost(fixedCostID: Int): FixedCost
+    deleteFixedCost(fixedCostID: Int): String
+    newOtherCost(otherCostInput: OtherCostInput): OtherCost
     hideOtherCost(otherCostID: Int): OtherCost
-    addIngredientToProduct(productID: Int, ingredientID: Int): ProductComponent
-    removeIngredientFromProduct(productID: Int, ingredientID: Int): String
-    addProductToProductGroup(productGroupID: Int, productID: Int): ProductGroup
-    removeProductFromProductGroup(productGroupID: Int, productID: Int): String
+    newFixedCostBill(fixedCostBillInput: FixedCostBillInput): FixedCostBill
+#     addIngredientToProduct(productID: Int, ingredientID: Int): ProductComponent
     delayFixedCostBill(fixedCostBillID: Int): FixedCostBill
     payFixedCostBill(fixedCostBillID: Int): FixedCostBill
 }

@@ -59,6 +59,24 @@ class Budabackend extends RESTDataSource {
     async productLeftLogsByStaff(staffID){
         return this.get(`api/product/quantity-log/staff/${staffID}/all`)
     }
+    async productGroupsByUser(){
+        return this.get(`api/product/group/view/all`)
+    }
+    async productsByProductGroupID(productGroupID){
+        return this.get(`api/product/group/view/${productGroupID}/products`)
+    }
+    async productComboByUser(){
+        return this.get(`api/product/packaging/combo/all`)
+    }
+    async productComboIncludeProduct(productID){
+        return this.get(`api/product/packaging/combo/include/product/${productID}`)
+    }
+    async componentsByProduct(productID){
+        return this.get(`api/product/packaging/component/view/productID/${productID}`)
+    }
+    async productContainIngredient(ingredientID){
+        return this.get(`api/product/packaging/component/contains/ingredient/${ingredientID}`)
+    }
     async buyOrdersByUser(){
         return this.get(`api/business/buy/new-order/all/`)
     }
@@ -104,8 +122,17 @@ class Budabackend extends RESTDataSource {
     async sellOrderItemsByProduct(productID){
         return this.get(`api/business/sell/item/product/${productID}`)
     }
+    async warrantyOrdersByUser(){
+        return this.get(`api/business/sell/warranty/view/all`)
+    }
+    async warrantyOrdersByProduct(productID){
+        return this.get(`api/business/sell/warranty/view/${productID}/all`)
+    }
+    async warrantyOrdersByCustomer(customerID){
+        return this.get(`api/business/sell/warranty/view/${customerID}/all`)
+    }
     async customersByUser(){
-        return this.get(`api/customer/crud/all`)
+        return this.get(`api/customer/view/all`)
     }
     async membershipType(membershipTypeID) {
         return this.get(`api/customer/membership/membershipTypeID/${membershipTypeID}`)
@@ -114,10 +141,10 @@ class Budabackend extends RESTDataSource {
         return this.get(`api/customer/membership/all`)
     }
     async discountsByUser(){
-        return this.get(`api/discount/all`)
+        return this.get(`api/discount/view/all`)
     }
     async discount(discountID){
-        return this.get(`api/discount/discountID/${discountID}`)
+        return this.get(`api/discount/view/id/${discountID}`)
     }
     async supplier(supplierID){
         return this.get(`api/supplier/view/${supplierID}`)
@@ -132,7 +159,7 @@ class Budabackend extends RESTDataSource {
         return this.get(`api/plan/purchase/all`)
     }
     async picture(pictureID){
-        return this.get(`api/picture/${pictureID}`)
+        return this.get(`api/picture/view/${pictureID}`)
     }
     async fixedCostsByUser(){
         return this.get(`api/fixed-cost/crud/all`)
@@ -197,15 +224,6 @@ class Budabackend extends RESTDataSource {
     async pendingNotiByUser(){
         return this.get(`api/notification/all/new`)
     }
-    async warrantyOrdersByUser(){
-        return this.get(`api/warranty-order/crud/all`)
-    }
-    async warrantyOrdersByProduct(productID){
-        return this.get(`api/warranty-order/crud/product/${productID}/all`)
-    }
-    async warrantyOrdersByCustomer(customerID){
-        return this.get(`api/warranty-order/crud/customer/${customerID}/all`)
-    }
     async user(userID){
         return this.get(`api/user/id/${userID}`)
     }
@@ -214,18 +232,6 @@ class Budabackend extends RESTDataSource {
     }
     async userByUUID(UUID) {
         return this.get(`api/user/uuid/${UUID}`)
-    }
-    async componentsByProduct(productID){
-        return this.get(`api/product-component/product/${productID}`)
-    }
-    async productContainIngredient(ingredientID){
-        return this.get(`api/product-component/contains/ingredient/${ingredientID}`)
-    }
-    async productGroupsByUser(){
-        return this.get(`api/product-group/all`)
-    }
-    async productsByProductGroupID(productGroupID){
-        return this.get(`api/product-group/${productGroupID}/products`)
     }
     async totalSpendAgeGroupByUser(){
         return this.get(`api/statistics/customer/age-group/total`)
@@ -240,7 +246,7 @@ class Budabackend extends RESTDataSource {
         return this.get(`api/statistics/customer/gender/this-month`)
     }
     async totalRevenueProductByUser(){
-        return this.get(`api/statistics/product/overall`)
+        return this.get(`api/statistics/product/overall/all`)
     }
     async totalRevenueByDiscount(discountID){
         return this.get(`api/statistics/discount/total-revenue/id/${discountID}`)
@@ -321,87 +327,70 @@ class Budabackend extends RESTDataSource {
         const productInputJson = JSON.parse(JSON.stringify(productInput))
         return this.post(`api/product/create`, productInputJson)
     }
+    async hideProduct(productID) {
+        return this.get(`api/product/view/hide/${productID}`)
+    }
+    async deleteProduct(productID){
+        return this.delete(`api/product/delete/productID/${productID}`)
+    }
+    async editProductQuantity(productID, quantityLog){
+        const quantityLogJson = JSON.parse(JSON.stringify(quantityLog))
+        return this.put(`api/product/update/quantity/${productID}`, quantityLogJson)
+    }
+    async editProduct(productID, product){
+        const productJson = JSON.parse(JSON.stringify(product))
+        return this.put(`api/product/update/${productID}`, productJson)
+    }
+    async newProductGroup(productGroupInput){
+        const productGroupInputJson= JSON.parse(JSON.stringify(productGroupInput))
+        return this.post(`api/product/group/create`, productGroupInputJson)
+    }
+    async deleteProductGroup(productGroupID){
+        return this.delete(`api/product/group/delete/id/${productGroupID}`)
+    }
+    async addProductToGroup(addProductToGroup){
+        const addProductToGroupJson=JSON.parse(JSON.stringify(addProductToGroup))
+        return this.post(`api/product/group/add-product`, addProductToGroupJson)
+    }
+    async removeProductFromGroup(removeProductFromGroup){
+        const removeProductFromGroupJson=JSON.parse(JSON.stringify(removeProductFromGroup))
+        return this.post(`api/product/group/remove-product`, removeProductFromGroupJson)
+    }
+    async newProductComponent(newProductComponent){
+        const newProductComponentJson = JSON.parse(JSON.stringify(newProductComponent))
+        return this.post(`api/product/packaging/component/add`, newProductComponentJson)
+    }
+    async deleteProductComponent(deleteProductComponent){
+        const deleteProductComponentJson = JSON.parse(JSON.stringify(deleteProductComponent))
+        return this.delete(`api/product/packaging/component/remove`,deleteProductComponentJson)
+    }
+    // async addIngredientToProduct(productID, ingredientID){
+    //     return this.post(`api/product/packaging/component/${productID}/add/${ingredientID}`)
+    // }
+    async removeIngredientFromProduct(productID, ingredientID){
+        return this.post(`api/product-component/${productID}/remove/${ingredientID}`)
+    }
     async newIngredient(ingredientInput) {
         const ingredientInputJson = JSON.parse(JSON.stringify(ingredientInput))
         return this.post(`api/ingredient/create`, ingredientInputJson)
     }
+    async hideIngredient(ingredientID){
+        return this.get(`api/ingredient/view/hide/${ingredientID}`)
+    }
+    async deleteIngredient(ingredientID){
+        return this.delete(`api/ingredient/delete/ingredientID/${ingredientID}`)
+    }
+    async editIngredientQuantity(ingredientID, quantityLog){
+        const quantityLogJson = JSON.parse(JSON.stringify(quantityLog))
+        return this.put(`api/ingredient/update/quantity/${ingredientID}`, quantityLogJson)
+    }
+    async editIngredient(ingredientID, ingredient){
+        const ingredientJson = JSON.parse(JSON.stringify(ingredient))
+        return this.put(`api/ingredient/update/${ingredientID}`, ingredientJson)
+    }
     async newStaff(staffInput){
         const staffInputJson = JSON.parse(JSON.stringify(staffInput))
         return this.post(`api/staff/crud/new`, staffInputJson)
-    }
-    async newUser(userRegister){
-        const userRegisterJson = JSON.parse(JSON.stringify(userRegister))
-        return this.post(`api/user/register`, userRegisterJson)
-    }
-    async newSalaryLog(salaryLogInput){
-        const salaryLogInputJson = JSON.parse(JSON.stringify(salaryLogInput))
-        return this.post(`api/staff/salary/new`, salaryLogInputJson)
-    }
-    async newBuyOrder(buyOrderInput) {
-        const buyOrderInputJson = JSON.parse(JSON.stringify(buyOrderInput))
-        return this.post(`api/business/buy/new-order/new`, buyOrderInputJson)
-    }
-    async newSellOrder(sellOrderInput) {
-        const sellOrderInputJson = JSON.parse(JSON.stringify(sellOrderInput))
-        return this.post(`api/business/sell/new-order/new`, sellOrderInputJson)
-    }
-    async newCustomer(customerInput){
-        const customerInputJson = JSON.parse(JSON.stringify(customerInput))
-        return this.post(`api/customer/crud/new`, customerInputJson)
-    }
-    async newDiscount(discountInput){
-        const discountInputJson = JSON.parse(JSON.stringify(discountInput))
-        return this.post(`api/discount/new`, discountInputJson)
-    }
-    async newSupplier(supplierInput){
-        const supplierInputJson = JSON.parse(JSON.stringify(supplierInput))
-        return this.post(`api/supplier/create`, supplierInputJson)
-    }
-    async newPlan(planInput){
-        const planInputJson = JSON.parse(JSON.stringify(planInput))
-        return this.post(`api/plan`, planInputJson)
-    }
-    async newPicture(pictureInput){
-        const pictureInputJson = JSON.parse(JSON.stringify(pictureInput))
-        return this.post(`api/picture`, pictureInputJson)
-    }
-    async newFixedCost(fixedCostInput){
-        const fixedCostInputJson = JSON.parse(JSON.stringify(fixedCostInput))
-        return this.post(`api/fixed-cost/crud/new`, fixedCostInputJson)
-    }
-    async newOtherCost(otherCostInput){
-        const otherCostInputJson = JSON.parse(JSON.stringify(otherCostInput))
-        return this.post(`api/other-cost/crud/new`, otherCostInputJson)
-    }
-    async newFixedCostBill(fixedCostBillInput){
-        const fixedCostBillInputJson = JSON.parse(JSON.stringify(fixedCostBillInput))
-        return this.post(`api/cost/fixed-cost/bill/new`, fixedCostBillInputJson)
-    }
-    async newStaffNote(staffNoteInput){
-        const staffNoteJson = JSON.parse(JSON.stringify(staffNoteInput))
-        return this.post(`api/staff/notification/new`, staffNoteJson)
-    }
-    async newMembershipType(membershipTypeInput){
-        const membershipTypeInputJson = JSON.parse(JSON.stringify(membershipTypeInput))
-        return this.post(`api/customer/membership/new`, membershipTypeInputJson)
-    }
-    async newPurchase(purchaseInput){
-        const purchaseInputJson = JSON.parse(JSON.stringify(purchaseInput))
-        return this.post(`api/plan/purchase/new`, purchaseInputJson)
-    }
-    async newProductGroup(productGroupInput){
-        const productGroupInputJson= JSON.parse(JSON.stringify(productGroupInput))
-        return this.post(`api/product-group/new`, productGroupInputJson)
-    }
-    async newWarrantyOrder(warrantyOrderInput){
-        const warrantyOrderInputJson = JSON.parse(JSON.stringify(warrantyOrderInput))
-        return this.post(`api/warranty-order/crud/new`, warrantyOrderInputJson)
-    }
-    async userLogin(email, password) {
-        return this.post(`api/user/login`, {
-            email: email,
-            password: password,
-        })
     }
     async staffLogin(uuid, password) {
         return this.post(`api/staff/login`, {
@@ -409,94 +398,54 @@ class Budabackend extends RESTDataSource {
             password: password,
         })
     }
-    async newAccessToken(jwtSimple) {
-        const jwtSimpleJson = JSON.parse(JSON.stringify(jwtSimple))
-        return this.post('api/user/refresh-token', jwtSimpleJson)
-    }
-    async confirmRegister(token) {
-        return this.get(`api/user/register/confirm/?token=${token}`)
-    }
-    async loginGoogle(jwtSimple){
-        const jwtSimpleJson = JSON.parse(JSON.stringify(jwtSimple))
-        return this.post(`api/user/login/google`, jwtSimpleJson)
-    }
-    async deleteProduct(productID){
-        return this.delete(`api/product/delete/productID/${productID}`)
-    }
-    async deleteSellOrder(sellOrderID){
-        return this.delete(`api/business/sell/new-order/${sellOrderID}`)
-    }
-    async deleteSellOrderItem(sellOrderItemID){
-        return this.delete(`api/business/sell/item/${sellOrderItemID}`)
-    }
-    async deletePlan(planID){
-        return this.delete(`api/plan/${planID}`)
-    }
-    async deletePicture(pictureID){
-        return this.delete(`api/picture/${pictureID}`)
-    }
-    async deleteFixedCost(fixedCostID){
-        return this.delete(`api/fixed-cost/crud/${fixedCostID}`)
-    }
-    async deleteBuyOrder(buyOrderID){
-        return this.delete(`api/business/buy/new-order/${buyOrderID}`)
-    }
-    async deleteBuyOrderItem(buyOrderItemID){
-        return this.delete(`api/business/buy/item/${buyOrderItemID}`)
+    async updateStaff(staffID, staff) {
+        const staffJson = JSON.parse(JSON.stringify(staff))
+        return this.put(`api/staff/crud/update/${staffID}`, staffJson)
     }
     async deleteStaff(staffID){
         return this.delete(`api/staff/crud/id/${staffID}`)
     }
+    async newSalaryLog(salaryLogInput){
+        const salaryLogInputJson = JSON.parse(JSON.stringify(salaryLogInput))
+        return this.post(`api/staff/salary/new`, salaryLogInputJson)
+    }
     async deleteSalaryLog(salaryLogID){
         return this.delete(`api/staff/salary/salary-logID/${salaryLogID}`)
     }
-    async deleteStaffNote(staffNoteID){
-        return this.delete(`api/staff/notification/noteID/${staffNoteID}`)
-    }
-    async deleteUser(userID){
-        return this.delete(`api/user/${userID}`)
-    }
-    async deleteProductGroup(productGroupID){
-        return this.delete(`api/product-group/remove/${productGroupID}`)
-    }
-    async deleteIngredient(ingredientID){
-        return this.delete(`api/ingredient/delete/ingredientID/${ingredientID}`)
-    }
-    async updatePicture(picture){
-        const pictureJson = JSON.parse(JSON.stringify(picture))
-        return this.put(`api/picture`,pictureJson)
-    }
-    async updateSellOrder(sellOrder){
-        const sellOrderJson = JSON.parse(JSON.stringify(sellOrder))
-        return this.put(`api/business/sell/new-order/update`, sellOrderJson)   
-    }
-    async updateFixedCost(fixedCost){
-        const fixedCostJson = JSON.parse(JSON.stringify(fixedCost))
-        return this.put(`api/fixed-cost/crud/update`, fixedCostJson)
-    }
-    async updateStaff(staffID, staff) {
-        const staffJson = JSON.parse(JSON.stringify(staff))
-        return this.put(`api/staff/crud/update/${staffID}`, staffJson)
+    async newStaffNote(staffNoteInput){
+        const staffNoteJson = JSON.parse(JSON.stringify(staffNoteInput))
+        return this.post(`api/staff/notification/new`, staffNoteJson)
     }
     async updateStaffNote(staffNoteID, staffNote){
         const staffNoteJson = JSON.parse(JSON.stringify(staffNote))
         return this.put(`api/staff/notification/noteID/${staffNoteID}`, staffNoteJson)
     }
-    async updateProduct(productID, product){
-        const productJson=JSON.parse(JSON.stringify(product))
-        return this.put(`api/product/crud/edit/${productID}`, productJson)
+    async deleteStaffNote(staffNoteID){
+        return this.delete(`api/staff/notification/noteID/${staffNoteID}`)
     }
-    async updateCustomer(customer){
-        const customerJson=JSON.parse(JSON.stringify(customer))
-        return this.put(`api/customer/update`, customerJson)
+    async newUser(userRegister){
+        const userRegisterJson = JSON.parse(JSON.stringify(userRegister))
+        return this.post(`api/user/register`, userRegisterJson)
     }
-    async updateSupplier(supplier){
-        const supplierJson=JSON.parse(JSON.stringify(supplier))
-        return this.put(`api/supplier/update`, supplierJson)
+    async confirmRegister(token) {
+        return this.get(`api/user/register/confirm/?token=${token}`)
     }
-    async updateUser(user){
-        const userJson=JSON.parse(JSON.stringify(user))
-        return this.put(`api/user/update-info`, userJson)
+    async deleteUser(userID){
+        return this.delete(`api/user/${userID}`)
+    }
+    async userLogin(email, password) {
+        return this.post(`api/user/login`, {
+            email: email,
+            password: password,
+        })
+    }
+    async loginGoogle(jwtSimple){
+        const jwtSimpleJson = JSON.parse(JSON.stringify(jwtSimple))
+        return this.post(`api/user/login/google`, jwtSimpleJson)
+    }
+    async newAccessToken(jwtSimple) {
+        const jwtSimpleJson = JSON.parse(JSON.stringify(jwtSimple))
+        return this.post('api/user/refresh-token', jwtSimpleJson)
     }
     async updateUserPassword(updateUserPassword){
         const updateUserPasswordJson=JSON.parse(JSON.stringify(updateUserPassword))
@@ -509,6 +458,10 @@ class Budabackend extends RESTDataSource {
         const updateUserPasswordJson=JSON.parse(JSON.stringify(updateUserPassword))
         return this.put(`api/user/password/forgot/confirm/?token=${token}`, updateUserPasswordJson)
     }
+    async updateUser(user){
+        const userJson=JSON.parse(JSON.stringify(user))
+        return this.put(`api/user/update-info`, userJson)
+    }
     async updateUserEmail(updateUserEmail){
         const updateUserEmailJson=JSON.parse(JSON.stringify(updateUserEmail))
         return this.put(`api/user/update-info/email`, updateUserEmailJson)
@@ -516,55 +469,123 @@ class Budabackend extends RESTDataSource {
     async confirmUpdateEmail(token){
         return this.get(`api/user/update-info/email/confirm/?token=${token}`)
     }
+    async newBuyOrder(buyOrderInput) {
+        const buyOrderInputJson = JSON.parse(JSON.stringify(buyOrderInput))
+        return this.post(`api/business/buy/new-order/new`, buyOrderInputJson)
+    }
+    async deleteBuyOrder(buyOrderID){
+        return this.delete(`api/business/buy/new-order/${buyOrderID}`)
+    }
+    async deleteBuyOrderItem(buyOrderItemID){
+        return this.delete(`api/business/buy/item/${buyOrderItemID}`)
+    }
+    async newSellOrder(sellOrderInput) {
+        const sellOrderInputJson = JSON.parse(JSON.stringify(sellOrderInput))
+        return this.post(`api/business/sell/new-order/new`, sellOrderInputJson)
+    }
+    async newPosSellOrder(sellOrderInput){
+        const sellOrderInputJson = JSON.parse(JSON.stringify(sellOrderInput))
+        return this.post(`api/business/sell/new-order/pos`, sellOrderInputJson) 
+    }
+    async updateSellOrder(sellOrder){
+        const sellOrderJson = JSON.parse(JSON.stringify(sellOrder))
+        return this.put(`api/business/sell/new-order/update`, sellOrderJson)   
+    }
+    async deleteSellOrder(sellOrderID){
+        return this.delete(`api/business/sell/new-order/${sellOrderID}`)
+    }
     async updateSellOrderItem(sellOrderItemID, sellOrderItem){
         const sellOrderItemJson=JSON.parse(JSON.stringify(sellOrderItem))
         return this.put(`api/business/sell/item/update/${sellOrderItemID}`, sellOrderItemJson)
     }
-    async editIngredientQuantity(ingredientID, quantityLog){
-        const quantityLogJson = JSON.parse(JSON.stringify(quantityLog))
-        return this.put(`api/ingredient/update/quantity/${ingredientID}`, quantityLogJson)
+    async deleteSellOrderItem(sellOrderItemID){
+        return this.delete(`api/business/sell/item/${sellOrderItemID}`)
     }
-    async editIngredient(ingredientID, ingredient){
-        const ingredientJson = JSON.parse(JSON.stringify(ingredient))
-        return this.put(`api/ingredient/update/${ingredientID}`, ingredientJson)
+    async newWarrantyOrder(warrantyOrderInput){
+        const warrantyOrderInputJson = JSON.parse(JSON.stringify(warrantyOrderInput))
+        return this.post(`api/business/sell/warranty/create`, warrantyOrderInputJson)
     }
-    async editProductQuantity(productID, quantityLog){
-        const quantityLogJson = JSON.parse(JSON.stringify(quantityLog))
-        return this.put(`api/product/update/quantity/${productID}`, quantityLogJson)
+    async cancelSellOrder(sellOrderID){
+        return this.put(`api/business/sell/cancel-order/id/${sellOrderID}`)
     }
-    async editProduct(productID, product){
-        const productJson = JSON.parse(JSON.stringify(product))
-        return this.put(`api/product/update/${productID}`, productJson)
+    async returnSellOrder(sellOrderID){
+        return this.put(`api/business/sell/return-order/id/${sellOrderID}`)
     }
-    async hideIngredient(ingredientID){
-        return this.get(`api/ingredient/view/hide/${ingredientID}`)
+    async newCustomer(customerInput){
+        const customerInputJson = JSON.parse(JSON.stringify(customerInput))
+        return this.post(`api/customer/create`, customerInputJson)
     }
-    async hideProduct(productID) {
-        return this.get(`api/product/view/hide/${productID}`)
+    async updateCustomer(customer){
+        const customerJson=JSON.parse(JSON.stringify(customer))
+        return this.put(`api/customer/update`, customerJson)
     }
     async hideCustomer(customerID) {
         return this.get(`api/customer/crud/hide/${customerID}`)
     }
-    async hideFixedCost(fixedCostID){
-        return this.get(`api/fixed-cost/crud/hide/${fixedCostID}`)
+    async newMembershipType(membershipTypeInput){
+        const membershipTypeInputJson = JSON.parse(JSON.stringify(membershipTypeInput))
+        return this.post(`api/customer/membership/new`, membershipTypeInputJson)
+    }
+    async newDiscount(discountInput){
+        const discountInputJson = JSON.parse(JSON.stringify(discountInput))
+        return this.post(`api/discount/create`, discountInputJson)
+    }
+    async deleteDiscount(discountID){
+        return this.delete(`api/discount/delete/id/${discountID}`)
+    }
+    async newSupplier(supplierInput){
+        const supplierInputJson = JSON.parse(JSON.stringify(supplierInput))
+        return this.post(`api/supplier/create`, supplierInputJson)
+    }
+    async updateSupplier(supplier){
+        const supplierJson=JSON.parse(JSON.stringify(supplier))
+        return this.put(`api/supplier/update`, supplierJson)
     }
     async hideSupplier(supplierID){
         return this.get(`api/supplier/crud/hide/${supplierID}`)
     }
+    async newPlan(planInput){
+        const planInputJson = JSON.parse(JSON.stringify(planInput))
+        return this.post(`api/plan`, planInputJson)
+    }
+    async deletePlan(planID){
+        return this.delete(`api/plan/${planID}`)
+    }
+    async newPurchase(purchaseInput){
+        const purchaseInputJson = JSON.parse(JSON.stringify(purchaseInput))
+        return this.post(`api/plan/purchase/new`, purchaseInputJson)
+    }
+    async newPicture(pictureInput){
+        const pictureInputJson = JSON.parse(JSON.stringify(pictureInput))
+        return this.post(`api/picture/upload`, pictureInputJson)
+    }
+    async deletePicture(pictureID){
+        return this.delete(`api/picture/delete/${pictureID}`)
+    }
+    async newFixedCost(fixedCostInput){
+        const fixedCostInputJson = JSON.parse(JSON.stringify(fixedCostInput))
+        return this.post(`api/fixed-cost/crud/new`, fixedCostInputJson)
+    }
+    async deleteFixedCost(fixedCostID){
+        return this.delete(`api/fixed-cost/crud/${fixedCostID}`)
+    }
+    async updateFixedCost(fixedCost){
+        const fixedCostJson = JSON.parse(JSON.stringify(fixedCost))
+        return this.put(`api/fixed-cost/crud/update`, fixedCostJson)
+    }
+    async hideFixedCost(fixedCostID){
+        return this.get(`api/fixed-cost/crud/hide/${fixedCostID}`)
+    }
+    async newOtherCost(otherCostInput){
+        const otherCostInputJson = JSON.parse(JSON.stringify(otherCostInput))
+        return this.post(`api/other-cost/crud/new`, otherCostInputJson)
+    }
     async hideOtherCost(otherCostID){
         return this.get(`api/other-cost/crud/hide/${otherCostID}`)
     }
-    async addIngredientToProduct(productID, ingredientID){
-        return this.post(`api/product-component/${productID}/add/${ingredientID}`)
-    }
-    async removeIngredientFromProduct(productID, ingredientID){
-        return this.post(`api/product-component/${productID}/remove/${ingredientID}`)
-    }
-    async addProductToProductGroup(productGroupID, productID){
-        return this.post(`api/product-group/${productGroupID}/add/${productID}`)
-    }
-    async removeProductFromProductGroup(productGroupID, productID){
-        return this.post(`api/product-group/${productGroupID}/remove/${productID}`)
+    async newFixedCostBill(fixedCostBillInput){
+        const fixedCostBillInputJson = JSON.parse(JSON.stringify(fixedCostBillInput))
+        return this.post(`api/cost/fixed-cost/bill/new`, fixedCostBillInputJson)
     }
     async delayFixedCostBill(fixedCostBillID){
         return this.put(`api/cost/fixed-cost/bill/delay/id/${fixedCostBillID}`)

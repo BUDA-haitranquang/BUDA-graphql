@@ -54,6 +54,12 @@ module.exports.resolvers = {
         productLeftLogsByStaff: async (_, args, { dataSources }) => {
             return dataSources.buda.productLeftLogsByStaff(args.staffID)
         },
+        productComboByUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.productComboByUser(args)
+        },
+        productComboIncludeProduct: async (_, args, { dataSources }) => {
+            return dataSources.buda.productComboIncludeProduct(args.productID)
+        },
         buyOrdersByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.buyOrdersByUser(args)
         },
@@ -98,6 +104,15 @@ module.exports.resolvers = {
         },
         sellOrderItemsByProduct: async (_, args, { dataSources }) => {
             return dataSources.buda.sellOrderItemsByProduct(args.productID)
+        },
+        warrantyOrdersByUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.warrantyOrdersByUser(args)
+        },
+        warrantyOrdersByCustomer: async (_, args, { dataSources }) => {
+            return dataSources.buda.warrantyOrdersByCustomer(args.customerID)
+        },
+        warrantyOrdersByProduct: async (_, args, { dataSources }) => {
+            return dataSources.buda.warrantyOrdersByProduct(args.productID)
         },
         customersByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.customersByUser(args)
@@ -191,15 +206,6 @@ module.exports.resolvers = {
         },
         pendingNotiByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.pendingNotiByUser(args)
-        },
-        warrantyOrdersByUser: async (_, args, { dataSources }) => {
-            return dataSources.buda.warrantyOrdersByUser(args)
-        },
-        warrantyOrdersByCustomer: async (_, args, { dataSources }) => {
-            return dataSources.buda.warrantyOrdersByCustomer(args.customerID)
-        },
-        warrantyOrdersByProduct: async (_, args, { dataSources }) => {
-            return dataSources.buda.warrantyOrdersByProduct(args.productID)
         },
         user: async (_, args, { dataSources }) => {
             return dataSources.buda.user(args.userID)
@@ -308,65 +314,86 @@ module.exports.resolvers = {
         newProduct: async (_, args, { dataSources }) => {
             return dataSources.buda.newProduct(args.productInput)
         },
-        newIngredient: async (_, args, { dataSources }) => {
-            return dataSources.buda.newIngredient(args.ingredientInput)
+        hideProduct: async (_, args, { dataSources }) => {
+            return dataSources.buda.hideProduct(args.productID)
         },
-        newStaff: async (_, args, { dataSources }) => {
-            return dataSources.buda.newStaff(args.staffInput)
+        deleteProduct: async (_, args, { dataSources }) => {
+            return dataSources.buda.deleteProduct(args.productID)
         },
-        newUser: async (_, args, { dataSources }) => {
-            return dataSources.buda.newUser(args.userRegister) 
+        editProductQuantity: async (_, args, { dataSources }) => {
+            return dataSources.buda.editProductQuantity(args.productID, args.quantityLog)
         },
-        newBuyOrder: async (_, args, { dataSources }) => {
-            return dataSources.buda.newBuyOrder(args.buyOrderInput)
-        },
-        newSellOrder: async (_, args, { dataSources }) => {
-            return dataSources.buda.newSellOrder(args.sellOrderInput)
-        },
-        newCustomer: async (_, args, { dataSources }) => {
-            return dataSources.buda.newCustomer(args.customerInput)
-        },
-        newMembershipType: async (_, args, { dataSources }) => {
-            return dataSources.buda.newMembershipType(args.membershipTypeInput)
-        },
-        newDiscount: async (_, args, { dataSources }) => {
-            return dataSources.buda.newDiscount(args.discountInput)
-        },
-        newSupplier: async (_, args, { dataSources }) => {
-            return dataSources.buda.newSupplier(args.supplierInput)
-        },
-        newPlan: async (_, args, { dataSources }) => {
-            return dataSources.buda.newPlan(args.planInput)
-        },
-        newPurchase: async (_, args, { dataSources }) => {
-            return dataSources.buda.newPurchase(args.purchaseInput)
-        },
-        newPicture: async (_, args, { dataSources }) => {
-            return dataSources.buda.newPicture(args.pictureInput)
-        },
-        newFixedCost: async (_, args, { dataSources }) => {
-            return dataSources.buda.newFixedCost(args.fixedCostInput)
-        },
-        newOtherCost: async (_, args, { dataSources }) => {
-            return dataSources.buda.newOtherCost(args.otherCostInput)
-        },
-        newFixedCostBill: async (_, args, { dataSources }) => {
-            return dataSources.buda.newFixedCostBill(args.fixedCostBillInput)
-        },
-        newSalaryLog: async (_, args, { dataSources }) => {
-            return dataSources.buda.newSalaryLog(args.salaryLogInput)
-        },
-        newStaffNote: async (_, args, { dataSources }) => {
-            return dataSources.buda.newStaffNote(args.staffNoteInput)
+        editProduct: async (_, args, { dataSources }) => {
+            return dataSources.buda.editProduct(args.productID, args.product)
         },
         newProductGroup: async (_, args, { dataSources }) => {
             return dataSources.buda.newProductGroup(args.productGroupInput)
         },
-        newWarrantyOrder: async (_, args, { dataSources }) => {
-            return dataSources.buda.newWarrantyOrder(args.warrantyOrderInput)
+        deleteProductGroup: async (_, args, { dataSources }) => {
+            return dataSources.buda.deleteProductGroup(args.productGroupID)
         },
-        newAccessToken: async (_, args, { dataSources }) => {
-            return dataSources.buda.newAccessToken(args.jwtSimple)
+        addProductToGroup: async (_, args, { dataSources }) => {
+            return dataSources.buda.addProductToGroup(args.addProductToGroup)
+        },
+        removeProductFromGroup: async (_, args, { dataSources }) => {
+            return dataSources.buda.removeProductFromGroup(args.removeProductFromGroup)
+        },
+        newProductComponent: async (_, args, { dataSources }) => {
+            return dataSources.buda.newProductComponent(args.newProductComponent)
+        },
+        deleteProductComponent: async (_, args, { dataSources }) => {
+            return dataSources.buda.deleteProductComponent(args.deleteProductComponent)
+        },
+        // addIngredientToProduct: async (_, args, { dataSources }) => {
+        //     return dataSources.buda.addIngredientToProduct(args.productID, args.ingredientID)
+        // },
+        removeIngredientFromProduct: async (_, args, { dataSources }) => {
+            return dataSources.buda.removeIngredientFromProduct(args.productID, args.ingredientID)
+        },
+        newIngredient: async (_, args, { dataSources }) => {
+            return dataSources.buda.newIngredient(args.ingredientInput)
+        },
+        hideIngredient: async (_, args, { dataSources }) => {
+            return dataSources.buda.hideIngredient(args.ingredientID)
+        },
+        deleteIngredient: async (_, args, { dataSources }) => {
+            return dataSources.buda.deleteIngredient(args.ingredientID)
+        },
+        editIngredientQuantity: async (_, args, { dataSources }) => {
+            return dataSources.buda.editIngredientQuantity(args.ingredientID, args.quantityLog)
+        },
+        editIngredient: async (_, args, { dataSources }) => {
+            return dataSources.buda.editIngredient(args.ingredientID, args.ingredient)
+        },
+        newStaff: async (_, args, { dataSources }) => {
+            return dataSources.buda.newStaff(args.staffInput)
+        },
+        staffLogin: async (_, args, { dataSources }) => {
+            return dataSources.buda.staffLogin(args.uuid, args.password)
+        },
+        updateStaff: async (_, args, { dataSources }) => {
+            return dataSources.buda.updateStaff(args.staffID, args.staff)
+        },
+        deleteStaff: async (_, args, { dataSources }) => {
+            return dataSources.buda.deleteStaff(args.staffID)
+        },
+        newSalaryLog: async (_, args, { dataSources }) => {
+            return dataSources.buda.newSalaryLog(args.salaryLogInput)
+        },
+        deleteSalaryLog: async (_, args, { dataSources }) => {
+            return dataSources.buda.deleteSalaryLog(args.salaryLogID)
+        },
+        newStaffNote: async (_, args, { dataSources }) => {
+            return dataSources.buda.newStaffNote(args.staffNoteInput)
+        },
+        updateStaffNote: async (_, args, { dataSources }) => {
+            return dataSources.buda.updateStaffNote(args.staffNoteID, args.staffNote)
+        },
+        deleteStaffNote: async (_, args, { dataSources }) => {
+            return dataSources.buda.deleteStaffNote(args.staffNoteID)
+        },
+        newUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.newUser(args.userRegister) 
         },
         confirmRegister: async (_, args, { dataSources }) => {
             return dataSources.buda.confirmRegister(args.token)
@@ -374,74 +401,14 @@ module.exports.resolvers = {
         userLogin: async (_, args, { dataSources }) => {
             return dataSources.buda.userLogin(args.email, args.password)
         },
-        staffLogin: async (_, args, { dataSources }) => {
-            return dataSources.buda.staffLogin(args.uuid, args.password)
+        deleteUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.deleteUser(args.userID)
         },
         loginGoogle: async (_, args, { dataSources }) => {
             return dataSources.buda.loginGoogle(args.jwtSimple)
         },
-        deleteProduct: async (_, args, { dataSources }) => {
-            return dataSources.buda.deleteProduct(args.productID)
-        },
-        deleteSellOrder: async (_, args, { dataSources }) => {
-            return dataSources.buda.deleteSellOrder(args.sellOrderID)
-        },
-        deleteSellOrderItem: async (_, args, { dataSources }) => {
-            return dataSources.buda.deleteSellOrderItem(args.sellOrderItemID)
-        },
-        deletePlan: async (_, args, { dataSources }) => {
-            return dataSources.buda.deletePlan(args.planID)
-        },
-        deletePicture: async (_, args, { dataSources }) => {
-            return dataSources.buda.deletePicture(args.pictureID)
-        },
-        deleteFixedCost: async (_, args, { dataSources }) => {
-            return dataSources.buda.deleteFixedCost(args.fixedCostID)
-        },
-        deleteBuyOrder: async (_, args, { dataSources }) => {
-            return dataSources.buda.deleteBuyOrder(args.buyOrderID)
-        },
-        deleteBuyOrderItem: async (_, args, { dataSources }) => {
-            return dataSources.buda.deleteBuyOrderItem(args.buyOrderItemID)
-        },
-        deleteStaff: async (_, args, { dataSources }) => {
-            return dataSources.buda.deleteStaff(args.staffID)
-        },
-        deleteSalaryLog: async (_, args, { dataSources }) => {
-            return dataSources.buda.deleteSalaryLog(args.salaryLogID)
-        },
-        deleteStaffNote: async (_, args, { dataSources }) => {
-            return dataSources.buda.deleteStaffNote(args.staffNoteID)
-        },
-        deleteUser: async (_, args, { dataSources }) => {
-            return dataSources.buda.deleteUser(args.userID)
-        },
-        deleteProductGroup: async (_, args, { dataSources }) => {
-            return dataSources.buda.deleteProductGroup(args.productGroupID)
-        },
-        deleteIngredient: async (_, args, { dataSources }) => {
-            return dataSources.buda.deleteIngredient(args.ingredientID)
-        },
-        updatePicture: async (_, args, { dataSources }) => {
-            return dataSources.buda.updatePicture(args.picture)
-        },
-        updateSellOrder: async (_,args, { dataSources }) => {
-            return dataSources.buda.updateSellOrder(args.sellOrder)
-        },
-        updateFixedCost: async (_, args, { dataSources }) => {
-            return dataSources.buda.updateFixedCost(args.fixedCost)
-        },
-        updateStaff: async (_, args, { dataSources }) => {
-            return dataSources.buda.updateStaff(args.staffID, args.staff)
-        },
-        updateStaffNote: async (_, args, { dataSources }) => {
-            return dataSources.buda.updateStaffNote(args.staffNoteID, args.staffNote)
-        },
-        updateCustomer: async (_, args, { dataSources }) => {
-            return dataSources.buda.updateCustomer(args.customer)
-        },
-        updateProduct: async (_, args, { dataSources }) => {
-            return dataSources.buda.updateProduct(args.productID, args.product)
+        newAccessToken: async (_, args, { dataSources }) => {
+            return dataSources.buda.newAccessToken(args.jwtSimple)
         },
         updateUser: async (_, args, { dataSources }) => {
             return dataSources.buda.updateUser(args.user)
@@ -461,60 +428,111 @@ module.exports.resolvers = {
         confirmUpdateEmail: async (_, args, { dataSources }) => {
             return dataSources.buda.confirmUpdateEmail(args.token)
         },
-        editIngredientQuantity: async (_, args, { dataSources }) => {
-            return dataSources.buda.editIngredientQuantity(args.ingredientID, args.quantityLog)
+        newBuyOrder: async (_, args, { dataSources }) => {
+            return dataSources.buda.newBuyOrder(args.buyOrderInput)
         },
-        editIngredient: async (_, args, { dataSources }) => {
-            return dataSources.buda.editIngredient(args.ingredientID, args.ingredient)
+        deleteBuyOrder: async (_, args, { dataSources }) => {
+            return dataSources.buda.deleteBuyOrder(args.buyOrderID)
         },
-        editProductQuantity: async (_, args, { dataSources }) => {
-            return dataSources.buda.editProductQuantity(args.productID, args.quantityLog)
+        deleteBuyOrderItem: async (_, args, { dataSources }) => {
+            return dataSources.buda.deleteBuyOrderItem(args.buyOrderItemID)
         },
-        editProduct: async (_, args, { dataSources }) => {
-            return dataSources.buda.editProduct(args.productID, args.product)
+        newSellOrder: async (_, args, { dataSources }) => {
+            return dataSources.buda.newSellOrder(args.sellOrderInput)
         },
-        updateSupplier: async (_, args, { dataSources }) => {
-            return dataSources.buda.updateSupplier(args.supplier)
+        newPosSellOrder: async (_, args, { dataSources }) => {
+            return dataSources.buda.newPosSellOrder(args.sellOrderInput)
+        },
+        updateSellOrder: async (_,args, { dataSources }) => {
+            return dataSources.buda.updateSellOrder(args.sellOrder)
+        },
+        deleteSellOrder: async (_, args, { dataSources }) => {
+            return dataSources.buda.deleteSellOrder(args.sellOrderID)
         },
         updateSellOrderItem: async (_, args, { dataSources }) => {
             return dataSources.buda.updateSellOrderItem(args.sellOrderItemID, args.sellOrderItem)
         },
-        hideProduct: async (_, args, { dataSources }) => {
-            return dataSources.buda.hideProduct(args.productID)
+        deleteSellOrderItem: async (_, args, { dataSources }) => {
+            return dataSources.buda.deleteSellOrderItem(args.sellOrderItemID)
         },
-        hideIngredient: async (_, args, { dataSources }) => {
-            return dataSources.buda.hideIngredient(args.ingredientID)
+        newWarrantyOrder: async (_, args, { dataSources }) => {
+            return dataSources.buda.newWarrantyOrder(args.warrantyOrderInput)
+        },
+        cancelSellOrder: async (_, args, { dataSources }) => {
+            return dataSources.buda.cancelSellOrder(args.sellOrderID)
+        },
+        returnSellOrder: async (_, args, { dataSources }) => {
+            return dataSources.buda.returnSellOrder(args.sellOrderID)
+        },
+        newCustomer: async (_, args, { dataSources }) => {
+            return dataSources.buda.newCustomer(args.customerInput)
+        },
+        updateCustomer: async (_, args, { dataSources }) => {
+            return dataSources.buda.updateCustomer(args.customer)
         },
         hideCustomer: async (_, args, { dataSources }) => {
             return dataSources.buda.hideCustomer(args.customerID)
         },
-        hideFixedCost: async (_, args, { dataSources }) => {
-            return dataSources.buda.hideFixedCost(args.fixedCostID)
+        newMembershipType: async (_, args, { dataSources }) => {
+            return dataSources.buda.newMembershipType(args.membershipTypeInput)
+        },
+        newDiscount: async (_, args, { dataSources }) => {
+            return dataSources.buda.newDiscount(args.discountInput)
+        },
+        deleteDiscount: async (_, args, { dataSources }) => {
+            return dataSources.buda.deleteDiscount(args.discountID)
+        },
+        newSupplier: async (_, args, { dataSources }) => {
+            return dataSources.buda.newSupplier(args.supplierInput)
+        },
+        updateSupplier: async (_, args, { dataSources }) => {
+            return dataSources.buda.updateSupplier(args.supplier)
         },
         hideSupplier: async (_, args, { dataSources }) => {
             return dataSources.buda.hideSupplier(args.supplierID)
         },
+        newPlan: async (_, args, { dataSources }) => {
+            return dataSources.buda.newPlan(args.planInput)
+        },
+        deletePlan: async (_, args, { dataSources }) => {
+            return dataSources.buda.deletePlan(args.planID)
+        },
+        newPurchase: async (_, args, { dataSources }) => {
+            return dataSources.buda.newPurchase(args.purchaseInput)
+        },
+        newPicture: async (_, args, { dataSources }) => {
+            return dataSources.buda.newPicture(args.pictureInput)
+        },
+        deletePicture: async (_, args, { dataSources }) => {
+            return dataSources.buda.deletePicture(args.pictureID)
+        },
+        newFixedCost: async (_, args, { dataSources }) => {
+            return dataSources.buda.newFixedCost(args.fixedCostInput)
+        },
+        updateFixedCost: async (_, args, { dataSources }) => {
+            return dataSources.buda.updateFixedCost(args.fixedCost)
+        },
+        hideFixedCost: async (_, args, { dataSources }) => {
+            return dataSources.buda.hideFixedCost(args.fixedCostID)
+        },
+        deleteFixedCost: async (_, args, { dataSources }) => {
+            return dataSources.buda.deleteFixedCost(args.fixedCostID)
+        },
+        newOtherCost: async (_, args, { dataSources }) => {
+            return dataSources.buda.newOtherCost(args.otherCostInput)
+        },
         hideOtherCost: async (_, args, { dataSources }) => {
             return dataSources.buda.hideOtherCost(args.otherCostID)
         },
-        addIngredientToProduct: async (_, args, { dataSources }) => {
-            return dataSources.buda.addIngredientToProduct(args.productID, args.ingredientID)
-        },
-        removeIngredientFromProduct: async (_, args, { dataSources }) => {
-            return dataSources.buda.removeIngredientFromProduct(args.productID, args.ingredientID)
-        },
-        addProductToProductGroup: async (_, args, { dataSources }) => {
-            return dataSources.buda.addProductToProductGroup(args.productGroupID, args.productID)
-        },
-        removeProductFromProductGroup: async (_, args, { dataSources }) => {
-            return dataSources.buda.removeProductFromProductGroup(args.productGroupID, args.productID)
+        newFixedCostBill: async (_, args, { dataSources }) => {
+            return dataSources.buda.newFixedCostBill(args.fixedCostBillInput)
         },
         delayFixedCostBill: async (_, args, { dataSources }) => {
             return dataSources.buda.delayFixedCostBill(args.fixedCostBillID)
         },
         payFixedCostBill: async (_, args, { dataSources }) => {
             return dataSources.buda.payFixedCostBill(args.fixedCostBillID)
-        }
+        },
         // cleanCache: async (_, __, { dataSources }) => {
         //     return dataSources.buda.cleanCache()
         // }
