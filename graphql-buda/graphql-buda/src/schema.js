@@ -457,6 +457,18 @@ input RemoveProductFromGroupDTO{
      productID: Int!
      productGroupID: Int!
 }
+input IngredientInput{
+     ingredientID: Int
+     name: String
+     description: String 
+     amountLeft: Int 
+     price: Float 
+     visible: Boolean 
+     userID: Int
+     pictureID: Int
+     alertAmountLeft: Int 
+     buyOrderItems: [BuyOrderItemInput]
+}
 input NewIngredient{
      ingredientID: Int
      name: String
@@ -834,7 +846,7 @@ type Query{
 }
 
 type Mutation{
-    newProduct(productInput: NewProduct): Product
+    newProduct(productInput: ProductInput): Product
     hideProduct(productID: Int): Product
     deleteProduct(productID: Int): String
     editProductQuantity(productID: Int, quantityLog: QuantityLogInput): Product
@@ -843,15 +855,15 @@ type Mutation{
     deleteProductGroup(productGroupID: Int): String
     addProductToGroup(addProductToGroup: AddProductToGroupDTO): ProductGroup
     removeProductFromGroup(removeProductFromGroup: RemoveProductFromGroupDTO): String
-    newProductComponent(newProductComponent: AddProductComponent): ProductComponent
-    deleteProductComponent(deleteProductComponent: removeProductComponent): String
+    newProductComponent(newProductComponent: AddProductComponentDTO): ProductComponent
+    deleteProductComponent(deleteProductComponent: RemoveProductComponentDTO): String
     removeIngredientFromProduct(productID: Int, ingredientID: Int): String
     newIngredient(ingredientInput: NewIngredient): Ingredient
     hideIngredient(ingredientID: Int): Ingredient 
     deleteIngredient(ingredientID: Int): String
     editIngredientQuantity(ingredientID: Int, quantityLog: QuantityLogInput): Ingredient
     editIngredient(ingredientID: Int, ingredient: UpdateIngredient): Ingredient
-    newStaff(staffInput: newStaff): Staff
+    newStaff(staffInput: NewStaff): Staff
     staffLogin(account: String!, password: String!): Authenticate
     updateStaff(staffID: Int, staff: UpdateStaff): Staff
     deleteStaff(staffID: Int): String
