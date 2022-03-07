@@ -43,7 +43,7 @@ module.exports.resolvers = {
             return dataSources.buda.alertProducts(args)
         },
         productLeftLog: async (_, args, { dataSources }) => {
-            return dataSources.buda.productsLeftLog(args.productLeftLogID)
+            return dataSources.buda.productLeftLog(args.productLeftLogID)
         },
         productLeftLogsByProduct: async (_, args, { dataSources }) => {
             return dataSources.buda.productLeftLogsByProduct(args.productID)
@@ -242,6 +242,30 @@ module.exports.resolvers = {
         },
         totalRevenueProductByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.totalRevenueProductByUser(args)
+        },
+        productsTopSellNumber: async (_, args, { dataSources }) => {
+            return dataSources.buda.productsTopSellNumber(args)
+        },
+        productsTopProfit: async (_, args, { dataSources }) => {
+            return dataSources.buda.productsTopProfit(args)
+        },
+        productsTopRevenue: async (_, args, { dataSources }) => {
+            return dataSources.buda.productsTopRevenue(args)
+        },
+        productsMostReturnNumber: async (_, args, { dataSources }) => {
+            return dataSources.buda.productsMostReturnNumber(args)
+        },
+        productsMostReturnPrice: async (_, args, { dataSources }) => {
+            return dataSources.buda.productsMostReturnPrice(args)
+        },
+        productsLeastSellNumber: async (_, args, { dataSources }) => {
+            return dataSources.buda.productsLeastSellNumber(args)
+        },
+        productsLeastProfit: async (_, args, { dataSources }) => {
+            return dataSources.buda.productsLeastProfit(args)
+        },
+        productsLeastRevenue: async (_, args, { dataSources }) => {
+            return dataSources.buda.productsLeastRevenue(args)
         },
         totalRevenueByDiscount: async (_, args, { dataSources }) => {
             return dataSources.buda.totalRevenueByDiscount(args.discountID)

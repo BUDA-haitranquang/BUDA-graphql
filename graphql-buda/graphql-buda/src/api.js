@@ -21,7 +21,7 @@ class Budabackend extends RESTDataSource {
         return this.get(`api/ingredient/view/alert`)
     }
     async ingredientLeftLog(ingredientLeftLogID){
-        return this.get(`api/ingredient/quantity-log/${ingredientLeftLogID}`)
+        return this.get(`api/ingredient/quantity-log/id/${ingredientLeftLogID}`)
     }
     async ingredientLeftLogsByIngredient(ingredientID){
         return this.get(`api/ingredient/quantity-log/${ingredientID}/all`)
@@ -248,6 +248,30 @@ class Budabackend extends RESTDataSource {
     async totalRevenueProductByUser(){
         return this.get(`api/statistics/product/overall/all`)
     }
+    async productsTopSellNumber(){
+        return this.get(`api/statistics/product/best/selling/sell-number`)
+    }
+    async productsTopProfit(){
+        return this.get(`api/statistics/product/best/selling/profit`)
+    }
+    async productsTopRevenue(){
+        return this.get(`api/statistics/product/best/selling/revenue`)
+    }
+    async productsMostReturnNumber(){
+        return this.get(`api/statistics/product/worst/returning/return-number`)
+    }
+    async productsMostReturnPrice(){
+        return this.get(`api/statistics/product/worst/returning/return-price`)
+    }
+    async productsLeastSellNumber(){
+        return this.get(`api/statistics/product/worst/selling/sell-number`)
+    }
+    async productsLeastProfit(){
+        return this.get(`api/statistics/product/worst/selling/profit`)
+    }
+    async productsLeastRevenue(){
+        return this.get(`api/statistics/product/worst/selling/revenue`)
+    }
     async totalRevenueByDiscount(discountID){
         return this.get(`api/statistics/discount/total-revenue/id/${discountID}`)
     }
@@ -390,7 +414,7 @@ class Budabackend extends RESTDataSource {
     }
     async newStaff(staffInput){
         const staffInputJson = JSON.parse(JSON.stringify(staffInput))
-        return this.post(`api/staff/crud/new`, staffInputJson)
+        return this.post(`api/staff/create`, staffInputJson)
     }
     async staffLogin(uuid, password) {
         return this.post(`api/staff/login`, {

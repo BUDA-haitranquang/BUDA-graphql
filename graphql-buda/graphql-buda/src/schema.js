@@ -142,6 +142,7 @@ type Customer{
 }
 type Discount{
      discountID: Int
+     discountCode: String
      name: String 
      description: String 
      cash: Float
@@ -346,6 +347,15 @@ type ProductStatistics{
      productID: Int
      name: String 
      totalRevenue: Float
+}
+type ProductRanking{
+     productID: Int
+     name: String 
+     revenue: Float
+     profit: Float
+     sellNumber: Int
+     returnNumber: Int
+     returnPrice: Float
 }
 type RevenueByTimeStatistics{
      timePeriod: String 
@@ -628,7 +638,7 @@ input CustomerInput{
      membershipID: Int
      name: String
      address: String 
-     phoneNumber: String! 
+     phoneNumber: String
      userID: Int
      visible: Boolean
      sellOrders: [SellOrderInput]
@@ -643,6 +653,7 @@ input MembershipTypeInput{
 }
 input DiscountInput{
      discountID: Int
+     discountCode: String
      name: String 
      description: String 
      cash: Float = 0
@@ -760,6 +771,10 @@ type Query{
     alertProducts: [Product]
     productComboByUser: [ProductCombo]
     productComboIncludeProduct(productID: Int): [ProductCombo]
+    componentsByProduct(productID: Int): [ProductComponent]
+    productContainIngredient(ingredientID: Int): [Product] 
+    productGroupsByUser: [ProductGroup]
+    productsByProductGroup(productGroupID: Int): [Product]
     buyOrdersByUser: [BuyOrder]
     buyOrdersBySupplier(supplierID: Int): [BuyOrder]
     buyOrdersLastXDaysByUser(X: Int): [BuyOrder]
@@ -812,15 +827,19 @@ type Query{
     user(userID: Int): User
     currentUser: User
     userByUUID(UUID: Int): User
-    componentsByProduct(productID: Int): [ProductComponent]
-    productContainIngredient(ingredientID: Int): [Product] 
-    productGroupsByUser: [ProductGroup]
-    productsByProductGroup(productGroupID: Int): [Product]
     totalSpendAgeGroupByUser: [AgeGroupStatistics]
     totalSpendAgeGroupThisMonthByUser: [AgeGroupStatistics]
     totalSpendGenderByUser: [GenderStatistics]
     totalSpendGenderThisMonthByUser: [GenderStatistics]
     totalRevenueProductByUser: [ProductStatistics]
+    productsTopSellNumber: [ProductRanking]
+    productsTopProfit: [ProductRanking]
+    productsTopRevenue: [ProductRanking]
+    productsMostReturnNumber: [ProductRanking]
+    productsMostReturnPrice: [ProductRanking]
+    productsLeastProfit: [ProductRanking]
+    productsLeastRevenue: [ProductRanking]
+    productsLeastSellNumber: [ProductRanking]
     totalRevenueByDiscount(discountID: Int): Float
     receiptRevenueWeekly: [RevenueByTimeStatistics]
     receiptRevenueMonthly: [RevenueByTimeStatistics]
