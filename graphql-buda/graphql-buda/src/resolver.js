@@ -459,7 +459,7 @@ module.exports.resolvers = {
             return dataSources.buda.confirmUpdateEmail(args.token)
         },
         newBuyOrder: async (_, args, { dataSources }) => {
-            return dataSources.buda.newBuyOrder(args.buyOrderInput)
+            return dataSources.buda.newBuyOrder(args.newBuyOrder)
         },
         deleteBuyOrder: async (_, args, { dataSources }) => {
             return dataSources.buda.deleteBuyOrder(args.buyOrderID)

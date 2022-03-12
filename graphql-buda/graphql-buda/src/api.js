@@ -499,9 +499,9 @@ class Budabackend extends RESTDataSource {
     async confirmUpdateEmail(token){
         return this.get(`api/user/update-info/email/confirm/?token=${token}`)
     }
-    async newBuyOrder(buyOrderInput) {
-        const buyOrderInputJson = JSON.parse(JSON.stringify(buyOrderInput))
-        return this.post(`api/business/buy/new-order/new`, buyOrderInputJson)
+    async newBuyOrder(newBuyOrder) {
+        const newBuyOrderJson = JSON.parse(JSON.stringify(newBuyOrder))
+        return this.post(`api/business/buy/new-order/new`, newBuyOrderJson)
     }
     async deleteBuyOrder(buyOrderID){
         return this.delete(`api/business/buy/new-order/${buyOrderID}`)
