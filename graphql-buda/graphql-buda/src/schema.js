@@ -106,6 +106,7 @@ type BuyOrder{
      buyOrderID: Int
      supplier: Supplier
      creationTime: String
+     finishTime: String
      status: Status
      totalCost: Float
      userID: Int
@@ -116,6 +117,7 @@ type SellOrder{
      customer: Customer
      discount: Discount
      creationTime: String
+     finishTime: String
      ageGroup: AgeGroup
      gender: Gender
      actualDiscountCash: Float
@@ -361,6 +363,10 @@ type RevenueByTimeStatistics{
      timePeriod: String 
      revenue: Float
 }
+type ActiveHoursStatistics{
+     hour: String
+     totalCount: Int
+}
 enum StaffPosition{
     MANAGER, 
     BASIC
@@ -511,10 +517,22 @@ input BuyOrderInput {
      buyOrderID: Int
      supplier: SupplierInput
      creationTime: String
+     finishTime: String
      status: Status!
      totalCost: Float = 0
      userID: Int
      buyOrderItems: [BuyOrderItemInput]
+}
+input BuyOrderDTO{
+     supplier: SupplierInput
+     address: String 
+     status: Status!
+     buyOrderItemDTOs: [BuyOrderItemDTO]!
+}
+input BuyOrderItemDTO{
+     ingredient: IngredientInput!
+     quantity: Int!
+     pricePerUnit: Float!
 }
 input BuyOrderItemInput{
      buyOrderItemID: Int
@@ -587,6 +605,7 @@ input SellOrderInput{
      customer: CustomerInput
      discount: DiscountInput
      creationTime: String
+     finishTime: String
      ageGroup: AgeGroup
      gender: Gender
      actualDiscountCash: Float 
@@ -827,6 +846,8 @@ type Query{
     user(userID: Int): User
     currentUser: User
     userByUUID(UUID: Int): User
+    totalCountByHours: ActiveHoursStatistics
+    totalCountCurrenMonthByHours: ActiveHoursStatistics
     totalSpendAgeGroupByUser: [AgeGroupStatistics]
     totalSpendAgeGroupThisMonthByUser: [AgeGroupStatistics]
     totalSpendGenderByUser: [GenderStatistics]
@@ -903,7 +924,7 @@ type Mutation{
     updateForgotPassword(token: String, updateUserPassword:UpdateUserPassword): String
     updateUserEmail(updateUserEmail: UpdateEmail): String
     confirmUpdateEmail(token: String): User
-    newBuyOrder(buyOrderInput: BuyOrderInput): BuyOrder
+    newBuyOrder(newBuyOrder: BuyOrderDTO): BuyOrder
     deleteBuyOrder(buyOrderID: Int): String
     deleteBuyOrderItem(buyOrderItemID: Int): String
     newSellOrder(sellOrderInput: NewSellOrder): SellOrder
@@ -915,6 +936,7 @@ type Mutation{
     newWarrantyOrder(warrantyOrderInput: WarrantyOrderInput): WarrantyOrder
     cancelSellOrder(sellOrderID: Int): SellOrder
     returnSellOrder(sellOrderID: Int): SellOrder
+    finishSellOrder(sellOrderID: Int): SellOrder
     newCustomer(customerInput: CustomerInput): Customer
     updateCustomer(customer: CustomerInput): Customer
     hideCustomer(customerID: Int): Customer

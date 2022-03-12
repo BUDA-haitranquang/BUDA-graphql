@@ -78,19 +78,19 @@ class Budabackend extends RESTDataSource {
         return this.get(`api/product/packaging/component/contains/ingredient/${ingredientID}`)
     }
     async buyOrdersByUser(){
-        return this.get(`api/business/buy/new-order/all/`)
+        return this.get(`api/business/buy/view/all`)
     }
     async buyOrdersBySupplier(supplierID) {
-        return this.get(`api/business/buy/new-order/supplier/${supplierID}/all`)
+        return this.get(`api/business/buy/view/supplier/${supplierID}/all`)
     }
     async buyOrdersLastXDaysByUser(X){
-        return this.get(`api/business/buy/new-order/all/last-x-days/${X}`)
+        return this.get(`api/business/buy/view/all/last-x-days/${X}`)
     }
     async incompletedBuyOrdersByUser(){
-        return this.get(`api/business/buy/new-order/all/incompleted`)
+        return this.get(`api/business/buy/view/all/incompleted`)
     }
     async buyOrdersByStatusAndUser(status){
-        return this.get(`api/business/buy/new-order/status/${status}`)
+        return this.get(`api/business/buy/view/status/${status}`)
     }
     async buyOrderItemsByBuyOrder(buyOrderID){
         return this.get(`api/business/buy/item/buy-order/${buyOrderID}`)
@@ -232,6 +232,12 @@ class Budabackend extends RESTDataSource {
     }
     async userByUUID(UUID) {
         return this.get(`api/user/uuid/${UUID}`)
+    }
+    async totalCountByHours(){
+        return this.get(`api/statistics/active-hours/total`)
+    }
+    async totalCountCurrenMonthByHours(){
+        return this.get(`api/statistics/active-hours/this-month`)
     }
     async totalSpendAgeGroupByUser(){
         return this.get(`api/statistics/customer/age-group/total`)
@@ -534,6 +540,9 @@ class Budabackend extends RESTDataSource {
     }
     async returnSellOrder(sellOrderID){
         return this.put(`api/business/sell/return-order/id/${sellOrderID}`)
+    }
+    async finishSellOrder(sellOrderID){
+        return this.put(`api/business/sell/finish/id/${sellOrderID}`)
     }
     async newCustomer(customerInput){
         const customerInputJson = JSON.parse(JSON.stringify(customerInput))
