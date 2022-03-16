@@ -92,29 +92,47 @@ class Budabackend extends RESTDataSource {
     async buyOrdersByStatusAndUser(status){
         return this.get(`api/business/buy/view/status/${status}`)
     }
+    async buyOrdersByTextID(textID) {
+        return this.get(`api/business/buy/view/textID/${textID}`)
+    }
     async buyOrderItemsByBuyOrder(buyOrderID){
         return this.get(`api/business/buy/item/buy-order/${buyOrderID}`)
     }
     async buyOrderItemsByIngredient(ingredientID){
         return this.get(`api/business/buy/item/ingredient/${ingredientID}`)
     }
+    async paySlipByUser(){
+        return this.get(`api/business/pay-slip/view/all`)
+    }
+    async paySlip(paySlipID){
+        return this.get(`api/business/pay-slip/view/id/${paySlipID}`)
+    }
+    async receiptByUser(){
+        return this.get(`api/business/receipt/view/all`)
+    }
+    async receipt(receiptID) {
+        return this.get(`api/business/receipt/view/id/${receiptID}`)
+    }
     async sellOrdersByUser() {
-        return this.get(`api/business/sell/new-order/all`)
+        return this.get(`api/business/sell/view/all`)
     }
     async sellOrdersByCustomer(customerID) {
-        return this.get(`api/business/sell/new-order/customer/${customerID}/all`)
+        return this.get(`api/business/sell/view/customer/${customerID}/all`)
     }
     async sellOrder(sellOrderID) {
-        return this.get(`api/business/sell/new-order/${sellOrderID}`)
+        return this.get(`api/business/sell/view/${sellOrderID}`)
     }
     async incompletedSellOrdersByUser(){
-        return this.get(`api/business/sell/new-order/all/incompleted`)
+        return this.get(`api/business/sell/view/all/incompleted`)
     }
     async sellOrdersXDaysByUser(X){
-        return this.get(`api/business/sell/new-order/all/last-x-days/${X}`)
+        return this.get(`api/business/sell/view/all/last-x-days/${X}`)
     }
     async sellOrdersByStatusAndUser(status){
-        return this.get(`api/business/sell/new-order/all/status/${status}`)
+        return this.get(`api/business/sell/view/all/status/${status}`)
+    }
+    async sellOrdersByTextID(textID) {
+        return this.get(`api/business/sell/view/textID/${textID}`)
     }
     async sellOrderItemsBySellOrder(sellOrderID){
         return this.get(`api/business/sell/item/sell-order-id/${sellOrderID}`)
@@ -344,6 +362,12 @@ class Budabackend extends RESTDataSource {
     async paySlipExpenseThisMonth(){
         return this.get(`api/statistics/expense/pay-slip/this-month`)
     }
+    async retentionRateWeekly(){
+        return this.get(`api/statistics/customer/retention/weekly`)
+    }
+    async retentionRateMonthly(){
+        return this.get(`api/statistics/customer/retention/monthly`)
+    }
     async cleanCache() {
         try {
             await this.httpCache.keyValueCache.wrapped.client.flushdb()
@@ -417,6 +441,18 @@ class Budabackend extends RESTDataSource {
     async editIngredient(ingredientID, ingredient){
         const ingredientJson = JSON.parse(JSON.stringify(ingredient))
         return this.put(`api/ingredient/update/${ingredientID}`, ingredientJson)
+    }
+    async newRetail(newRetail){
+        const newRetailJson = JSON.parse(JSON.stringify(newRetail))
+        return this.post(`api/retail/create`, newRetailJson)
+    }
+    async newRetailFromProduct(newRetail){
+        const newRetailJson = JSON.parse(JSON.stringify(newRetail))
+        return this.post(`api/retail/create/product`, newRetailJson)
+    }
+    async newRetailFromIngredient(newRetail){
+        const newRetailJson = JSON.parse(JSON.stringify(newRetail))
+        return this.post(`api/retail/create/ingredient`, newRetailJson)
     }
     async newStaff(staffInput){
         const staffInputJson = JSON.parse(JSON.stringify(staffInput))
@@ -543,6 +579,20 @@ class Budabackend extends RESTDataSource {
     }
     async finishSellOrder(sellOrderID){
         return this.put(`api/business/sell/finish/id/${sellOrderID}`)
+    }
+    async newPaySlip(paySlipInput){
+        const paySlipInputJson = JSON.parse(JSON.stringify(paySlipInput))
+        return this.post(`api/business/pay-slip/create`, paySlipInputJson)
+    }
+    async deletePaySlip(paySlipID){
+        return this.delete(`api/business/pay-slip/delete/id/${paySlipID}`)
+    }
+    async newReceipt(receiptInput){
+        const receiptInputJson = JSON.parse(JSON.stringify(receiptInput))
+        return this.post(`api/business/receipt/create`, receiptInputJson)
+    }
+    async deleteReceipt(receiptID){
+        return this.delete(`api/business/receipt/delete/id/${receiptID}`)
     }
     async newCustomer(customerInput){
         const customerInputJson = JSON.parse(JSON.stringify(customerInput))

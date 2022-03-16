@@ -8,7 +8,7 @@ type Product{
     description: String
     userID: Int
     visible: Boolean
-    pictureID: Int
+    picture: Picture
     sellingPrice: Float
     alertAmount: Int
     amountLeft: Int
@@ -48,7 +48,7 @@ type Ingredient{
      price: Float
      visible: Boolean
      userID: Int
-     pictureID: Int
+     picture: Picture
      alertAmountLeft: Int
      buyOrderItems: [BuyOrderItem]
 }
@@ -111,6 +111,7 @@ type BuyOrder{
      totalCost: Float
      userID: Int
      buyOrderItems: [BuyOrderItem]
+     textID: String
 }
 type SellOrder{
      sellOrderID: Int
@@ -128,6 +129,7 @@ type SellOrder{
      customerMessage: String
      status: Status
      sellOrderItems: [SellOrderItem]
+     textID: String
 }
 type Customer{
      customerID: Int
@@ -417,7 +419,7 @@ input ProductInput{
     description: String
     userID: Int
     visible: Boolean
-    pictureID: Int
+    picture: PictureInput
     sellingPrice: Float 
     alertAmount: Int 
     amountLeft: Int 
@@ -432,7 +434,7 @@ input UpdateProduct{
     description: String
     userID: Int
     visible: Boolean
-    pictureID: Int
+    picture: PictureInput
     sellingPrice: Float = 0
     alertAmount: Int = 0
     amountLeft: Int = 0
@@ -481,7 +483,7 @@ input IngredientInput{
      price: Float 
      visible: Boolean 
      userID: Int
-     pictureID: Int
+     picture: PictureInput
      alertAmountLeft: Int 
      buyOrderItems: [BuyOrderItemInput]
 }
@@ -493,7 +495,7 @@ input NewIngredient{
      price: Float = 0
      visible: Boolean 
      userID: Int
-     pictureID: Int
+     picture: PictureInput
      alertAmountLeft: Int = 0
      buyOrderItems: [BuyOrderItemInput]
 }
@@ -505,9 +507,29 @@ input UpdateIngredient{
      price: Float 
      visible: Boolean 
      userID: Int
-     pictureID: Int
+     picture: PictureInput
      alertAmountLeft: Int 
      buyOrderItems: [BuyOrderItemInput]
+}
+input RetailCreateDTO{
+     productSKU: String 
+     ingredientSKU: String 
+     name: String
+     description: String 
+     amountLeft: Int
+     alertAmountLeft: Int
+     price: Float
+     sellingPrice: Float
+     pictureID: Int
+}
+input RetailCreateFromIngredientDTO{
+     ingredientID: Int
+     productSKU: String
+     price: Float
+}
+input RetailCreateFromProductDTO{
+     productID: Int
+     ingredientSKU: String
 }
 input QuantityLogInput{
      amountLeftChange: Int!
@@ -543,6 +565,26 @@ input BuyOrderItemInput{
      creationTime: String
      userID: Int
      supplierID: Int!
+}
+input PaySlipInput{
+     paySlipID: Int
+     supplier: SupplierInput 
+     receiverName: String 
+     receiverContact: String
+     creationTime: String
+     message: String 
+     totalCost: Int
+     userID: Int
+}
+input ReceiptInput{
+     receiptID: Int
+     totalCost: Int
+     customer: CustomerInput 
+     senderName: String 
+     senderContact: String 
+     creationTime: String
+     message: String
+     userID: Int
 }
 input PlanInput{
     planID: Int
@@ -799,14 +841,20 @@ type Query{
     buyOrdersLastXDaysByUser(X: Int): [BuyOrder]
     incompletedBuyOrdersByUser: [BuyOrder]
     buyOrdersByStatusAndUser(status: Status): [BuyOrder]
+    buyOrdersByTextID(textID: String): [BuyOrder]
     buyOrderItemsByBuyOrder(buyOrderID: Int): [BuyOrderItem]
     buyOrderItemsByIngredient(ingredientID: Int): [BuyOrderItem]
+    paySlipByUser: [PaySlip]
+    paySlip(paySlipID: Int): PaySlip
+    receiptByUser: [Receipt]
+    receipt(receiptID: Int): Receipt
     sellOrdersByUser: [SellOrder]
     sellOrdersByCustomer(customerID: Int): [SellOrder]
     sellOrder(sellOrderID: Int): SellOrder
     incompletedSellOrdersByUser: [SellOrder]
     sellOrdersXDaysByUser(X: Int): [SellOrder]
     sellOrdersByStatusAndUser(status: Status): [SellOrder]
+    sellOrdersByTextID(textID: String): [SellOrder]
     sellOrderItemsBySellOrder(sellOrderID: Int): [SellOrderItem]
     sellOrderItemsByProduct(productID: Int): [SellOrderItem] 
     warrantyOrdersByUser: [WarrantyOrder]
@@ -846,8 +894,8 @@ type Query{
     user(userID: Int): User
     currentUser: User
     userByUUID(UUID: Int): User
-    totalCountByHours: ActiveHoursStatistics
-    totalCountCurrenMonthByHours: ActiveHoursStatistics
+    totalCountByHours: [ActiveHoursStatistics]
+    totalCountCurrenMonthByHours: [ActiveHoursStatistics]
     totalSpendAgeGroupByUser: [AgeGroupStatistics]
     totalSpendAgeGroupThisMonthByUser: [AgeGroupStatistics]
     totalSpendGenderByUser: [GenderStatistics]
@@ -883,6 +931,8 @@ type Query{
     paySlipExpenseMonthly: [ExpenseByTimeStatistics]
     paySlipExpenseWeekly: [ExpenseByTimeStatistics]
     paySlipExpenseThisMonth: [ExpenseByTimeStatistics]
+    retentionRateWeekly: Float
+    retentionRateMonthly: Float
 }
 
 type Mutation{
@@ -903,6 +953,9 @@ type Mutation{
     deleteIngredient(ingredientID: Int): String
     editIngredientQuantity(ingredientID: Int, quantityLog: QuantityLogInput): Ingredient
     editIngredient(ingredientID: Int, ingredient: UpdateIngredient): Ingredient
+    newRetail(newRetail: RetailCreateDTO): Product
+    newRetailFromProduct(newRetail: RetailCreateFromProductDTO): Product
+    newRetailFromIngredient(newRetail: RetailCreateFromIngredientDTO): Ingredient
     newStaff(staffInput: NewStaff): Staff
     staffLogin(account: String!, password: String!): Authenticate
     updateStaff(staffID: Int, staff: UpdateStaff): Staff
@@ -937,6 +990,10 @@ type Mutation{
     cancelSellOrder(sellOrderID: Int): SellOrder
     returnSellOrder(sellOrderID: Int): SellOrder
     finishSellOrder(sellOrderID: Int): SellOrder
+    newPaySlip(paySlipInput: PaySlipInput): PaySlip
+    deletePaySlip(paySlipID: Int): String
+    newReceipt(receiptInput: ReceiptInput): Receipt
+    deleteReceipt(receiptID: Int): String
     newCustomer(customerInput: CustomerInput): Customer
     updateCustomer(customer: CustomerInput): Customer
     hideCustomer(customerID: Int): Customer
