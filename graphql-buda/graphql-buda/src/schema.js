@@ -110,6 +110,7 @@ type BuyOrder{
      status: Status
      totalCost: Float
      userID: Int
+     staff: Staff
      buyOrderItems: [BuyOrderItem]
      textID: String
 }
@@ -126,6 +127,7 @@ type SellOrder{
      realCost: Float
      finalCost: Float
      userID: Int
+     staff: Staff
      customerMessage: String
      status: Status
      sellOrderItems: [SellOrderItem]
@@ -754,23 +756,23 @@ input FixedCostInput{
      fixedCostBills: [FixedCostBillInput] 
 }
 input FixedCostBillInput{
-     fixedCostBillID: Int!
+     fixedCostBillID: Int
      fixedCost: FixedCostInput 
      userID: Int
-     totalSpend: Float!
+     totalSpend: Float
      message: String 
      creationTime: String
-     dueTime: String!
-     status: Status!
+     dueTime: String
+     status: Status
 }
 input OtherCostInput{
-     otherCostID: Int!
+     otherCostID: Int
      userID: Int
-     totalCost: Float!
+     totalCost: Float
      creationTime: String
-     name: String! 
+     name: String
      description: String 
-     status: Status! 
+     status: Status
      visible: Boolean
 }
 input NewStaff{
@@ -835,6 +837,7 @@ type Query{
     componentsByProduct(productID: Int): [ProductComponent]
     productContainIngredient(ingredientID: Int): [Product] 
     productGroupsByUser: [ProductGroup]
+    productGroup(productGroupID: Int): ProductGroup
     productsByProductGroup(productGroupID: Int): [Product]
     buyOrdersByUser: [BuyOrder]
     buyOrdersBySupplier(supplierID: Int): [BuyOrder]
@@ -978,7 +981,9 @@ type Mutation{
     updateUserEmail(updateUserEmail: UpdateEmail): String
     confirmUpdateEmail(token: String): User
     newBuyOrder(newBuyOrder: BuyOrderDTO): BuyOrder
+    newBuyOrderStaff(newBuyOrder: BuyOrderDTO): BuyOrder
     deleteBuyOrder(buyOrderID: Int): String
+    deleteBuyOrderStaff(buyOrderID: Int): String
     deleteBuyOrderItem(buyOrderItemID: Int): String
     newSellOrder(sellOrderInput: NewSellOrder): SellOrder
     newPosSellOrder(sellOrderInput: NewSellOrder): SellOrder

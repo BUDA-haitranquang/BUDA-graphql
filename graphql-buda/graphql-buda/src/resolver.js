@@ -243,6 +243,9 @@ module.exports.resolvers = {
         productGroupsByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.productGroupsByUser(args)
         },
+        productGroup: async (_, args, { dataSources }) => {
+            return dataSources.buda.productGroup(args.productGroupID)
+        },
         productsByProductGroup: async (_, args, { dataSources }) => {
             return dataSources.buda.productsByProductGroup(args.productGroupID)
         },
@@ -494,8 +497,14 @@ module.exports.resolvers = {
         newBuyOrder: async (_, args, { dataSources }) => {
             return dataSources.buda.newBuyOrder(args.newBuyOrder)
         },
+        newBuyOrderStaff: async (_, args, { dataSources }) => {
+            return dataSources.buda.newBuyOrderStaff(args.newBuyOrder)
+        },
         deleteBuyOrder: async (_, args, { dataSources }) => {
             return dataSources.buda.deleteBuyOrder(args.buyOrderID)
+        },
+        deleteBuyOrderStaff: async (_, args, { dataSources }) => {
+            return dataSources.buda.deleteBuyOrderStaff(args.buyOrderID)
         },
         deleteBuyOrderItem: async (_, args, { dataSources }) => {
             return dataSources.buda.deleteBuyOrderItem(args.buyOrderItemID)
