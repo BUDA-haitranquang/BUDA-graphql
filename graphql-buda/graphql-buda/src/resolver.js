@@ -61,7 +61,7 @@ module.exports.resolvers = {
             return dataSources.buda.productComboIncludeProduct(args.productID)
         },
         buyOrdersByUser: async (_, args, { dataSources }) => {
-            return dataSources.buda.buyOrdersByUser(args)
+            return dataSources.buda.buyOrdersByUser(args.page, args.size, args.sort)
         },
         buyOrdersBySupplier: async (_, args, { dataSources }) => {
             return dataSources.buda.buyOrdersBySupplier(args.supplierID)
@@ -71,6 +71,9 @@ module.exports.resolvers = {
         },
         incompletedBuyOrdersByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.incompletedBuyOrdersByUser(args)
+        },
+        completedBuyOrdersByUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.completedBuyOrdersByUser(args.page, args.size, args.sort)
         },
         buyOrdersByStatusAndUser: async (_, args, { dataSources }) => {
             return dataSources.buda.buyOrdersByStatusAndUser(args.status)
@@ -97,7 +100,7 @@ module.exports.resolvers = {
             return dataSources.buda.receipt(args.receiptID)
         },
         sellOrdersByUser: async (_, args, { dataSources }) =>{
-            return dataSources.buda.sellOrdersByUser(args)
+            return dataSources.buda.sellOrdersByUser(args.page, args.size, args.sort)
         },
         sellOrdersByCustomer: async (_, args, { dataSources }) => {
             return dataSources.buda.sellOrdersByCustomer(args.customerID)
@@ -107,6 +110,9 @@ module.exports.resolvers = {
         },
         incompletedSellOrdersByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.incompletedSellOrdesrByUser(args)
+        },
+        completedSellOrdersByUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.completedSellOrdersByUser(args.page, args.size, args.sort)
         },
         sellOrdersXDaysByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.sellOrdersXDaysByUser(args.X)
@@ -317,6 +323,9 @@ module.exports.resolvers = {
         },
         revenueDaysThisMonth: async (_, args, { dataSources }) => {
             return dataSources.buda.revenueDaysThisMonth(args)
+        },
+        revenuePeriod: async (_, args, { dataSources }) => {
+            return dataSources.buda.revenuePeriod(args.period)
         },
         otherCostExpenseWeekly: async (_, args, { dataSources }) => {
             return dataSources.buda.otherCostExpenseWeekly(args)

@@ -415,6 +415,10 @@ enum MailTokenType{
     UPDATE_INFO, 
     UPDATE_PASSWORD 
 }
+input PeriodDTO{
+     from: String
+     to: String
+}
 input ProductInput{
     productID: Int
     name: String
@@ -839,10 +843,11 @@ type Query{
     productGroupsByUser: [ProductGroup]
     productGroup(productGroupID: Int): ProductGroup
     productsByProductGroup(productGroupID: Int): [Product]
-    buyOrdersByUser: [BuyOrder]
+    buyOrdersByUser(page: Int=0, size: Int=50, sort: String="buyOrderID,desc"): [BuyOrder]
     buyOrdersBySupplier(supplierID: Int): [BuyOrder]
     buyOrdersLastXDaysByUser(X: Int): [BuyOrder]
     incompletedBuyOrdersByUser: [BuyOrder]
+    completedBuyOrdersByUser(page: Int=0, size: Int=50, sort: String="buyOrderID,desc"): [BuyOrder]
     buyOrdersByStatusAndUser(status: Status): [BuyOrder]
     buyOrdersByTextID(textID: String): [BuyOrder]
     buyOrderItemsByBuyOrder(buyOrderID: Int): [BuyOrderItem]
@@ -851,10 +856,11 @@ type Query{
     paySlip(paySlipID: Int): PaySlip
     receiptByUser: [Receipt]
     receipt(receiptID: Int): Receipt
-    sellOrdersByUser: [SellOrder]
+    sellOrdersByUser(page: Int=0, size: Int=50, sort: String="sellOrderID,desc"): [SellOrder]
     sellOrdersByCustomer(customerID: Int): [SellOrder]
     sellOrder(sellOrderID: Int): SellOrder
     incompletedSellOrdersByUser: [SellOrder]
+    completedSellOrdersByUser(page: Int=0, size: Int=50, sort: String="sellOrderID,desc"): [SellOrder]
     sellOrdersXDaysByUser(X: Int): [SellOrder]
     sellOrdersByStatusAndUser(status: Status): [SellOrder]
     sellOrdersByTextID(textID: String): [SellOrder]
@@ -920,6 +926,7 @@ type Query{
     revenueMonthly: [RevenueByTimeStatistics]
     revenueWeekdays: [RevenueByTimeStatistics]
     revenueDaysThisMonth: [RevenueByTimeStatistics]
+    revenuePeriod(period: PeriodDTO): [RevenueByTimeStatistics]
     otherCostExpenseWeekly: [ExpenseByTimeStatistics]
     otherCostExpenseThisMonth: [ExpenseByTimeStatistics]
     otherCostExpenseMonthly: [ExpenseByTimeStatistics] 
