@@ -65,6 +65,9 @@ class Budabackend extends RESTDataSource {
     async productGroup(productGroupID) {
         return this.get(`api/product/group/view/productGroupID/${productGroupID}`)
     }
+    async productGroupByProduct(productID){
+        return this.get(`api/product/group/view/by-product/${productID}`)
+    }
     async productsByProductGroupID(productGroupID){
         return this.get(`api/product/group/view/${productGroupID}/products`)
     }

@@ -60,6 +60,21 @@ module.exports.resolvers = {
         productComboIncludeProduct: async (_, args, { dataSources }) => {
             return dataSources.buda.productComboIncludeProduct(args.productID)
         },
+        productContainIngredient: async (_, args, { dataSources }) => {
+            return dataSources.buda.productContainIngredient(args.ingredientID)
+        },
+        productGroupsByUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.productGroupsByUser(args)
+        },
+        productGroup: async (_, args, { dataSources }) => {
+            return dataSources.buda.productGroup(args.productGroupID)
+        },
+        productsByProductGroup: async (_, args, { dataSources }) => {
+            return dataSources.buda.productsByProductGroup(args.productGroupID)
+        },
+        productGroupByProduct: async (_, args, { dataSources }) => {
+            return dataSources.buda.productGroupByProduct(args.productID)
+        },
         buyOrdersByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.buyOrdersByUser(args.page, args.size, args.sort)
         },
@@ -242,18 +257,6 @@ module.exports.resolvers = {
         },
         componentsByProduct: async (_, args, { dataSources }) => {
             return dataSources.buda.componentsByProduct(args.productID)
-        },
-        productContainIngredient: async (_, args, { dataSources }) => {
-            return dataSources.buda.productContainIngredient(args.ingredientID)
-        },
-        productGroupsByUser: async (_, args, { dataSources }) => {
-            return dataSources.buda.productGroupsByUser(args)
-        },
-        productGroup: async (_, args, { dataSources }) => {
-            return dataSources.buda.productGroup(args.productGroupID)
-        },
-        productsByProductGroup: async (_, args, { dataSources }) => {
-            return dataSources.buda.productsByProductGroup(args.productGroupID)
         },
         totalCountByHours: async (_, args, { dataSources }) => {
             return dataSources.buda.totalCountByHours(args)

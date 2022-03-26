@@ -842,6 +842,7 @@ type Query{
     productContainIngredient(ingredientID: Int): [Product] 
     productGroupsByUser: [ProductGroup]
     productGroup(productGroupID: Int): ProductGroup
+    productGroupByProduct(productID: Int): [ProductGroup]
     productsByProductGroup(productGroupID: Int): [Product]
     buyOrdersByUser(page: Int=0, size: Int=50, sort: String="buyOrderID,desc"): [BuyOrder]
     buyOrdersBySupplier(supplierID: Int): [BuyOrder]
