@@ -107,7 +107,7 @@ class Budabackend extends RESTDataSource {
         })
     }
     async buyOrdersByStatusAndUser(status){
-        return this.get(`api/business/buy/view/status/${status}`)
+        return this.get(`api/business/buy/view/all/status/${status}`)
     }
     async buyOrdersByTextID(textID) {
         return this.get(`api/business/buy/view/textID/${textID}`)
@@ -172,10 +172,10 @@ class Budabackend extends RESTDataSource {
         return this.get(`api/business/sell/warranty/view/all`)
     }
     async warrantyOrdersByProduct(productID){
-        return this.get(`api/business/sell/warranty/view/${productID}/all`)
+        return this.get(`api/business/sell/warranty/view/product/${productID}/all`)
     }
     async warrantyOrdersByCustomer(customerID){
-        return this.get(`api/business/sell/warranty/view/${customerID}/all`)
+        return this.get(`api/business/sell/warranty/view/customer/${customerID}/all`)
     }
     async customersByUser(){
         return this.get(`api/customer/view/all`)
@@ -193,7 +193,7 @@ class Budabackend extends RESTDataSource {
         return this.get(`api/discount/view/id/${discountID}`)
     }
     async supplier(supplierID){
-        return this.get(`api/supplier/view/${supplierID}`)
+        return this.get(`api/supplier/view/id/${supplierID}`)
     }
     async suppliersByUser(){
         return this.get(`api/supplier/view/all`)
@@ -205,7 +205,7 @@ class Budabackend extends RESTDataSource {
         return this.get(`api/plan/purchase/all`)
     }
     async picture(pictureID){
-        return this.get(`api/picture/view/${pictureID}`)
+        return this.get(`api/picture/view/id/${pictureID}`)
     }
     async fixedCostsByUser(){
         return this.get(`api/fixed-cost/crud/all`)
@@ -244,7 +244,7 @@ class Budabackend extends RESTDataSource {
         return this.get(`api/staff/view/id/${staffID}`)
     }
     async staffNotesByUser(){
-        return this.get(`api/staff/notification/userID/all`)
+        return this.get(`api/staff/notification/all`)
     }
     async staffNotesByStaff(staffID){
         return this.get(`api/staff/notification/staffID/${staffID}/all`)
@@ -270,14 +270,8 @@ class Budabackend extends RESTDataSource {
     async pendingNotiByUser(){
         return this.get(`api/notification/all/new`)
     }
-    async user(userID){
-        return this.get(`api/user/id/${userID}`)
-    }
     async currentUser(){
         return this.get(`api/user/view/me`)
-    }
-    async userByUUID(UUID) {
-        return this.get(`api/user/uuid/${UUID}`)
     }
     async totalCountByHours(){
         return this.get(`api/statistics/active-hours/total`)

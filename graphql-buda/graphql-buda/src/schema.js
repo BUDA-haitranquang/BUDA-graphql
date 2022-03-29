@@ -901,9 +901,7 @@ type Query{
     staffNote(staffNoteID: Int): StaffNote  
     notiByUser: [Notification]
     pendingNotiByUser: [Notification]
-    user(userID: Int): User
     currentUser: User
-    userByUUID(UUID: Int): User
     totalCountByHours: [ActiveHoursStatistics]
     totalCountCurrenMonthByHours: [ActiveHoursStatistics]
     totalSpendAgeGroupByUser: [AgeGroupStatistics]

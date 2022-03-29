@@ -124,7 +124,7 @@ module.exports.resolvers = {
             return dataSources.buda.sellOrder(args.sellOrderID)
         },
         incompletedSellOrdersByUser: async (_, args, { dataSources }) => {
-            return dataSources.buda.incompletedSellOrdesrByUser(args)
+            return dataSources.buda.incompletedSellOrdersByUser(args)
         },
         completedSellOrdersByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.completedSellOrdersByUser(args.page, args.size, args.sort)
@@ -223,10 +223,10 @@ module.exports.resolvers = {
         //     return dataSources.salaryLog(args.salaryLogID)
         // },
         salaryLogsByUser: async (_, args, { dataSources }) =>{
-            return dataSources.salaryLogsByUser(args)
+            return dataSources.buda.salaryLogsByUser(args)
         },
         salaryLogsByStaff: async (_, args, { dataSources }) => {
-            return dataSources.salaryLogsByStaff(args.staffID)
+            return dataSources.buda.salaryLogsByStaff(args.staffID)
         },
         staffNotesByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.staffNotesByUser(args)
@@ -246,14 +246,8 @@ module.exports.resolvers = {
         pendingNotiByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.pendingNotiByUser(args)
         },
-        user: async (_, args, { dataSources }) => {
-            return dataSources.buda.user(args.userID)
-        },
         currentUser: async (_, args, { dataSources }) => {
             return dataSources.buda.currentUser(args)
-        },
-        userByUUID: async (_, args, { dataSources }) => {
-            return dataSources.buda.userByUUID(args.UUID)
         },
         componentsByProduct: async (_, args, { dataSources }) => {
             return dataSources.buda.componentsByProduct(args.productID)
