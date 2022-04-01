@@ -407,12 +407,6 @@ module.exports.resolvers = {
         deleteProductComponent: async (_, args, { dataSources }) => {
             return dataSources.buda.deleteProductComponent(args.deleteProductComponent)
         },
-        // addIngredientToProduct: async (_, args, { dataSources }) => {
-        //     return dataSources.buda.addIngredientToProduct(args.productID, args.ingredientID)
-        // },
-        removeIngredientFromProduct: async (_, args, { dataSources }) => {
-            return dataSources.buda.removeIngredientFromProduct(args.productID, args.ingredientID)
-        },
         newIngredient: async (_, args, { dataSources }) => {
             return dataSources.buda.newIngredient(args.ingredientInput)
         },
@@ -441,7 +435,7 @@ module.exports.resolvers = {
             return dataSources.buda.newStaff(args.staffInput)
         },
         staffLogin: async (_, args, { dataSources }) => {
-            return dataSources.buda.staffLogin(args.uuid, args.password)
+            return dataSources.buda.staffLogin(args.account, args.password)
         },
         updateStaff: async (_, args, { dataSources }) => {
             return dataSources.buda.updateStaff(args.staffID, args.staff)
@@ -511,6 +505,15 @@ module.exports.resolvers = {
         },
         deleteBuyOrderStaff: async (_, args, { dataSources }) => {
             return dataSources.buda.deleteBuyOrderStaff(args.buyOrderID)
+        },
+        returnBuyOrder: async (_, args, { dataSources }) => {
+            return dataSources.buda.returnBuyOrder(args.buyOrderID)
+        },
+        delayPayBuyOrder: async (_, args, { dataSources }) => {
+            return dataSources.buda.delayPayBuyOrder(args.buyOrderID)
+        },
+        payDelayBuyOrder: async (_, args, { dataSources }) => {
+            return dataSources.buda.payDelayBuyOrder(args.buyOrderID)
         },
         deleteBuyOrderItem: async (_, args, { dataSources }) => {
             return dataSources.buda.deleteBuyOrderItem(args.buyOrderItemID)

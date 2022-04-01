@@ -434,7 +434,7 @@ class Budabackend extends RESTDataSource {
     }
     async removeProductFromGroup(removeProductFromGroup){
         const removeProductFromGroupJson=JSON.parse(JSON.stringify(removeProductFromGroup))
-        return this.post(`api/product/group/remove-product`, removeProductFromGroupJson)
+        return this.delete(`api/product/group/remove-product`, removeProductFromGroupJson)
     }
     async newProductComponent(newProductComponent){
         const newProductComponentJson = JSON.parse(JSON.stringify(newProductComponent))
@@ -443,12 +443,6 @@ class Budabackend extends RESTDataSource {
     async deleteProductComponent(deleteProductComponent){
         const deleteProductComponentJson = JSON.parse(JSON.stringify(deleteProductComponent))
         return this.delete(`api/product/packaging/component/remove`,deleteProductComponentJson)
-    }
-    // async addIngredientToProduct(productID, ingredientID){
-    //     return this.post(`api/product/packaging/component/${productID}/add/${ingredientID}`)
-    // }
-    async removeIngredientFromProduct(productID, ingredientID){
-        return this.post(`api/product-component/${productID}/remove/${ingredientID}`)
     }
     async newIngredient(ingredientInput) {
         const ingredientInputJson = JSON.parse(JSON.stringify(ingredientInput))
@@ -484,9 +478,9 @@ class Budabackend extends RESTDataSource {
         const staffInputJson = JSON.parse(JSON.stringify(staffInput))
         return this.post(`api/staff/create`, staffInputJson)
     }
-    async staffLogin(uuid, password) {
+    async staffLogin(account, password) {
         return this.post(`api/staff/login`, {
-            uuid: uuid,
+            account: account,
             password: password,
         })
     }
@@ -574,6 +568,15 @@ class Budabackend extends RESTDataSource {
     }
     async deleteBuyOrderStaff(buyOrderID){
         return this.delete(`api/business/buy/new-order/staff/${buyOrderID}`)
+    }
+    async returnBuyOrder(buyOrderID){
+        return this.put(`api/business/buy/return-order/id/${buyOrderID}`)
+    }
+    async delayPayBuyOrder(buyOrderID){
+        return this.put(`api/business/buy/delay/id/${buyOrderID}`)
+    }
+    async payDelayBuyOrder(buyOrderID){
+        return this.put(`api/business/buy/delay/pay/id/${buyOrderID}`)
     }
     async deleteBuyOrderItem(buyOrderItemID){
         return this.delete(`api/business/buy/item/${buyOrderItemID}`)

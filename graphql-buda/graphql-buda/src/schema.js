@@ -441,10 +441,10 @@ input UpdateProduct{
     userID: Int
     visible: Boolean
     picture: PictureInput
-    sellingPrice: Float = 0
-    alertAmount: Int = 0
-    amountLeft: Int = 0
-    costPerUnit: Float = 0
+    sellingPrice: Float
+    alertAmount: Int 
+    amountLeft: Int 
+    costPerUnit: Float 
     groupID: Int
     sellOrderItems: [SellOrderItemInput] 
     productLeftLogs: [ProductLeftLogInput]
@@ -609,7 +609,7 @@ input PurchaseInput{
      creationTime: String
      expiryDate: String!
      message: String
-     totalCost: Float = 0
+     totalCost: Float
      status: Status
 }
 input UserInput{
@@ -818,6 +818,10 @@ input StaffNoteInput{
      message: String 
      seen: Boolean
 }
+input StaffLogin{
+     account: String!
+     password: String!
+}
 type Query{
     ingredient(ingredientID:Int): Ingredient
     ingredientsByUser: [Ingredient]
@@ -963,8 +967,8 @@ type Mutation{
     editIngredientQuantity(ingredientID: Int, quantityLog: QuantityLogInput): Ingredient
     editIngredient(ingredientID: Int, ingredient: UpdateIngredient): Ingredient
     newRetail(newRetail: RetailCreateDTO): Product
-    newRetailFromProduct(newRetail: RetailCreateFromProductDTO): Product
-    newRetailFromIngredient(newRetail: RetailCreateFromIngredientDTO): Ingredient
+    newRetailFromProduct(newRetail: RetailCreateFromProductDTO): Ingredient
+    newRetailFromIngredient(newRetail: RetailCreateFromIngredientDTO): Product
     newStaff(staffInput: NewStaff): Staff
     staffLogin(account: String!, password: String!): Authenticate
     updateStaff(staffID: Int, staff: UpdateStaff): Staff
@@ -990,6 +994,9 @@ type Mutation{
     newBuyOrderStaff(newBuyOrder: BuyOrderDTO): BuyOrder
     deleteBuyOrder(buyOrderID: Int): String
     deleteBuyOrderStaff(buyOrderID: Int): String
+    returnBuyOrder(buyOrderID: Int): BuyOrder
+    delayPayBuyOrder(buyOrderID: Int): BuyOrder
+    payDelayBuyOrder(buyOrderID: Int): BuyOrder
     deleteBuyOrderItem(buyOrderItemID: Int): String
     newSellOrder(sellOrderInput: NewSellOrder): SellOrder
     newPosSellOrder(sellOrderInput: NewSellOrder): SellOrder
@@ -1026,7 +1033,6 @@ type Mutation{
     newOtherCost(otherCostInput: OtherCostInput): OtherCost
     hideOtherCost(otherCostID: Int): OtherCost
     newFixedCostBill(fixedCostBillInput: FixedCostBillInput): FixedCostBill
-#     addIngredientToProduct(productID: Int, ingredientID: Int): ProductComponent
     delayFixedCostBill(fixedCostBillID: Int): FixedCostBill
     payFixedCostBill(fixedCostBillID: Int): FixedCostBill
 }
