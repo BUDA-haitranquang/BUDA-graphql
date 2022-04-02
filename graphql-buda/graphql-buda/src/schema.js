@@ -98,10 +98,6 @@ type Staff{
     account: String!
     email: String
 }
-type StaffLogin{
-    account: String 
-    password: String 
-}
 type BuyOrder{
      buyOrderID: Int
      supplier: Supplier
