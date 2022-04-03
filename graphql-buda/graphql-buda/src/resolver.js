@@ -324,6 +324,21 @@ module.exports.resolvers = {
         revenuePeriod: async (_, args, { dataSources }) => {
             return dataSources.buda.revenuePeriod(args.period)
         },
+        totalRevenueDay: async (_, args, { dataSources }) => {
+            return dataSources.buda.totalRevenueDay(args)
+        },
+        totalRevenueWeek: async (_, args, { dataSources }) => {
+            return dataSources.buda.totalRevenueWeek(args)
+        },
+        totalRevenueMonth: async (_, args, { dataSources }) => {
+            return dataSources.buda.totalRevenueMonth(args)
+        },
+        totalRevenueYear: async (_, args, { dataSources }) => {
+            return dataSources.buda.totalRevenueYear(args)
+        },
+        totalRevenueXDays: async (_, args, { dataSources }) => {
+            return dataSources.buda.totalRevenueXDays(args.X)
+        },
         otherCostExpenseWeekly: async (_, args, { dataSources }) => {
             return dataSources.buda.otherCostExpenseWeekly(args)
         },
@@ -365,6 +380,21 @@ module.exports.resolvers = {
         },
         paySlipExpenseThisMonth: async (_, args, { dataSources }) => {
             return dataSources.buda.paySlipExpenseThisMonth(args)
+        },
+        totalExpenseDay: async (_, args, { dataSources }) => {
+            return dataSources.buda.totalExpenseDay(args)
+        },
+        totalExpenseWeek: async (_, args, { dataSources }) => {
+            return dataSources.buda.totalExpenseWeek(args)
+        },
+        totalExpenseMonth: async (_, args, { dataSources }) => {
+            return dataSources.buda.totalExpenseMonth(args)
+        },
+        totalExpenseYear: async (_, args, { dataSources }) => {
+            return dataSources.buda.totalExpenseYear(args)
+        },
+        totalExpenseXDays: async (_, args, { dataSources }) => {
+            return dataSources.buda.totalExpenseXDays(args.X)
         },
         retentionRateWeekly: async (_, args, { dataSources }) => {
             return dataSources.buda.retentionRateWeekly(args)

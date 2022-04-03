@@ -926,6 +926,11 @@ type Query{
     revenueWeekdays: [RevenueByTimeStatistics]
     revenueDaysThisMonth: [RevenueByTimeStatistics]
     revenuePeriod(period: PeriodDTO): [RevenueByTimeStatistics]
+    totalRevenueDay: [RevenueByTimeStatistics]
+    totalRevenueWeek: [RevenueByTimeStatistics]
+    totalRevenueMonth: [RevenueByTimeStatistics]
+    totalRevenueYear: [RevenueByTimeStatistics]
+    totalRevenueXDays(X: Int): [RevenueByTimeStatistics]
     otherCostExpenseWeekly: [ExpenseByTimeStatistics]
     otherCostExpenseThisMonth: [ExpenseByTimeStatistics]
     otherCostExpenseMonthly: [ExpenseByTimeStatistics] 
@@ -940,6 +945,11 @@ type Query{
     paySlipExpenseMonthly: [ExpenseByTimeStatistics]
     paySlipExpenseWeekly: [ExpenseByTimeStatistics]
     paySlipExpenseThisMonth: [ExpenseByTimeStatistics]
+    totalExpenseDay: [ExpenseByTimeStatistics]
+    totalExpenseWeek: [ExpenseByTimeStatistics]
+    totalExpenseMonth: [ExpenseByTimeStatistics]
+    totalExpenseYear: [ExpenseByTimeStatistics]
+    totalExpenseXDays(X: Int): [ExpenseByTimeStatistics]
     retentionRateWeekly: Float
     retentionRateMonthly: Float
 }

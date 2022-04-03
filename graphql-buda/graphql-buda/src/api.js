@@ -346,6 +346,21 @@ class Budabackend extends RESTDataSource {
         const periodJson=JSON.parse(JSON.stringify(period))
         return this.get(`api/statistics/revenue/sell-order/period`, periodJson)
     }
+    async totalRevenueDay(){
+        return this.get(`api/statistics/revenue/total/all/day`)
+    }
+    async totalRevenueWeek(){
+        return this.get(`api/statistics/revenue/total/all/week`)
+    }
+    async totalRevenueMonth(){
+        return this.get(`api/statistics/revenue/total/all/month`)
+    }
+    async totalRevenueYear(){
+        return this.get(`api/statistics/revenue/total/all/year`)
+    }
+    async totalRevenueXDays(X){
+        return this.get(`api/statistics/revenue/total/all/last-x-days/${X}`)
+    }
     async otherCostExpenseWeekly(){
         return this.get(`api/statistics/expense/other-cost/weekly`)
     }
@@ -387,6 +402,21 @@ class Budabackend extends RESTDataSource {
     }
     async paySlipExpenseThisMonth(){
         return this.get(`api/statistics/expense/pay-slip/this-month`)
+    }
+    async totalExpenseDay(){
+        return this.get(`api/statistics/expense/total/all/day`)
+    }
+    async totalExpenseWeek(){
+        return this.get(`api/statistics/expense/total/all/week`)
+    }
+    async totalExpenseMonth(){
+        return this.get(`api/statistics/expense/total/all/month`)
+    }
+    async totalExpenseYear(){
+        return this.get(`api/statistics/expense/total/all/year`)
+    }
+    async totalExpenseXDays(X){
+        return this.get(`api/statistics/expense/total/all/last-x-days/${X}`)
     }
     async retentionRateWeekly(){
         return this.get(`api/statistics/customer/retention/weekly`)
