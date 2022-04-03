@@ -359,7 +359,7 @@ class Budabackend extends RESTDataSource {
         return this.get(`api/statistics/revenue/total/all/year`)
     }
     async totalRevenueXDays(X){
-        return this.get(`api/statistics/revenue/total/all/last-x-days/${X}`)
+        return this.get(`api/statistics/revenue/total/last-x-days/${X}`)
     }
     async otherCostExpenseWeekly(){
         return this.get(`api/statistics/expense/other-cost/weekly`)
@@ -416,7 +416,7 @@ class Budabackend extends RESTDataSource {
         return this.get(`api/statistics/expense/total/all/year`)
     }
     async totalExpenseXDays(X){
-        return this.get(`api/statistics/expense/total/all/last-x-days/${X}`)
+        return this.get(`api/statistics/expense/total/last-x-days/${X}`)
     }
     async retentionRateWeekly(){
         return this.get(`api/statistics/customer/retention/weekly`)
