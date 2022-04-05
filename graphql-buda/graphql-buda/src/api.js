@@ -83,6 +83,9 @@ class Budabackend extends RESTDataSource {
     async productContainIngredient(ingredientID){
         return this.get(`api/product/packaging/component/contains/ingredient/${ingredientID}`)
     }
+    async buyOrder(buyOrderID) {
+        return this.get(`api/business/buy/view/ids/${buyOrderID}`)
+    }
     async buyOrdersByUser(page, size, sort){
         return this.get(`api/business/buy/view/all`,{
             page: page,
@@ -141,7 +144,7 @@ class Budabackend extends RESTDataSource {
         return this.get(`api/business/sell/view/customer/${customerID}/all`)
     }
     async sellOrder(sellOrderID) {
-        return this.get(`api/business/sell/view/${sellOrderID}`)
+        return this.get(`api/business/sell/view/id/${sellOrderID}`)
     }
     async incompletedSellOrdersByUser(){
         return this.get(`api/business/sell/view/all/incompleted`)

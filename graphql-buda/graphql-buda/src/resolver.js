@@ -75,6 +75,9 @@ module.exports.resolvers = {
         productGroupByProduct: async (_, args, { dataSources }) => {
             return dataSources.buda.productGroupByProduct(args.productID)
         },
+        buyOrder: async (_, args, { dataSources }) => {
+            return dataSources.buda.buyOrder(args.buyOrderID)
+        },
         buyOrdersByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.buyOrdersByUser(args.page, args.size, args.sort)
         },

@@ -844,6 +844,7 @@ type Query{
     productGroup(productGroupID: Int): ProductGroup
     productGroupByProduct(productID: Int): [ProductGroup]
     productsByProductGroup(productGroupID: Int): [Product]
+    buyOrder(buyOrderID: Int): BuyOrder
     buyOrdersByUser(page: Int=0, size: Int=50, sort: String="buyOrderID,desc"): [BuyOrder]
     buyOrdersBySupplier(supplierID: Int): [BuyOrder]
     buyOrdersLastXDaysByUser(X: Int): [BuyOrder]
