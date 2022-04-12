@@ -399,12 +399,33 @@ module.exports.resolvers = {
         totalExpenseXDays: async (_, args, { dataSources }) => {
             return dataSources.buda.totalExpenseXDays(args.X)
         },
+        expensePeriod: async (_, args, { dataSources }) => {
+            return dataSources.buda.expensePeriod(args.period)
+        },
         retentionRateWeekly: async (_, args, { dataSources }) => {
             return dataSources.buda.retentionRateWeekly(args)
         },
         retentionRateMonthly: async (_, args, { dataSources }) => {
             return dataSources.buda.retentionRateMonthly(args)
-        }
+        },
+        businessOverallEveryDay: async (_, args, { dataSources }) => {
+            return dataSources.buda.businessOverallEveryDay(args)
+        },
+        businessOverallEveryWeek: async (_, args, { dataSources }) => {
+            return dataSources.buda.businessOverallEveryWeek(args)
+        },
+        businessOverallEveryMonth: async (_, args, { dataSources }) => {
+            return dataSources.buda.businessOverallEveryMonth(args)
+        },
+        businessOverallEveryYear: async (_, args, { dataSources }) => {
+            return dataSources.buda.businessOverallEveryYear(args)
+        },
+        businessOverallXDays: async (_, args, { dataSources }) => {
+            return dataSources.buda.businessOverallXDays(args.X)
+        },
+        businessOverallPeriod: async (_, args, { dataSources }) => {
+            return dataSources.buda.businessOverallPeriod(args.period)
+        },
     },
     Mutation: {
         newProduct: async (_, args, { dataSources }) => {

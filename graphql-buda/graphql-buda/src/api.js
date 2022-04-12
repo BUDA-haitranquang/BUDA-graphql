@@ -346,8 +346,8 @@ class Budabackend extends RESTDataSource {
         return this.get(`api/statistics/revenue/sell-order/this-month/daily`)
     }
     async revenuePeriod(period) {
-        const periodJson=JSON.parse(JSON.stringify(period))
-        return this.get(`api/statistics/revenue/sell-order/period`, periodJson)
+        const periodJson = JSON.parse(JSON.stringify(period))
+        return this.get(`api/statistics/revenue/total/all/period`,periodJson) 
     }
     async totalRevenueDay(){
         return this.get(`api/statistics/revenue/total/all/day`)
@@ -421,11 +421,34 @@ class Budabackend extends RESTDataSource {
     async totalExpenseXDays(X){
         return this.get(`api/statistics/expense/total/last-x-days/${X}`)
     }
+    async expensePeriod(period) {
+        const periodJson=JSON.parse(JSON.stringify(period))
+        return this.get(`api/statistics/expense/total/all/period`, periodJson)
+    }
     async retentionRateWeekly(){
         return this.get(`api/statistics/customer/retention/weekly`)
     }
     async retentionRateMonthly(){
         return this.get(`api/statistics/customer/retention/monthly`)
+    }
+    async totalProfitEveryDay(){
+        return this.get(`api/statistics/overall/total/all/day`)
+    }
+    async totalProfitEveryWeek(){
+        return this.get(`api/statistics/overall/total/all/week`)
+    }
+    async totalProfitEveryMonth(){
+        return this.get(`api/statistics/overall/total/all/month`)
+    }
+    async totalProfitEveryYear(){
+        return this.get(`api/statistics/overall/total/all/year`)
+    }
+    async totalProfitXDays(X){
+        return this.get(`api/statistics/overall/total/last-x-days/${X}`)
+    }
+    async totalProfitPeriod(period) {
+        const periodJson = JSON.parse(JSON.stringify(period))
+        return this.get(`api/statistics/overall/total/all/period`, periodJson)
     }
     async cleanCache() {
         try {

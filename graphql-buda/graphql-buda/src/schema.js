@@ -337,6 +337,11 @@ type ExpenseByTimeStatistics{
      timePeriod: String 
      expense: Float
 }
+type ExpenseByTimePeriodStatistics{
+     timeFrom: String 
+     timeTo: String 
+     expense: Float
+}
 type AgeGroupStatistics{
      ageGroup: AgeGroup 
      totalSpend: Float
@@ -363,9 +368,27 @@ type RevenueByTimeStatistics{
      timePeriod: String 
      revenue: Float
 }
+type RevenueByTimePeriodStatistics{
+     timeFrom: String 
+     timeTo: String 
+     revenue: Float
+}
 type ActiveHoursStatistics{
      hour: String
      totalCount: Int
+}
+type BusinessReportByTimeStatistics{
+    timePeriod: String 
+    revenue: Float
+    expense: Float
+    profit: Float
+}
+type BusinessByTimePeriodStatistics {
+   timeFrom: String 
+   timeTo: String
+   revenue: Float
+   expense: Float
+   profit: Float
 }
 enum StaffPosition{
     MANAGER, 
@@ -926,7 +949,7 @@ type Query{
     revenueMonthly: [RevenueByTimeStatistics]
     revenueWeekdays: [RevenueByTimeStatistics]
     revenueDaysThisMonth: [RevenueByTimeStatistics]
-    revenuePeriod(period: PeriodDTO): [RevenueByTimeStatistics]
+    revenuePeriod(from: String, to: String): [RevenueByTimePeriodStatistics]
     totalRevenueDay: [RevenueByTimeStatistics]
     totalRevenueWeek: [RevenueByTimeStatistics]
     totalRevenueMonth: [RevenueByTimeStatistics]
@@ -951,8 +974,15 @@ type Query{
     totalExpenseMonth: [ExpenseByTimeStatistics]
     totalExpenseYear: [ExpenseByTimeStatistics]
     totalExpenseXDays(X: Int): [ExpenseByTimeStatistics]
+    expensePeriod(period: PeriodDTO): [ExpenseByTimePeriodStatistics]
     retentionRateWeekly: Float
     retentionRateMonthly: Float
+    businessOverallEveryDay: [BusinessReportByTimeStatistics]
+    businessOverallEveryWeek: [BusinessReportByTimeStatistics]
+    businessOverallEveryMonth: [BusinessReportByTimeStatistics]
+    businessOverallEveryYear: [BusinessReportByTimeStatistics]
+    businessOverallXDays(X: Int): [BusinessReportByTimeStatistics]
+    businessOverallPeriod(period: PeriodDTO): [BusinessByTimePeriodStatistics]
 }
 
 type Mutation{
