@@ -431,22 +431,22 @@ class Budabackend extends RESTDataSource {
     async retentionRateMonthly(){
         return this.get(`api/statistics/customer/retention/monthly`)
     }
-    async totalProfitEveryDay(){
+    async businessOverallEveryDay(){
         return this.get(`api/statistics/overall/total/all/day`)
     }
-    async totalProfitEveryWeek(){
+    async businessOverallEveryWeek(){
         return this.get(`api/statistics/overall/total/all/week`)
     }
-    async totalProfitEveryMonth(){
+    async businessOverallEveryMonth(){
         return this.get(`api/statistics/overall/total/all/month`)
     }
-    async totalProfitEveryYear(){
+    async businessOverallEveryYear(){
         return this.get(`api/statistics/overall/total/all/year`)
     }
-    async totalProfitXDays(X){
+    async businessOverallXDays(X){
         return this.get(`api/statistics/overall/total/last-x-days/${X}`)
     }
-    async totalProfitPeriod(period) {
+    async businessOverallPeriod(period) {
         const periodJson = JSON.parse(JSON.stringify(period))
         return this.get(`api/statistics/overall/total/all/period`, periodJson)
     }
