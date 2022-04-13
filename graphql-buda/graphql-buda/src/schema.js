@@ -440,6 +440,7 @@ input PeriodDTO{
 }
 input ProductInput{
     productID: Int
+    productSKU: String
     name: String
     description: String
     userID: Int
@@ -455,6 +456,7 @@ input ProductInput{
 }
 input UpdateProduct{
     productID: Int
+    productSKU: String
     name: String
     description: String
     userID: Int
@@ -502,6 +504,7 @@ input RemoveProductFromGroupDTO{
 }
 input IngredientInput{
      ingredientID: Int
+     ingredientSKU: String
      name: String
      description: String 
      amountLeft: Int 
@@ -514,6 +517,7 @@ input IngredientInput{
 }
 input NewIngredient{
      ingredientID: Int
+     ingredientSKU: String
      name: String
      description: String 
      amountLeft: Int = 0
@@ -526,6 +530,7 @@ input NewIngredient{
 }
 input UpdateIngredient{
      ingredientID: Int
+     ingredientSKU: String
      name: String
      description: String 
      amountLeft: Int 
