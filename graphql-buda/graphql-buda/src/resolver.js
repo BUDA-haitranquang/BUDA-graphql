@@ -434,9 +434,6 @@ module.exports.resolvers = {
         hideProduct: async (_, args, { dataSources }) => {
             return dataSources.buda.hideProduct(args.productID)
         },
-        deleteProduct: async (_, args, { dataSources }) => {
-            return dataSources.buda.deleteProduct(args.productID)
-        },
         editProductQuantity: async (_, args, { dataSources }) => {
             return dataSources.buda.editProductQuantity(args.productID, args.quantityLog)
         },
@@ -466,9 +463,6 @@ module.exports.resolvers = {
         },
         hideIngredient: async (_, args, { dataSources }) => {
             return dataSources.buda.hideIngredient(args.ingredientID)
-        },
-        deleteIngredient: async (_, args, { dataSources }) => {
-            return dataSources.buda.deleteIngredient(args.ingredientID)
         },
         editIngredientQuantity: async (_, args, { dataSources }) => {
             return dataSources.buda.editIngredientQuantity(args.ingredientID, args.quantityLog)
@@ -664,9 +658,6 @@ module.exports.resolvers = {
         },
         hideFixedCost: async (_, args, { dataSources }) => {
             return dataSources.buda.hideFixedCost(args.fixedCostID)
-        },
-        deleteFixedCost: async (_, args, { dataSources }) => {
-            return dataSources.buda.deleteFixedCost(args.fixedCostID)
         },
         newOtherCost: async (_, args, { dataSources }) => {
             return dataSources.buda.newOtherCost(args.otherCostInput)

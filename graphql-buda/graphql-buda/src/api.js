@@ -466,9 +466,6 @@ class Budabackend extends RESTDataSource {
     async hideProduct(productID) {
         return this.get(`api/product/view/hide/${productID}`)
     }
-    async deleteProduct(productID){
-        return this.delete(`api/product/delete/productID/${productID}`)
-    }
     async editProductQuantity(productID, quantityLog){
         const quantityLogJson = JSON.parse(JSON.stringify(quantityLog))
         return this.put(`api/product/update/quantity/${productID}`, quantityLogJson)
@@ -506,9 +503,6 @@ class Budabackend extends RESTDataSource {
     }
     async hideIngredient(ingredientID){
         return this.get(`api/ingredient/view/hide/${ingredientID}`)
-    }
-    async deleteIngredient(ingredientID){
-        return this.delete(`api/ingredient/delete/ingredientID/${ingredientID}`)
     }
     async editIngredientQuantity(ingredientID, quantityLog){
         const quantityLogJson = JSON.parse(JSON.stringify(quantityLog))
@@ -740,9 +734,6 @@ class Budabackend extends RESTDataSource {
     async newFixedCost(fixedCostInput){
         const fixedCostInputJson = JSON.parse(JSON.stringify(fixedCostInput))
         return this.post(`api/fixed-cost/crud/new`, fixedCostInputJson)
-    }
-    async deleteFixedCost(fixedCostID){
-        return this.delete(`api/fixed-cost/crud/${fixedCostID}`)
     }
     async updateFixedCost(fixedCost){
         const fixedCostJson = JSON.parse(JSON.stringify(fixedCost))

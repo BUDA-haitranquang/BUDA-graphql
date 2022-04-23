@@ -993,7 +993,6 @@ type Query{
 type Mutation{
     newProduct(productInput: ProductInput): Product
     hideProduct(productID: Int): Product
-    deleteProduct(productID: Int): String
     editProductQuantity(productID: Int, quantityLog: QuantityLogInput): Product
     editProduct(productID: Int, product: UpdateProduct): Product
     newProductGroup(productGroupInput: ProductGroupInput): ProductGroup
@@ -1005,7 +1004,6 @@ type Mutation{
     removeIngredientFromProduct(productID: Int, ingredientID: Int): String
     newIngredient(ingredientInput: NewIngredient): Ingredient
     hideIngredient(ingredientID: Int): Ingredient 
-    deleteIngredient(ingredientID: Int): String
     editIngredientQuantity(ingredientID: Int, quantityLog: QuantityLogInput): Ingredient
     editIngredient(ingredientID: Int, ingredient: UpdateIngredient): Ingredient
     newRetail(newRetail: RetailCreateDTO): Product
@@ -1071,7 +1069,6 @@ type Mutation{
     newFixedCost(fixedCostInput: FixedCostInput): FixedCost
     updateFixedCost(fixedCost: FixedCostInput): FixedCost
     hideFixedCost(fixedCostID: Int): FixedCost
-    deleteFixedCost(fixedCostID: Int): String
     newOtherCost(otherCostInput: OtherCostInput): OtherCost
     hideOtherCost(otherCostID: Int): OtherCost
     newFixedCostBill(fixedCostBillInput: FixedCostBillInput): FixedCostBill
