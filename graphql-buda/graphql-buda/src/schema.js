@@ -579,6 +579,8 @@ input BuyOrderDTO{
      supplier: SupplierInput
      address: String 
      status: Status!
+     textID: String
+     description: String
      buyOrderItemDTOs: [BuyOrderItemDTO]!
 }
 input BuyOrderItemDTO{
