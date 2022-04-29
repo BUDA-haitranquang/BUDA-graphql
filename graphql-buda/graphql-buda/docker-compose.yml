@@ -1,0 +1,8 @@
+version: "3.0"
+services:
+  graphql:
+    image: haitranquangofficial/buda:graphql
+    restart: always
+    ports:
+      - 4000:4000
+    stdin_open: true

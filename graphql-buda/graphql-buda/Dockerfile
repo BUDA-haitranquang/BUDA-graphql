@@ -4,7 +4,7 @@ RUN mkdir -p /graphql-buda
 WORKDIR /graphql-buda
 # Informs Docker that the container listens on the 
 # specified network ports at runtime
-EXPOSE 3005
+EXPOSE 4000
 # Copies files from the local 
 # directory to a new app directory on the container
 COPY . .
