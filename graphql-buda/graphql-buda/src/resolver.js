@@ -674,6 +674,9 @@ module.exports.resolvers = {
         payFixedCostBill: async (_, args, { dataSources }) => {
             return dataSources.buda.payFixedCostBill(args.fixedCostBillID)
         },
+        newIssue: async (_, args, { dataSources }) => {
+            return dataSources.issueService.newIssue(args.issue)
+        }
         // cleanCache: async (_, __, { dataSources }) => {
         //     return dataSources.buda.cleanCache()
         // }

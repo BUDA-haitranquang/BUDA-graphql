@@ -390,6 +390,12 @@ type BusinessByTimePeriodStatistics {
    expense: Float
    profit: Float
 }
+type Issue{
+     issueID: Int
+     description: String
+     userID: Int
+     creationTime: String
+}
 enum StaffPosition{
     MANAGER, 
     BASIC
@@ -433,6 +439,10 @@ enum MailTokenType{
     REGISTER, 
     UPDATE_INFO, 
     UPDATE_PASSWORD 
+}
+enum IssueType{
+     TECHNICAL,
+     OTHER
 }
 input PeriodDTO{
      from: String
@@ -848,6 +858,13 @@ input StaffLogin{
      account: String!
      password: String!
 }
+input IssueInput{
+     issueID: Int
+     type: IssueType
+     description: String
+     userID: Int
+     creationTime: String
+}
 type Query{
     ingredient(ingredientID:Int): Ingredient
     ingredientsByUser: [Ingredient]
@@ -1076,5 +1093,6 @@ type Mutation{
     newFixedCostBill(fixedCostBillInput: FixedCostBillInput): FixedCostBill
     delayFixedCostBill(fixedCostBillID: Int): FixedCostBill
     payFixedCostBill(fixedCostBillID: Int): FixedCostBill
+    newIssue(issue: IssueInput): Issue
 }
 `;
