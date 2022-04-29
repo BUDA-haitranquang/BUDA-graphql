@@ -2,9 +2,7 @@ const { ApolloServer } = require('apollo-server');
 const { typeDefs } = require('./schema');
 const { resolvers } = require('./resolver');
 const Budabackend = require('./api');
-const { BaseRedisCache } = require('apollo-server-cache-redis');
-const responseCachePlugin = require('apollo-server-plugin-response-cache');
-const Redis = require('ioredis');
+const issueServicebackend = require('./issue-service');
 
 
 const server = new ApolloServer({
@@ -20,6 +18,7 @@ const server = new ApolloServer({
   dataSources: () => {
     return {
       buda: new Budabackend(),
+      issueService: new issueServicebackend(),
     };
   },
   context: ({ req }) => {
