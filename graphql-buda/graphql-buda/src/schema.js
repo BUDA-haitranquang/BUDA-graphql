@@ -423,7 +423,8 @@ enum Status{
     PACKAGING, 
     RECEIVING, 
     DELAYING, 
-    CANCELLED
+    CANCELLED,
+    RETURNED
 }
 enum DiscountType {
     CASH_ONLY, 
