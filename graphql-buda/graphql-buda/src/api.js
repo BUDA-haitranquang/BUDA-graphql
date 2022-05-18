@@ -560,10 +560,6 @@ class Budabackend extends RESTDataSource {
     async deleteStaffNote(staffNoteID){
         return this.delete(`api/staff/notification/noteID/${staffNoteID}`)
     }
-    async newUser(userRegister){
-        const userRegisterJson = JSON.parse(JSON.stringify(userRegister))
-        return this.post(`api/user/register`, userRegisterJson)
-    }
     async confirmRegister(token) {
         return this.get(`api/user/register/confirm/?token=${token}`)
     }
@@ -579,10 +575,6 @@ class Budabackend extends RESTDataSource {
     async loginGoogle(jwtSimple){
         const jwtSimpleJson = JSON.parse(JSON.stringify(jwtSimple))
         return this.post(`api/user/login/google`, jwtSimpleJson)
-    }
-    async newAccessToken(jwtSimple) {
-        const jwtSimpleJson = JSON.parse(JSON.stringify(jwtSimple))
-        return this.post('api/user/refresh-token', jwtSimpleJson)
     }
     async updateUserPassword(updateUserPassword){
         const updateUserPasswordJson=JSON.parse(JSON.stringify(updateUserPassword))

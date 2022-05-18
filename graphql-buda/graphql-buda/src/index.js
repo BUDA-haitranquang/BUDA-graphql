@@ -3,6 +3,7 @@ const { typeDefs } = require('./schema');
 const { resolvers } = require('./resolver');
 const Budabackend = require('./api');
 const issueServicebackend = require('./issue-service');
+const authenticationServicebackend = require('./authentication-service');
 
 
 const server = new ApolloServer({
@@ -19,6 +20,7 @@ const server = new ApolloServer({
     return {
       buda: new Budabackend(),
       issueService: new issueServicebackend(),
+      authenticationService: new authenticationServicebackend()
     };
   },
   context: ({ req }) => {
