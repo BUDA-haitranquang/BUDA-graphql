@@ -3,6 +3,11 @@ const { typeDefs } = require('./schema');
 const { resolvers } = require('./resolver');
 const Budabackend = require('./api');
 const issueServicebackend = require('./issue-service');
+<<<<<<< Updated upstream
+=======
+const authenticationServicebackend = require('./authentication-service');
+const notifierServicebackend = require('./notifier-service');
+>>>>>>> Stashed changes
 
 
 const server = new ApolloServer({
@@ -19,6 +24,11 @@ const server = new ApolloServer({
     return {
       buda: new Budabackend(),
       issueService: new issueServicebackend(),
+<<<<<<< Updated upstream
+=======
+      authenticationService: new authenticationServicebackend(),
+      notifierService: new notifierServicebackend()
+>>>>>>> Stashed changes
     };
   },
   context: ({ req }) => {

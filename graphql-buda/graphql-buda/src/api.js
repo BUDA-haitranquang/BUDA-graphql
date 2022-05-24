@@ -8,6 +8,7 @@ class Budabackend extends RESTDataSource {
         this.baseURL = "http://103.173.228.124:8080/"
         //this.baseURL = "http://143.198.194.24:8080/"
         //this.baseURL = 'http://159.89.203.89:8080/'
+        // this.baseURL="http://localhost:8080/"
     }
     async ingredient(ingredientID) {
         return this.get(`api/ingredient/view/ingredientID/${ingredientID}`)
@@ -94,6 +95,9 @@ class Budabackend extends RESTDataSource {
             sort: sort
         })
     }
+    async countBuyOrderByUser(){
+        return this.get(`api/business/buy/view/all/count`)
+    }
     async buyOrdersBySupplier(supplierID) {
         return this.get(`api/business/buy/view/supplier/${supplierID}/all`)
     }
@@ -113,8 +117,28 @@ class Budabackend extends RESTDataSource {
     async buyOrdersByStatusAndUser(status){
         return this.get(`api/business/buy/view/all/status/${status}`)
     }
+    async countBuyOrderByStatusAndUser(status){
+        return this.get(`api/business/buy/view/all/status/${status}/count`)
+    }
     async buyOrdersByTextID(textID) {
         return this.get(`api/business/buy/view/textID/${textID}`)
+    }
+    async countBuyOrderByTextID(textID) {
+        return this.get(`api/business/buy/view/textID/${textID}/count`)
+    }
+    async buyOrdersBySupplierName(supplierName) {
+        return this.get(`api/business/buy/view/supplier/${supplierName}`)
+    }
+    async countBuyOrderBySupplierName(supplierName) {
+        return this.get(`api/business/buy/view/supplier/${supplierName}/count`)
+    }
+    async buyOrdersInPeriod(period) {
+        const periodJson = JSON.parse(JSON.stringify(period))
+        return this.get(`api/business/buy/view/period`, periodJson)
+    }
+    async countBuyOrderInPeriod(period) {
+        const periodJson = JSON.parse(JSON.stringify(period))
+        return this.get(`api/business/buy/view/period/count`, periodJson)
     }
     async buyOrderItemsByBuyOrder(buyOrderID){
         return this.get(`api/business/buy/item/buy-order/${buyOrderID}`)
@@ -141,6 +165,9 @@ class Budabackend extends RESTDataSource {
             sort: sort
         })
     }
+    async countSellOrderByUser(){
+        return this.get(`api/business/sell/view/all/count`)
+    }
     async sellOrdersByCustomer(customerID) {
         return this.get(`api/business/sell/view/customer/${customerID}/all`)
     }
@@ -163,8 +190,28 @@ class Budabackend extends RESTDataSource {
     async sellOrdersByStatusAndUser(status){
         return this.get(`api/business/sell/view/all/status/${status}`)
     }
+    async countSellOrderByStatusAndUser(status){
+        return this.get(`api/business/sell/view/all/status/${status}/count`)
+    }
     async sellOrdersByTextID(textID) {
         return this.get(`api/business/sell/view/textID/${textID}`)
+    }
+    async countSellOrderByTextID(textID) {
+        return this.get(`api/business/sell/view/textID/${textID}/count`)
+    }
+    async sellOrdersByCustomerName(customerName) {
+        return this.get(`api/business/sell/view/customer/${customerName}`)
+    }
+    async countSellOrderByCustomerName(customerName) {
+        return this.get(`api/business/sell/view/customer/${customerName}/count`)
+    }
+    async sellOrdersInPeriod(period) {
+        const periodJson = JSON.parse(JSON.stringify(period))
+        return this.get(`api/business/sell/view/period`, periodJson)
+    }
+    async countSellOrderInPeriod(from, to) {
+        const periodJson = JSON.parse(JSON.stringify({from: from, to: to}))
+        return this.get(`api/business/sell/view/period/count`, periodJson)
     }
     async sellOrderItemsBySellOrder(sellOrderID){
         return this.get(`api/business/sell/item/sell-order-id/${sellOrderID}`)
@@ -276,6 +323,9 @@ class Budabackend extends RESTDataSource {
     }
     async currentUser(){
         return this.get(`api/user/view/me`)
+    }
+    async storesByUser(){
+        return this.get(`api/store/view/all`)
     }
     async totalCountByHours(){
         return this.get(`api/statistics/active-hours/total`)
@@ -560,6 +610,7 @@ class Budabackend extends RESTDataSource {
     async deleteStaffNote(staffNoteID){
         return this.delete(`api/staff/notification/noteID/${staffNoteID}`)
     }
+<<<<<<< Updated upstream
     async newUser(userRegister){
         const userRegisterJson = JSON.parse(JSON.stringify(userRegister))
         return this.post(`api/user/register`, userRegisterJson)
@@ -567,19 +618,16 @@ class Budabackend extends RESTDataSource {
     async confirmRegister(token) {
         return this.get(`api/user/register/confirm/?token=${token}`)
     }
+=======
+>>>>>>> Stashed changes
     async deleteUser(userID){
         return this.delete(`api/user/${userID}`)
-    }
-    async userLogin(email, password) {
-        return this.post(`api/user/login`, {
-            email: email,
-            password: password,
-        })
     }
     async loginGoogle(jwtSimple){
         const jwtSimpleJson = JSON.parse(JSON.stringify(jwtSimple))
         return this.post(`api/user/login/google`, jwtSimpleJson)
     }
+<<<<<<< Updated upstream
     async newAccessToken(jwtSimple) {
         const jwtSimpleJson = JSON.parse(JSON.stringify(jwtSimple))
         return this.post('api/user/refresh-token', jwtSimpleJson)
@@ -595,6 +643,8 @@ class Budabackend extends RESTDataSource {
         const updateUserPasswordJson=JSON.parse(JSON.stringify(updateUserPassword))
         return this.put(`api/user/password/forgot/confirm/?token=${token}`, updateUserPasswordJson)
     }
+=======
+>>>>>>> Stashed changes
     async updateUser(user){
         const userJson=JSON.parse(JSON.stringify(user))
         return this.put(`api/user/update-info`, userJson)
@@ -759,6 +809,14 @@ class Budabackend extends RESTDataSource {
     }
     async payFixedCostBill(fixedCostBillID){
         return this.put(`api/cost/fixed-cost/bill/pay/id/${fixedCostBillID}`)
+    }
+    async newStore(store){
+        const storeJson = JSON.parse(JSON.stringify(store))
+        return this.post(`api/store/create`, storeJson)
+    }
+    async updateStore(store){
+        const storeJson = JSON.parse(JSON.stringify(store))
+        return this.put(`api/store/update`, storeJson)
     }
 }
 module.exports = Budabackend

@@ -81,6 +81,9 @@ module.exports.resolvers = {
         buyOrdersByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.buyOrdersByUser(args.page, args.size, args.sort)
         },
+        countBuyOrderByUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.countBuyOrderByUser(args)
+        },
         buyOrdersBySupplier: async (_, args, { dataSources }) => {
             return dataSources.buda.buyOrdersBySupplier(args.supplierID)
         },
@@ -96,8 +99,26 @@ module.exports.resolvers = {
         buyOrdersByStatusAndUser: async (_, args, { dataSources }) => {
             return dataSources.buda.buyOrdersByStatusAndUser(args.status)
         },
+        countBuyOrderByStatusAndUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.countBuyOrderByStatusAndUser(args.status)
+        },
         buyOrdersByTextID: async (_, args, { dataSources }) => {
             return dataSources.buda.buyOrdersByTextID(args.textID)
+        },
+        countBuyOrderByTextID: async (_, args, { dataSources }) => {
+            return dataSources.buda.countBuyOrderByTextID(args.textID)
+        },
+        buyOrdersBySupplierName: async (_, args, { dataSources }) => {
+            return dataSources.buda.buyOrdersBySupplierName(args.supplierName)
+        },
+        countBuyOrderBySupplierName: async (_, args, { dataSources }) => {
+            return dataSources.buda.countBuyOrderBySupplierName(args.supplierName)
+        },
+        buyOrdersInPeriod: async (_, args, { dataSources }) => {
+            return dataSources.buda.buyOrdersInPeriod(args.period)
+        },
+        countBuyOrderInPeriod: async (_, args, { dataSources }) => {
+            return dataSources.buda.countBuyOrderInPeriod(args.period)
         },
         buyOrderItemsByBuyOrder: async (_, args, { dataSources }) => {
             return dataSources.buda.buyOrderItemsByBuyOrder(args.buyOrderID)
@@ -120,6 +141,9 @@ module.exports.resolvers = {
         sellOrdersByUser: async (_, args, { dataSources }) =>{
             return dataSources.buda.sellOrdersByUser(args.page, args.size, args.sort)
         },
+        countSellOrdersByUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.countSellOrdersByUser(args)
+        },
         sellOrdersByCustomer: async (_, args, { dataSources }) => {
             return dataSources.buda.sellOrdersByCustomer(args.customerID)
         },
@@ -138,8 +162,26 @@ module.exports.resolvers = {
         sellOrdersByStatusAndUser: async (_, args, { dataSources }) => {
             return dataSources.buda.sellOrdersByStatusAndUser(args.status)
         },
+        countSellOrderByStatusAndUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.countSellOrderByStatusAndUser(args.status)
+        },
         sellOrdersByTextID: async (_, args, { dataSources }) => {
             return dataSources.buda.sellOrdersByTextID(args.textID)
+        },
+        countSellOrderByTextID: async (_, args, { dataSources }) => {
+            return dataSources.buda.countSellOrderByTextID(args.textID)
+        },
+        sellOrdersByCustomerName: async (_, args, { dataSources }) => {
+            return dataSources.buda.sellOrdersByCustomerName(args.customerName)
+        },
+        countSellOrderByCustomerName: async (_, args, { dataSources }) => {
+            return dataSources.buda.countSellOrderByCustomerName(args.customerName)
+        },
+        sellOrdersInPeriod: async (_, args, { dataSources }) => {
+            return dataSources.buda.sellOrdersInPeriod(args.period)
+        },
+        countSellOrderInPeriod: async (_, args, { dataSources }) => {
+            return dataSources.buda.countSellOrderInPeriod(args.from, args.to)
         },
         sellOrderItemsBySellOrder: async (_, args, { dataSources }) => {
             return dataSources.buda.sellOrderItemsBySellOrder(args.sellOrderID)
@@ -254,6 +296,12 @@ module.exports.resolvers = {
         },
         componentsByProduct: async (_, args, { dataSources }) => {
             return dataSources.buda.componentsByProduct(args.productID)
+        },
+        storesByUser: async (_, args, { dataSources }) => {
+            return dataSources.buda.storesByUser(args)
+        },
+        allNotifier: async (_, args, { dataSources }) => {
+            return dataSources.notifierService.allNotifier(args)
         },
         totalCountByHours: async (_, args, { dataSources }) => {
             return dataSources.buda.totalCountByHours(args)
@@ -510,7 +558,7 @@ module.exports.resolvers = {
             return dataSources.buda.newUser(args.userRegister) 
         },
         confirmRegister: async (_, args, { dataSources }) => {
-            return dataSources.buda.confirmRegister(args.token)
+            return dataSources.authenticationService.confirmRegister(args.token)
         },
         userLogin: async (_, args, { dataSources }) => {
             return dataSources.buda.userLogin(args.email, args.password)
@@ -528,13 +576,13 @@ module.exports.resolvers = {
             return dataSources.buda.updateUser(args.user)
         },
         updateUserPassword: async (_, args, { dataSources }) => {
-            return dataSources.buda.updateUserPassword(args.updateUserPassword)
+            return dataSources.authenticationService.updateUserPassword(args.updateUserPassword)
         },
         forgotPassword: async (_, args, { dataSources }) => {
-            return dataSources.buda.forgotPassword(args.email)
+            return dataSources.authenticationService.forgotPassword(args.email)
         },
         updateForgotPassword: async (_, args, { dataSources }) => {
-            return dataSources.buda.forgotPassword(args.token, args.updateUserPassword)
+            return dataSources.authenticationService.updateforgotPassword(args.token, args.updateUserPassword)
         },
         updateUserEmail: async (_, args, { dataSources }) => {
             return dataSources.buda.updateUserEmail(args.updateUserEmail)
@@ -676,6 +724,12 @@ module.exports.resolvers = {
         },
         newIssue: async (_, args, { dataSources }) => {
             return dataSources.issueService.newIssue(args.issue)
+        },
+        newStore: async (_, args, { dataSources }) => {
+            return dataSources.buda.newStore(args.store)
+        },
+        updateStore: async (_, args, { dataSources }) => {
+            return dataSources.buda.updateStore(args.store)
         }
         // cleanCache: async (_, __, { dataSources }) => {
         //     return dataSources.buda.cleanCache()

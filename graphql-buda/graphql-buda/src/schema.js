@@ -396,6 +396,19 @@ type Issue{
      userID: Int
      creationTime: String
 }
+type Store{
+     storeID: Int
+     userID: Int
+     name: String
+     address: String
+}
+type Notifier{
+     notifcationID: Int
+     creationTime: String
+     expireTime: String
+     title: String 
+     body: String
+}
 enum StaffPosition{
     MANAGER, 
     BASIC
@@ -866,6 +879,12 @@ input IssueInput{
      userID: Int
      creationTime: String
 }
+input StoreInput{
+     storeID: Int
+     userID: Int
+     name: String
+     address: String
+}
 type Query{
     ingredient(ingredientID:Int): Ingredient
     ingredientsByUser: [Ingredient]
@@ -894,12 +913,19 @@ type Query{
     productsByProductGroup(productGroupID: Int): [Product]
     buyOrder(buyOrderID: Int): BuyOrder
     buyOrdersByUser(page: Int=0, size: Int=50, sort: String="buyOrderID,desc"): [BuyOrder]
+    countBuyOrderByUser: Int
     buyOrdersBySupplier(supplierID: Int): [BuyOrder]
     buyOrdersLastXDaysByUser(X: Int): [BuyOrder]
     incompletedBuyOrdersByUser: [BuyOrder]
     completedBuyOrdersByUser(page: Int=0, size: Int=50, sort: String="buyOrderID,desc"): [BuyOrder]
     buyOrdersByStatusAndUser(status: Status): [BuyOrder]
+    countBuyOrderByStatusAndUser(status: Status): Int
     buyOrdersByTextID(textID: String): [BuyOrder]
+    countBuyOrderByTextID(textID: String): Int
+    buyOrdersBySupplierName(supplierName: String): [BuyOrder]
+    countBuyOrderBySupplierName(supplierName: String): Int
+    buyOrdersInPeriod(period: PeriodDTO): [BuyOrder]
+    countBuyOrderInPeriod(period: PeriodDTO): Int
     buyOrderItemsByBuyOrder(buyOrderID: Int): [BuyOrderItem]
     buyOrderItemsByIngredient(ingredientID: Int): [BuyOrderItem]
     paySlipByUser: [PaySlip]
@@ -907,13 +933,20 @@ type Query{
     receiptByUser: [Receipt]
     receipt(receiptID: Int): Receipt
     sellOrdersByUser(page: Int=0, size: Int=50, sort: String="sellOrderID,desc"): [SellOrder]
+    countSellOrdersByUser: Int
     sellOrdersByCustomer(customerID: Int): [SellOrder]
     sellOrder(sellOrderID: Int): SellOrder
     incompletedSellOrdersByUser: [SellOrder]
     completedSellOrdersByUser(page: Int=0, size: Int=50, sort: String="sellOrderID,desc"): [SellOrder]
     sellOrdersXDaysByUser(X: Int): [SellOrder]
     sellOrdersByStatusAndUser(status: Status): [SellOrder]
+    countSellOrderByStatusAndUser(status: Status): Int
     sellOrdersByTextID(textID: String): [SellOrder]
+    countSellOrderByTextID(textID: String): Int
+    sellOrdersByCustomerName(customerName: String): [SellOrder]
+    countSellOrderByCustomerName(customerName: String): Int
+    sellOrdersInPeriod(period: PeriodDTO): [SellOrder]
+    countSellOrderInPeriod(from: String, to: String): Int
     sellOrderItemsBySellOrder(sellOrderID: Int): [SellOrderItem]
     sellOrderItemsByProduct(productID: Int): [SellOrderItem] 
     warrantyOrdersByUser: [WarrantyOrder]
@@ -951,6 +984,8 @@ type Query{
     notiByUser: [Notification]
     pendingNotiByUser: [Notification]
     currentUser: User
+    storesByUser: [Store]
+    allNotifier: [Notifier]
     totalCountByHours: [ActiveHoursStatistics]
     totalCountCurrenMonthByHours: [ActiveHoursStatistics]
     totalSpendAgeGroupByUser: [AgeGroupStatistics]
@@ -1095,5 +1130,7 @@ type Mutation{
     delayFixedCostBill(fixedCostBillID: Int): FixedCostBill
     payFixedCostBill(fixedCostBillID: Int): FixedCostBill
     newIssue(issue: IssueInput): Issue
+    newStore(store: StoreInput): Store
+    updateStore(store: StoreInput): Store
 }
 `;
