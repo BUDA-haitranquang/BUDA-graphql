@@ -95,9 +95,6 @@ class Budabackend extends RESTDataSource {
             sort: sort
         })
     }
-    async countBuyOrderByUser(){
-        return this.get(`api/business/buy/view/all/count`)
-    }
     async buyOrdersBySupplier(supplierID) {
         return this.get(`api/business/buy/view/supplier/${supplierID}/all`)
     }
@@ -114,31 +111,34 @@ class Budabackend extends RESTDataSource {
             sort: sort
         })
     }
-    async buyOrdersByStatusAndUser(status){
-        return this.get(`api/business/buy/view/all/status/${status}`)
+    async buyOrdersByStatusAndUser(status, page, size, sort){
+        return this.get(`api/business/buy/view/all/status/${status}`,{
+            page: page,
+            size: size,
+            sort: sort
+        })
     }
-    async countBuyOrderByStatusAndUser(status){
-        return this.get(`api/business/buy/view/all/status/${status}/count`)
+    async buyOrdersByTextID(textID, page, size, sort) {
+        return this.get(`api/business/buy/view/textID/${textID}`,{
+            page: page,
+            size: size,
+            sort: sort
+        })
     }
-    async buyOrdersByTextID(textID) {
-        return this.get(`api/business/buy/view/textID/${textID}`)
+    async buyOrdersBySupplierName(supplierName, page, size, sort) {
+        return this.get(`api/business/buy/view/supplier/${supplierName}`,{
+            page: page,
+            size: size,
+            sort: sort
+        })
     }
-    async countBuyOrderByTextID(textID) {
-        return this.get(`api/business/buy/view/textID/${textID}/count`)
-    }
-    async buyOrdersBySupplierName(supplierName) {
-        return this.get(`api/business/buy/view/supplier/${supplierName}`)
-    }
-    async countBuyOrderBySupplierName(supplierName) {
-        return this.get(`api/business/buy/view/supplier/${supplierName}/count`)
-    }
-    async buyOrdersInPeriod(period) {
+    async buyOrdersInPeriod(period, page, size, sort) {
         const periodJson = JSON.parse(JSON.stringify(period))
-        return this.get(`api/business/buy/view/period`, periodJson)
-    }
-    async countBuyOrderInPeriod(period) {
-        const periodJson = JSON.parse(JSON.stringify(period))
-        return this.get(`api/business/buy/view/period/count`, periodJson)
+        return this.get(`api/business/buy/view/period`, periodJson,{
+            page: page,
+            size: size,
+            sort: sort
+        })
     }
     async buyOrderItemsByBuyOrder(buyOrderID){
         return this.get(`api/business/buy/item/buy-order/${buyOrderID}`)
@@ -165,9 +165,6 @@ class Budabackend extends RESTDataSource {
             sort: sort
         })
     }
-    async countSellOrderByUser(){
-        return this.get(`api/business/sell/view/all/count`)
-    }
     async sellOrdersByCustomer(customerID) {
         return this.get(`api/business/sell/view/customer/${customerID}/all`)
     }
@@ -187,31 +184,34 @@ class Budabackend extends RESTDataSource {
     async sellOrdersXDaysByUser(X){
         return this.get(`api/business/sell/view/all/last-x-days/${X}`)
     }
-    async sellOrdersByStatusAndUser(status){
-        return this.get(`api/business/sell/view/all/status/${status}`)
+    async sellOrdersByStatusAndUser(status, page, size, sort){
+        return this.get(`api/business/sell/view/all/status/${status}`,{
+            page: page,
+            size: size,
+            sort: sort
+        })
     }
-    async countSellOrderByStatusAndUser(status){
-        return this.get(`api/business/sell/view/all/status/${status}/count`)
+    async sellOrdersByTextID(textID, page, size, sort) {
+        return this.get(`api/business/sell/view/textID/${textID}`,{
+            page: page,
+            size: size,
+            sort: sort
+        })
     }
-    async sellOrdersByTextID(textID) {
-        return this.get(`api/business/sell/view/textID/${textID}`)
+    async sellOrdersByCustomerName(customerName, page, size, sort) {
+        return this.get(`api/business/sell/view/customer/${customerName}`,{
+            page: page,
+            size: size,
+            sort: sort
+        })
     }
-    async countSellOrderByTextID(textID) {
-        return this.get(`api/business/sell/view/textID/${textID}/count`)
-    }
-    async sellOrdersByCustomerName(customerName) {
-        return this.get(`api/business/sell/view/customer/${customerName}`)
-    }
-    async countSellOrderByCustomerName(customerName) {
-        return this.get(`api/business/sell/view/customer/${customerName}/count`)
-    }
-    async sellOrdersInPeriod(period) {
+    async sellOrdersInPeriod(period, page, size, sort) {
         const periodJson = JSON.parse(JSON.stringify(period))
-        return this.get(`api/business/sell/view/period`, periodJson)
-    }
-    async countSellOrderInPeriod(from, to) {
-        const periodJson = JSON.parse(JSON.stringify({from: from, to: to}))
-        return this.get(`api/business/sell/view/period/count`, periodJson)
+        return this.post(`api/business/sell/view/period`, periodJson,{
+            page: page,
+            size: size,
+            sort: sort
+        })
     }
     async sellOrderItemsBySellOrder(sellOrderID){
         return this.get(`api/business/sell/item/sell-order-id/${sellOrderID}`)

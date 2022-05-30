@@ -81,9 +81,6 @@ module.exports.resolvers = {
         buyOrdersByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.buyOrdersByUser(args.page, args.size, args.sort)
         },
-        countBuyOrderByUser: async (_, args, { dataSources }) => {
-            return dataSources.buda.countBuyOrderByUser(args)
-        },
         buyOrdersBySupplier: async (_, args, { dataSources }) => {
             return dataSources.buda.buyOrdersBySupplier(args.supplierID)
         },
@@ -97,28 +94,16 @@ module.exports.resolvers = {
             return dataSources.buda.completedBuyOrdersByUser(args.page, args.size, args.sort)
         },
         buyOrdersByStatusAndUser: async (_, args, { dataSources }) => {
-            return dataSources.buda.buyOrdersByStatusAndUser(args.status)
-        },
-        countBuyOrderByStatusAndUser: async (_, args, { dataSources }) => {
-            return dataSources.buda.countBuyOrderByStatusAndUser(args.status)
+            return dataSources.buda.buyOrdersByStatusAndUser(args.status, args.page, args.size, args.sort)
         },
         buyOrdersByTextID: async (_, args, { dataSources }) => {
-            return dataSources.buda.buyOrdersByTextID(args.textID)
-        },
-        countBuyOrderByTextID: async (_, args, { dataSources }) => {
-            return dataSources.buda.countBuyOrderByTextID(args.textID)
+            return dataSources.buda.buyOrdersByTextID(args.textID, args.page, args.size, args.sort)
         },
         buyOrdersBySupplierName: async (_, args, { dataSources }) => {
-            return dataSources.buda.buyOrdersBySupplierName(args.supplierName)
-        },
-        countBuyOrderBySupplierName: async (_, args, { dataSources }) => {
-            return dataSources.buda.countBuyOrderBySupplierName(args.supplierName)
+            return dataSources.buda.buyOrdersBySupplierName(args.supplierName, args.page, args.size, args.sort)
         },
         buyOrdersInPeriod: async (_, args, { dataSources }) => {
-            return dataSources.buda.buyOrdersInPeriod(args.period)
-        },
-        countBuyOrderInPeriod: async (_, args, { dataSources }) => {
-            return dataSources.buda.countBuyOrderInPeriod(args.period)
+            return dataSources.buda.buyOrdersInPeriod(args.period, args.page, args.size, args.sort)
         },
         buyOrderItemsByBuyOrder: async (_, args, { dataSources }) => {
             return dataSources.buda.buyOrderItemsByBuyOrder(args.buyOrderID)
@@ -141,9 +126,6 @@ module.exports.resolvers = {
         sellOrdersByUser: async (_, args, { dataSources }) =>{
             return dataSources.buda.sellOrdersByUser(args.page, args.size, args.sort)
         },
-        countSellOrdersByUser: async (_, args, { dataSources }) => {
-            return dataSources.buda.countSellOrdersByUser(args)
-        },
         sellOrdersByCustomer: async (_, args, { dataSources }) => {
             return dataSources.buda.sellOrdersByCustomer(args.customerID)
         },
@@ -160,28 +142,16 @@ module.exports.resolvers = {
             return dataSources.buda.sellOrdersXDaysByUser(args.X)
         },
         sellOrdersByStatusAndUser: async (_, args, { dataSources }) => {
-            return dataSources.buda.sellOrdersByStatusAndUser(args.status)
-        },
-        countSellOrderByStatusAndUser: async (_, args, { dataSources }) => {
-            return dataSources.buda.countSellOrderByStatusAndUser(args.status)
+            return dataSources.buda.sellOrdersByStatusAndUser(args.status, args.page, args.size, args.sort)
         },
         sellOrdersByTextID: async (_, args, { dataSources }) => {
-            return dataSources.buda.sellOrdersByTextID(args.textID)
-        },
-        countSellOrderByTextID: async (_, args, { dataSources }) => {
-            return dataSources.buda.countSellOrderByTextID(args.textID)
+            return dataSources.buda.sellOrdersByTextID(args.textID, args.page, args.size, args.sort)
         },
         sellOrdersByCustomerName: async (_, args, { dataSources }) => {
-            return dataSources.buda.sellOrdersByCustomerName(args.customerName)
-        },
-        countSellOrderByCustomerName: async (_, args, { dataSources }) => {
-            return dataSources.buda.countSellOrderByCustomerName(args.customerName)
+            return dataSources.buda.sellOrdersByCustomerName(args.customerName, args.page, args.size, args.sort)
         },
         sellOrdersInPeriod: async (_, args, { dataSources }) => {
-            return dataSources.buda.sellOrdersInPeriod(args.period)
-        },
-        countSellOrderInPeriod: async (_, args, { dataSources }) => {
-            return dataSources.buda.countSellOrderInPeriod(args.from, args.to)
+            return dataSources.buda.sellOrdersInPeriod(args.period,args.page, args.size, args.sort)
         },
         sellOrderItemsBySellOrder: async (_, args, { dataSources }) => {
             return dataSources.buda.sellOrderItemsBySellOrder(args.sellOrderID)

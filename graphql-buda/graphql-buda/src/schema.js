@@ -325,6 +325,14 @@ type Receipt{
      message: String
      userID: Int
 }
+type ViewBuyOrder{
+     count: Int
+     buyOrders: [BuyOrder]
+}
+type ViewSellOrder{
+     count: Int
+     sellOrders: [SellOrder]
+}
 type UserLogin{
     email: String 
     password: String 
@@ -912,41 +920,31 @@ type Query{
     productGroupByProduct(productID: Int): [ProductGroup]
     productsByProductGroup(productGroupID: Int): [Product]
     buyOrder(buyOrderID: Int): BuyOrder
-    buyOrdersByUser(page: Int=0, size: Int=50, sort: String="buyOrderID,desc"): [BuyOrder]
-    countBuyOrderByUser: Int
+    buyOrdersByUser(page: Int=0, size: Int=50, sort: String="buyOrderID,desc"): [ViewBuyOrder]
     buyOrdersBySupplier(supplierID: Int): [BuyOrder]
     buyOrdersLastXDaysByUser(X: Int): [BuyOrder]
     incompletedBuyOrdersByUser: [BuyOrder]
     completedBuyOrdersByUser(page: Int=0, size: Int=50, sort: String="buyOrderID,desc"): [BuyOrder]
-    buyOrdersByStatusAndUser(status: Status): [BuyOrder]
-    countBuyOrderByStatusAndUser(status: Status): Int
-    buyOrdersByTextID(textID: String): [BuyOrder]
-    countBuyOrderByTextID(textID: String): Int
-    buyOrdersBySupplierName(supplierName: String): [BuyOrder]
-    countBuyOrderBySupplierName(supplierName: String): Int
-    buyOrdersInPeriod(period: PeriodDTO): [BuyOrder]
-    countBuyOrderInPeriod(period: PeriodDTO): Int
+    buyOrdersByStatusAndUser(status: Status, page: Int=0, size: Int=50, sort: String="buyOrderID,desc"): ViewBuyOrder
+    buyOrdersByTextID(textID: String, page: Int=0, size: Int=50, sort: String="buyOrderID,desc"): ViewBuyOrder
+    buyOrdersBySupplierName(supplierName: String, page: Int=0, size: Int=50, sort: String="buyOrderID,desc"): ViewBuyOrder
+    buyOrdersInPeriod(period: PeriodDTO, page: Int=0, size: Int=50, sort: String="buyOrderID,desc"): ViewBuyOrder
     buyOrderItemsByBuyOrder(buyOrderID: Int): [BuyOrderItem]
     buyOrderItemsByIngredient(ingredientID: Int): [BuyOrderItem]
     paySlipByUser: [PaySlip]
     paySlip(paySlipID: Int): PaySlip
     receiptByUser: [Receipt]
     receipt(receiptID: Int): Receipt
-    sellOrdersByUser(page: Int=0, size: Int=50, sort: String="sellOrderID,desc"): [SellOrder]
-    countSellOrdersByUser: Int
+    sellOrdersByUser(page: Int=0, size: Int=50, sort: String="sellOrderID,desc"): ViewSellOrder
     sellOrdersByCustomer(customerID: Int): [SellOrder]
     sellOrder(sellOrderID: Int): SellOrder
     incompletedSellOrdersByUser: [SellOrder]
     completedSellOrdersByUser(page: Int=0, size: Int=50, sort: String="sellOrderID,desc"): [SellOrder]
     sellOrdersXDaysByUser(X: Int): [SellOrder]
-    sellOrdersByStatusAndUser(status: Status): [SellOrder]
-    countSellOrderByStatusAndUser(status: Status): Int
-    sellOrdersByTextID(textID: String): [SellOrder]
-    countSellOrderByTextID(textID: String): Int
-    sellOrdersByCustomerName(customerName: String): [SellOrder]
-    countSellOrderByCustomerName(customerName: String): Int
-    sellOrdersInPeriod(period: PeriodDTO): [SellOrder]
-    countSellOrderInPeriod(from: String, to: String): Int
+    sellOrdersByStatusAndUser(status: Status, page: Int=0, size: Int=50, sort: String="sellOrderID,desc"): ViewSellOrder
+    sellOrdersByTextID(textID: String, page: Int=0, size: Int=50, sort: String="sellOrderID,desc"): ViewSellOrder
+    sellOrdersByCustomerName(customerName: String, page: Int=0, size: Int=50, sort: String="sellOrderID,desc"): ViewSellOrder
+    sellOrdersInPeriod(period: PeriodDTO, page: Int=0, size: Int=50, sort: String="sellOrderID,desc"): ViewSellOrder
     sellOrderItemsBySellOrder(sellOrderID: Int): [SellOrderItem]
     sellOrderItemsByProduct(productID: Int): [SellOrderItem] 
     warrantyOrdersByUser: [WarrantyOrder]
