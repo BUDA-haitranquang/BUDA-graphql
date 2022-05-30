@@ -555,13 +555,13 @@ module.exports.resolvers = {
             return dataSources.buda.deleteStaffNote(args.staffNoteID)
         },
         newUser: async (_, args, { dataSources }) => {
-            return dataSources.buda.newUser(args.userRegister) 
+            return dataSources.authenticationService.newUser(args.userRegister) 
         },
         confirmRegister: async (_, args, { dataSources }) => {
             return dataSources.authenticationService.confirmRegister(args.token)
         },
         userLogin: async (_, args, { dataSources }) => {
-            return dataSources.buda.userLogin(args.email, args.password)
+            return dataSources.authenticationService.userLogin(args.email, args.password)
         },
         deleteUser: async (_, args, { dataSources }) => {
             return dataSources.buda.deleteUser(args.userID)
@@ -570,7 +570,7 @@ module.exports.resolvers = {
             return dataSources.buda.loginGoogle(args.jwtSimple)
         },
         newAccessToken: async (_, args, { dataSources }) => {
-            return dataSources.buda.newAccessToken(args.jwtSimple)
+            return dataSources.authenticationService.newAccessToken(args.jwtSimple)
         },
         updateUser: async (_, args, { dataSources }) => {
             return dataSources.buda.updateUser(args.user)

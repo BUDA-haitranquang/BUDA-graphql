@@ -610,16 +610,6 @@ class Budabackend extends RESTDataSource {
     async deleteStaffNote(staffNoteID){
         return this.delete(`api/staff/notification/noteID/${staffNoteID}`)
     }
-<<<<<<< Updated upstream
-    async newUser(userRegister){
-        const userRegisterJson = JSON.parse(JSON.stringify(userRegister))
-        return this.post(`api/user/register`, userRegisterJson)
-    }
-    async confirmRegister(token) {
-        return this.get(`api/user/register/confirm/?token=${token}`)
-    }
-=======
->>>>>>> Stashed changes
     async deleteUser(userID){
         return this.delete(`api/user/${userID}`)
     }
@@ -627,24 +617,6 @@ class Budabackend extends RESTDataSource {
         const jwtSimpleJson = JSON.parse(JSON.stringify(jwtSimple))
         return this.post(`api/user/login/google`, jwtSimpleJson)
     }
-<<<<<<< Updated upstream
-    async newAccessToken(jwtSimple) {
-        const jwtSimpleJson = JSON.parse(JSON.stringify(jwtSimple))
-        return this.post('api/user/refresh-token', jwtSimpleJson)
-    }
-    async updateUserPassword(updateUserPassword){
-        const updateUserPasswordJson=JSON.parse(JSON.stringify(updateUserPassword))
-        return this.put(`api/user/password/update`, updateUserPasswordJson)
-    }
-    async forgotPassword(email){
-        return this.get(`api/user/password/forgot/?email=${email}`)
-    }
-    async updateForgotPassword(token, updateUserPassword){
-        const updateUserPasswordJson=JSON.parse(JSON.stringify(updateUserPassword))
-        return this.put(`api/user/password/forgot/confirm/?token=${token}`, updateUserPasswordJson)
-    }
-=======
->>>>>>> Stashed changes
     async updateUser(user){
         const userJson=JSON.parse(JSON.stringify(user))
         return this.put(`api/user/update-info`, userJson)
