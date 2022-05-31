@@ -140,13 +140,9 @@ class Budabackend extends RESTDataSource {
             sort: sort
         })
     }
-    async buyOrdersByFilter(filter, page, size, sort) {
+    async buyOrdersByFilter(page, size, sort, filter) {
         const filterJson = JSON.parse(JSON.stringify(filter))
-        return this.post(`api/business/buy/view/filter`, filterJson,{
-            page: page,
-            size: size,
-            sort: sort
-        })
+        return this.post(`api/business/buy/view/filter/?page=${page}&size=${size}&sort=${sort}`, filterJson)
     }
     async buyOrderItemsByBuyOrder(buyOrderID){
         return this.get(`api/business/buy/item/buy-order/${buyOrderID}`)
@@ -221,13 +217,9 @@ class Budabackend extends RESTDataSource {
             sort: sort
         })
     }
-    async sellOrdersByFilter(filter, page, size, sort) {
+    async sellOrdersByFilter(page, size, sort, filter) {
         const filterJson = JSON.parse(JSON.stringify(filter))
-        return this.post(`api/business/sell/view/filter`, filterJson,{
-            page: page,
-            size: size,
-            sort: sort
-        })
+        return this.post(`api/business/sell/view/filter/?page=${page}&size=${size}&sort=${sort}`, filterJson)
     }
     async sellOrderItemsBySellOrder(sellOrderID){
         return this.get(`api/business/sell/item/sell-order-id/${sellOrderID}`)

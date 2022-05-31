@@ -943,7 +943,7 @@ type Query{
     buyOrdersByTextID(textID: String, page: Int=0, size: Int=50, sort: String="buyOrderID,desc"): ViewBuyOrder
     buyOrdersBySupplierName(supplierName: String, page: Int=0, size: Int=50, sort: String="buyOrderID,desc"): ViewBuyOrder
     buyOrdersInPeriod(period: PeriodDTO, page: Int=0, size: Int=50, sort: String="buyOrderID,desc"): ViewBuyOrder
-    buyOrdersByFilter(filter: ViewBuyOrderFilter, page: Int=0, size: Int=50, sort: String="buyOrderID,desc"): ViewBuyOrder
+    buyOrdersByFilter(page: Int=0, size: Int=50, sort: String="buyOrderID,desc", filter: ViewBuyOrderFilter): ViewBuyOrder
     buyOrderItemsByBuyOrder(buyOrderID: Int): [BuyOrderItem]
     buyOrderItemsByIngredient(ingredientID: Int): [BuyOrderItem]
     paySlipByUser: [PaySlip]
@@ -960,7 +960,7 @@ type Query{
     sellOrdersByTextID(textID: String, page: Int=0, size: Int=50, sort: String="sellOrderID,desc"): ViewSellOrder
     sellOrdersByCustomerName(customerName: String, page: Int=0, size: Int=50, sort: String="sellOrderID,desc"): ViewSellOrder
     sellOrdersInPeriod(period: PeriodDTO, page: Int=0, size: Int=50, sort: String="sellOrderID,desc"): ViewSellOrder
-    sellOrdersByFilter(filter: ViewSellOrderFilter, page: Int=0, size: Int=50, sort: String="sellOrderID,desc"): ViewSellOrder
+    sellOrdersByFilter(page: Int=0, size: Int=50, sort: String="sellOrderID,desc", filter: ViewSellOrderFilter): ViewSellOrder
     sellOrderItemsBySellOrder(sellOrderID: Int): [SellOrderItem]
     sellOrderItemsByProduct(productID: Int): [SellOrderItem] 
     warrantyOrdersByUser: [WarrantyOrder]

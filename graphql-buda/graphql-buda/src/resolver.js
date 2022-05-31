@@ -106,7 +106,7 @@ module.exports.resolvers = {
             return dataSources.buda.buyOrdersInPeriod(args.period, args.page, args.size, args.sort)
         },
         buyOrdersByFilter: async (_, args, { dataSources }) => {
-            return dataSources.buda.buyOrdersByFilter(args.filter, args.page, args.size, args.sort)
+            return dataSources.buda.buyOrdersByFilter(args.page, args.size, args.sort, args.filter)
         },
         buyOrderItemsByBuyOrder: async (_, args, { dataSources }) => {
             return dataSources.buda.buyOrderItemsByBuyOrder(args.buyOrderID)
@@ -157,7 +157,7 @@ module.exports.resolvers = {
             return dataSources.buda.sellOrdersInPeriod(args.period,args.page, args.size, args.sort)
         },
         sellOrdersByFilter: async (_, args, { dataSources }) => {
-            return dataSources.buda.sellOrdersByFilter(args.filter, args.page, args.size, args.sort)
+            return dataSources.buda.sellOrdersByFilter(args.page, args.size, args.sort, args.filter)
         },
         sellOrderItemsBySellOrder: async (_, args, { dataSources }) => {
             return dataSources.buda.sellOrderItemsBySellOrder(args.sellOrderID)
@@ -706,7 +706,7 @@ module.exports.resolvers = {
         },
         updateStore: async (_, args, { dataSources }) => {
             return dataSources.buda.updateStore(args.store)
-        }
+        },
         // cleanCache: async (_, __, { dataSources }) => {
         //     return dataSources.buda.cleanCache()
         // }
