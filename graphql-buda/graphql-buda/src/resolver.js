@@ -105,6 +105,9 @@ module.exports.resolvers = {
         buyOrdersInPeriod: async (_, args, { dataSources }) => {
             return dataSources.buda.buyOrdersInPeriod(args.period, args.page, args.size, args.sort)
         },
+        buyOrdersByFilter: async (_, args, { dataSources }) => {
+            return dataSources.buda.buyOrdersByFilter(args.filter, args.page, args.size, args.sort)
+        },
         buyOrderItemsByBuyOrder: async (_, args, { dataSources }) => {
             return dataSources.buda.buyOrderItemsByBuyOrder(args.buyOrderID)
         },
@@ -152,6 +155,9 @@ module.exports.resolvers = {
         },
         sellOrdersInPeriod: async (_, args, { dataSources }) => {
             return dataSources.buda.sellOrdersInPeriod(args.period,args.page, args.size, args.sort)
+        },
+        sellOrdersByFilter: async (_, args, { dataSources }) => {
+            return dataSources.buda.sellOrdersByFilter(args.filter, args.page, args.size, args.sort)
         },
         sellOrderItemsBySellOrder: async (_, args, { dataSources }) => {
             return dataSources.buda.sellOrderItemsBySellOrder(args.sellOrderID)

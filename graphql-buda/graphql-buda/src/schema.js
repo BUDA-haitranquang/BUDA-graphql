@@ -470,6 +470,20 @@ input PeriodDTO{
      from: String
      to: String
 }
+input ViewBuyOrderFilter{
+     supplierName: String 
+     from: String
+     to: String
+     status: Status
+     textID: String
+}
+input ViewSellOrderFilter{
+     customerName: String
+     from: String
+     to: String
+     status: Status
+     textID: String
+}
 input ProductInput{
     productID: Int
     productSKU: String
@@ -920,7 +934,7 @@ type Query{
     productGroupByProduct(productID: Int): [ProductGroup]
     productsByProductGroup(productGroupID: Int): [Product]
     buyOrder(buyOrderID: Int): BuyOrder
-    buyOrdersByUser(page: Int=0, size: Int=50, sort: String="buyOrderID,desc"): [ViewBuyOrder]
+    buyOrdersByUser(page: Int=0, size: Int=50, sort: String="buyOrderID,desc"): ViewBuyOrder
     buyOrdersBySupplier(supplierID: Int): [BuyOrder]
     buyOrdersLastXDaysByUser(X: Int): [BuyOrder]
     incompletedBuyOrdersByUser: [BuyOrder]
@@ -929,6 +943,7 @@ type Query{
     buyOrdersByTextID(textID: String, page: Int=0, size: Int=50, sort: String="buyOrderID,desc"): ViewBuyOrder
     buyOrdersBySupplierName(supplierName: String, page: Int=0, size: Int=50, sort: String="buyOrderID,desc"): ViewBuyOrder
     buyOrdersInPeriod(period: PeriodDTO, page: Int=0, size: Int=50, sort: String="buyOrderID,desc"): ViewBuyOrder
+    buyOrdersByFilter(filter: ViewBuyOrderFilter, page: Int=0, size: Int=50, sort: String="buyOrderID,desc"): ViewBuyOrder
     buyOrderItemsByBuyOrder(buyOrderID: Int): [BuyOrderItem]
     buyOrderItemsByIngredient(ingredientID: Int): [BuyOrderItem]
     paySlipByUser: [PaySlip]
@@ -945,6 +960,7 @@ type Query{
     sellOrdersByTextID(textID: String, page: Int=0, size: Int=50, sort: String="sellOrderID,desc"): ViewSellOrder
     sellOrdersByCustomerName(customerName: String, page: Int=0, size: Int=50, sort: String="sellOrderID,desc"): ViewSellOrder
     sellOrdersInPeriod(period: PeriodDTO, page: Int=0, size: Int=50, sort: String="sellOrderID,desc"): ViewSellOrder
+    sellOrdersByFilter(filter: ViewSellOrderFilter, page: Int=0, size: Int=50, sort: String="sellOrderID,desc"): ViewSellOrder
     sellOrderItemsBySellOrder(sellOrderID: Int): [SellOrderItem]
     sellOrderItemsByProduct(productID: Int): [SellOrderItem] 
     warrantyOrdersByUser: [WarrantyOrder]
