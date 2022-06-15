@@ -108,6 +108,9 @@ module.exports.resolvers = {
         buyOrdersByFilter: async (_, args, { dataSources }) => {
             return dataSources.buda.buyOrdersByFilter(args.page, args.size, args.sort, args.filter)
         },
+        printBuyOrder: async (_, args, { dataSources }) => {
+            return dataSources.buda.printBuyOrder(args.printInput)
+        },
         buyOrderItemsByBuyOrder: async (_, args, { dataSources }) => {
             return dataSources.buda.buyOrderItemsByBuyOrder(args.buyOrderID)
         },
@@ -587,6 +590,9 @@ module.exports.resolvers = {
         payDelayBuyOrder: async (_, args, { dataSources }) => {
             return dataSources.buda.payDelayBuyOrder(args.buyOrderID)
         },
+        updateBuyOrderStatus: async (_, args, { dataSources }) => {
+            return dataSources.buda.updateBuyOrderStatus(args.updateStatus)
+        },
         deleteBuyOrderItem: async (_, args, { dataSources }) => {
             return dataSources.buda.deleteBuyOrderItem(args.buyOrderItemID)
         },
@@ -601,6 +607,9 @@ module.exports.resolvers = {
         },
         deleteSellOrder: async (_, args, { dataSources }) => {
             return dataSources.buda.deleteSellOrder(args.sellOrderID)
+        },
+        updateSellOrderStatus: async (_, args, { dataSources }) => {
+            return dataSources.buda.updateSellOrderStatus(args.updateStatus)
         },
         updateSellOrderItem: async (_, args, { dataSources }) => {
             return dataSources.buda.updateSellOrderItem(args.sellOrderItemID, args.sellOrderItem)

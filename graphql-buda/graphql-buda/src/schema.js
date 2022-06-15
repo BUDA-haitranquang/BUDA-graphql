@@ -417,6 +417,10 @@ type Notifier{
      title: String 
      body: String
 }
+type PrintBuyOrder{
+     buyOrder: BuyOrder
+     store: Store
+}
 enum StaffPosition{
     MANAGER, 
     BASIC
@@ -476,6 +480,18 @@ input ViewBuyOrderFilter{
      to: String
      status: Status
      textID: String
+}
+input UpdateBuyOrderStatus{
+     buyOrderID: Int
+     status: Status
+}
+input PrintBuyOrderInput{
+     buyOrder: BuyOrderInput
+     store: StoreInput
+}
+input UpdateSellOrderStatus{
+     sellOrderID: Int
+     status: Status
 }
 input ViewSellOrderFilter{
      customerName: String
@@ -616,7 +632,7 @@ input BuyOrderInput {
      supplier: SupplierInput
      creationTime: String
      finishTime: String
-     status: Status!
+     status: Status
      totalCost: Float = 0
      userID: Int
      buyOrderItems: [BuyOrderItemInput]
@@ -944,6 +960,7 @@ type Query{
     buyOrdersBySupplierName(supplierName: String, page: Int=0, size: Int=50, sort: String="buyOrderID,desc"): ViewBuyOrder
     buyOrdersInPeriod(period: PeriodDTO, page: Int=0, size: Int=50, sort: String="buyOrderID,desc"): ViewBuyOrder
     buyOrdersByFilter(page: Int=0, size: Int=50, sort: String="buyOrderID,desc", filter: ViewBuyOrderFilter): ViewBuyOrder
+    printBuyOrder(printInput: PrintBuyOrderInput): PrintBuyOrder
     buyOrderItemsByBuyOrder(buyOrderID: Int): [BuyOrderItem]
     buyOrderItemsByIngredient(ingredientID: Int): [BuyOrderItem]
     paySlipByUser: [PaySlip]
@@ -1106,11 +1123,13 @@ type Mutation{
     returnBuyOrder(buyOrderID: Int): BuyOrder
     delayPayBuyOrder(buyOrderID: Int): BuyOrder
     payDelayBuyOrder(buyOrderID: Int): BuyOrder
+    updateBuyOrderStatus(updateStatus: UpdateBuyOrderStatus): BuyOrder
     deleteBuyOrderItem(buyOrderItemID: Int): String
     newSellOrder(sellOrderInput: NewSellOrder): SellOrder
     newPosSellOrder(sellOrderInput: NewSellOrder): SellOrder
     updateSellOrder(sellOrder: SellOrderInput): SellOrder
     deleteSellOrder(sellOrderID: Int): String
+    updateSellOrderStatus(updateStatus: UpdateSellOrderStatus): SellOrder
     updateSellOrderItem(sellOrderItemID: Int, sellOrderItem: SellOrderItemInput): SellOrderItem
     deleteSellOrderItem(sellOrderItemID: Int): String
     newWarrantyOrder(warrantyOrderInput: WarrantyOrderInput): WarrantyOrder
