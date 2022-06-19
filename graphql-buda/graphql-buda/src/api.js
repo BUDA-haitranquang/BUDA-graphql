@@ -617,7 +617,7 @@ class Budabackend extends RESTDataSource {
     }
     async updateStaffNote(staffNoteID, staffNote){
         const staffNoteJson = JSON.parse(JSON.stringify(staffNote))
-        return this.put(`api/staff/notification/noteID/${staffNoteID}`, staffNoteJson)
+        return this.put(`api/staff/notification/update/${staffNoteID}`, staffNoteJson)
     }
     async deleteStaffNote(staffNoteID){
         return this.delete(`api/staff/notification/noteID/${staffNoteID}`)
