@@ -486,8 +486,8 @@ input UpdateBuyOrderStatus{
      status: Status
 }
 input PrintBuyOrderInput{
-     buyOrderID: Long
-     storeID: Long
+     buyOrderID: Int
+     storeID: Int
 }
 input UpdateSellOrderStatus{
      sellOrderID: Int
