@@ -421,6 +421,10 @@ type PrintBuyOrder{
      buyOrder: BuyOrder
      store: Store
 }
+type PrintSellOrder{
+     sellOrder: SellOrder
+     store: Store
+}
 enum StaffPosition{
     MANAGER, 
     BASIC
@@ -499,6 +503,10 @@ input ViewSellOrderFilter{
      to: String
      status: Status
      textID: String
+}
+input PrintSellOrderInput{
+     sellOrderID: Int
+     storeID: Int
 }
 input ProductInput{
     productID: Int
@@ -978,6 +986,7 @@ type Query{
     sellOrdersByCustomerName(customerName: String, page: Int=0, size: Int=50, sort: String="sellOrderID,desc"): ViewSellOrder
     sellOrdersInPeriod(period: PeriodDTO, page: Int=0, size: Int=50, sort: String="sellOrderID,desc"): ViewSellOrder
     sellOrdersByFilter(page: Int=0, size: Int=50, sort: String="sellOrderID,desc", filter: ViewSellOrderFilter): ViewSellOrder
+    printSellOrder(printInput: PrintSellOrderInput): PrintSellOrder
     sellOrderItemsBySellOrder(sellOrderID: Int): [SellOrderItem]
     sellOrderItemsByProduct(productID: Int): [SellOrderItem] 
     warrantyOrdersByUser: [WarrantyOrder]

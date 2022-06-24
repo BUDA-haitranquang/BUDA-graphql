@@ -162,6 +162,9 @@ module.exports.resolvers = {
         sellOrdersByFilter: async (_, args, { dataSources }) => {
             return dataSources.buda.sellOrdersByFilter(args.page, args.size, args.sort, args.filter)
         },
+        printSellOrder: async (_, args, { dataSources }) => {
+            return dataSources.buda.printSellOrder(args.printInput)
+        },
         sellOrderItemsBySellOrder: async (_, args, { dataSources }) => {
             return dataSources.buda.sellOrderItemsBySellOrder(args.sellOrderID)
         },

@@ -225,6 +225,10 @@ class Budabackend extends RESTDataSource {
         const filterJson = JSON.parse(JSON.stringify(filter))
         return this.post(`api/business/sell/view/filter/?page=${page}&size=${size}&sort=${sort}`, filterJson)
     }
+    async printSellOrder(printInput){
+        const printInputJson = JSON.parse(JSON.stringify(printInput))
+        return this.post(`api/business/sell/print`, printInputJson)
+    }
     async sellOrderItemsBySellOrder(sellOrderID){
         return this.get(`api/business/sell/item/sell-order-id/${sellOrderID}`)
     }
