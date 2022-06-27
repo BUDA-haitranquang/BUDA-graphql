@@ -701,6 +701,9 @@ module.exports.resolvers = {
         hideOtherCost: async (_, args, { dataSources }) => {
             return dataSources.buda.hideOtherCost(args.otherCostID)
         },
+        updateOtherCostStatus: async (_, args, { dataSources }) => {
+            return dataSources.buda.updateOtherCostStatus(args.updateStatus)
+        },
         newFixedCostBill: async (_, args, { dataSources }) => {
             return dataSources.buda.newFixedCostBill(args.fixedCostBillInput)
         },
@@ -709,6 +712,9 @@ module.exports.resolvers = {
         },
         payFixedCostBill: async (_, args, { dataSources }) => {
             return dataSources.buda.payFixedCostBill(args.fixedCostBillID)
+        },
+        updateFixedCostBillStatus: async (_, args, { dataSources }) => {
+            return dataSources.buda.updateFixedCostBillStatus(args.updateStatus)
         },
         newIssue: async (_, args, { dataSources }) => {
             return dataSources.issueService.newIssue(args.issue)

@@ -796,6 +796,10 @@ class Budabackend extends RESTDataSource {
     async hideOtherCost(otherCostID){
         return this.get(`api/other-cost/crud/hide/${otherCostID}`)
     }
+    async updateOtherCostStatus(updateStatus){
+        const updateStatusJson = JSON.parse(JSON.stringify(updateStatus))
+        return this.put(`api/cost/othercost/status`, updateStatusJson)
+    }
     async newFixedCostBill(fixedCostBillInput){
         const fixedCostBillInputJson = JSON.parse(JSON.stringify(fixedCostBillInput))
         return this.post(`api/cost/fixed-cost/bill/new`, fixedCostBillInputJson)
@@ -805,6 +809,10 @@ class Budabackend extends RESTDataSource {
     }
     async payFixedCostBill(fixedCostBillID){
         return this.put(`api/cost/fixed-cost/bill/pay/id/${fixedCostBillID}`)
+    }
+    async updateFixedCostBillStatus(updateStatus){
+        const updateStatusJson = JSON.parse(JSON.stringify(updateStatus))
+        return this.put(`api/cost/fixedcost/bill/status`, updateStatusJson)
     }
     async newStore(store){
         const storeJson = JSON.parse(JSON.stringify(store))

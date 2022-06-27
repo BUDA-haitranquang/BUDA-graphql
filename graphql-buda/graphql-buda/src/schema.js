@@ -865,6 +865,10 @@ input FixedCostBillInput{
      dueTime: String
      status: Status
 }
+input UpdateFixedCostBillStatus{
+     fixedCostBillID: Int
+     status: Status
+}
 input OtherCostInput{
      otherCostID: Int
      userID: Int
@@ -874,6 +878,10 @@ input OtherCostInput{
      description: String 
      status: Status
      visible: Boolean
+}
+input UpdateOtherCostStatus{
+     otherCostID: Int
+     status: Status
 }
 input NewStaff{
     staffID: Int
@@ -1168,9 +1176,11 @@ type Mutation{
     hideFixedCost(fixedCostID: Int): FixedCost
     newOtherCost(otherCostInput: OtherCostInput): OtherCost
     hideOtherCost(otherCostID: Int): OtherCost
+    updateOtherCostStatus(updateStatus: UpdateOtherCostStatus): OtherCost
     newFixedCostBill(fixedCostBillInput: FixedCostBillInput): FixedCostBill
     delayFixedCostBill(fixedCostBillID: Int): FixedCostBill
     payFixedCostBill(fixedCostBillID: Int): FixedCostBill
+    updateFixedCostBillStatus(updateStatus: UpdateFixedCostBillStatus): FixedCostBill
     newIssue(issue: IssueInput): Issue
     newStore(store: StoreInput): Store
     updateStore(store: StoreInput): Store
