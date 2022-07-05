@@ -703,20 +703,20 @@ input PurchaseInput{
      user: UserInput
      plan: PlanInput
      creationTime: String
-     expiryDate: String!
+     expiryDate: String
      message: String
      totalCost: Float
      status: Status
 }
 input UserInput{
      userID: Int
-     userUUID: String !
-     userName: String! 
-     password: String !
-     email: String !
-     phoneNumber: String! 
-     lastName: String !
-     firstName: String !
+     userUUID: String 
+     userName: String
+     password: String 
+     email: String 
+     phoneNumber: String
+     lastName: String 
+     firstName: String 
      enabled: Boolean
      pictureID: Int 
      purchases: [PurchaseInput] 
