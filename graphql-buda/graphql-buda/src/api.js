@@ -629,10 +629,6 @@ class Budabackend extends RESTDataSource {
     async deleteUser(userID){
         return this.delete(`api/user/${userID}`)
     }
-    async loginGoogle(jwtSimple){
-        const jwtSimpleJson = JSON.parse(JSON.stringify(jwtSimple))
-        return this.post(`api/user/login/google`, jwtSimpleJson)
-    }
     async updateUser(user){
         const userJson=JSON.parse(JSON.stringify(user))
         return this.put(`api/user/update-info`, userJson)

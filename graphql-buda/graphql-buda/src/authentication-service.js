@@ -13,6 +13,10 @@ class authenticationService extends RESTDataSource {
             password: password,
         })
     }
+    async loginGoogle(jwtSimple){
+        const jwtSimpleJson = JSON.parse(JSON.stringify(jwtSimple))
+        return this.post(`api/login/social/google`, jwtSimpleJson)
+    }
     async newUser(userRegister){
         const userRegisterJson = JSON.parse(JSON.stringify(userRegister))
         return this.post(`api/register`, userRegisterJson)
