@@ -555,7 +555,7 @@ module.exports.resolvers = {
             return dataSources.buda.deleteUser(args.userID)
         },
         loginGoogle: async (_, args, { dataSources }) => {
-            return dataSources.buda.loginGoogle(args.jwtSimple)
+            return dataSources.authenticationService.loginGoogle(args.jwtSimple)
         },
         newAccessToken: async (_, args, { dataSources }) => {
             return dataSources.authenticationService.newAccessToken(args.jwtSimple)
