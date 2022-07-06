@@ -5,6 +5,7 @@ const Budabackend = require('./api');
 const issueServicebackend = require('./issue-service');
 const authenticationServicebackend = require('./authentication-service');
 const notifierServicebackend = require('./notifier-service');
+const paymentServicebackend = require('./payment-service');
 
 
 
@@ -23,7 +24,8 @@ const server = new ApolloServer({
       buda: new Budabackend(),
       issueService: new issueServicebackend(),
       authenticationService: new authenticationServicebackend(),
-      notifierService: new notifierServicebackend()
+      notifierService: new notifierServicebackend(),
+      paymentService: new paymentServicebackend(),
     };
   },
   context: ({ req }) => {

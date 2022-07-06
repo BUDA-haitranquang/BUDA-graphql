@@ -456,6 +456,12 @@ module.exports.resolvers = {
         businessOverallPeriod: async (_, args, { dataSources }) => {
             return dataSources.buda.businessOverallPeriod(args.period)
         },
+        zaloCallback: async (_, args, { dataSources }) => {
+            return dataSources.buda.zaloCallback(args.callback)
+        },
+        zaloGetOrderStatus: async (_, args, { dataSources }) => {
+            return dataSources.buda.zaloGetOrderStatus(args.apptransid)
+        }
     },
     Mutation: {
         newProduct: async (_, args, { dataSources }) => {
@@ -725,6 +731,9 @@ module.exports.resolvers = {
         updateStore: async (_, args, { dataSources }) => {
             return dataSources.buda.updateStore(args.store)
         },
+        zaloCreateOrder: async (_, args, { dataSources }) => {
+            return dataSources.buda.zaloCreateOrder(args.purchase)
+        }
         // cleanCache: async (_, __, { dataSources }) => {
         //     return dataSources.buda.cleanCache()
         // }

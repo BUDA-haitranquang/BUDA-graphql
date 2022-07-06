@@ -474,6 +474,9 @@ enum IssueType{
      TECHNICAL,
      OTHER
 }
+enum PaymentMethod{
+     ZALOPAY
+}
 input PeriodDTO{
      from: String
      to: String
@@ -939,6 +942,27 @@ input StoreInput{
      name: String
      address: String
 }
+input ZaloCallback{
+     jsonStr: String
+}
+input PurchaseDTO{
+     id: Int
+     purchaseID: Int
+     userID: Int
+     userName: String 
+     userPhoneNumber: String 
+     userMail: String 
+     planID: Int
+     planType: PlanType 
+     curPlanType: PlanType 
+     price: Float
+     duration: Int
+     creationTime: String
+     message: String
+     callBackData: String
+     status: Status
+     payMethod: PaymentMethod
+}
 type Query{
     ingredient(ingredientID:Int): Ingredient
     ingredientsByUser: [Ingredient]
@@ -1091,6 +1115,8 @@ type Query{
     businessOverallEveryYear: [BusinessReportByTimeStatistics]
     businessOverallXDays(X: Int): [BusinessReportByTimeStatistics]
     businessOverallPeriod(period: PeriodDTO): [BusinessByTimePeriodStatistics]
+    zaloCallback(callback: ZaloCallback): String 
+    zaloGetOrderStatus(apptransid: String): String 
 }
 
 type Mutation{
@@ -1184,5 +1210,6 @@ type Mutation{
     newIssue(issue: IssueInput): Issue
     newStore(store: StoreInput): Store
     updateStore(store: StoreInput): Store
+    zaloCreateOrder(purchase: PurchaseDTO): String
 }
 `;
