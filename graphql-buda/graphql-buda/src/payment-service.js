@@ -18,5 +18,15 @@ class paymentService extends RESTDataSource {
         const purchaseJson = JSON.parse(JSON.stringify(purchase))
         return this.post(`api/payment/zalopay/create-order`, purchaseJson)
     }
+    async vnPayCallback(){
+        return this.get(`api/payment/vnpay/callback`)
+    }
+    async vnPayReturnURL(){
+        return this.get(`api/payment/vnpay/return-url`)
+    }
+    async vnPayCreateOrder(purchase){
+        const purchaseJson = JSON.parse(JSON.stringify(purchase))
+        return this.post(`api/payment/vnpay/create-order`, purchaseJson)
+    }
 }
 module.exports = paymentService

@@ -457,10 +457,16 @@ module.exports.resolvers = {
             return dataSources.buda.businessOverallPeriod(args.period)
         },
         zaloCallback: async (_, args, { dataSources }) => {
-            return dataSources.buda.zaloCallback(args.callback)
+            return dataSources.paymentService.zaloCallback(args.callback)
         },
         zaloGetOrderStatus: async (_, args, { dataSources }) => {
-            return dataSources.buda.zaloGetOrderStatus(args.apptransid)
+            return dataSources.paymentService.zaloGetOrderStatus(args.apptransid)
+        },
+        vnPayCallback: async (_, args, { dataSources }) => {
+            return dataSources.paymentService.vnPayCallback(args)
+        },
+        vnPayReturnURL: async (_, args, { dataSources }) => {
+            return dataSources.paymentService.vnPayReturnURL(args)
         }
     },
     Mutation: {
@@ -732,7 +738,10 @@ module.exports.resolvers = {
             return dataSources.buda.updateStore(args.store)
         },
         zaloCreateOrder: async (_, args, { dataSources }) => {
-            return dataSources.buda.zaloCreateOrder(args.purchase)
+            return dataSources.paymentService.zaloCreateOrder(args.purchase)
+        },
+        vnPayCreateOrder: async (_, args, { dataSources }) => {
+            return dataSources.paymentService.vnPayCreateOrder(args.purchase)
         }
         // cleanCache: async (_, __, { dataSources }) => {
         //     return dataSources.buda.cleanCache()

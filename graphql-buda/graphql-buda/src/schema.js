@@ -946,7 +946,6 @@ input ZaloCallback{
      jsonStr: String
 }
 input PurchaseDTO{
-     id: Int
      purchaseID: Int
      userID: Int
      userName: String 
@@ -1117,6 +1116,8 @@ type Query{
     businessOverallPeriod(period: PeriodDTO): [BusinessByTimePeriodStatistics]
     zaloCallback(callback: ZaloCallback): String 
     zaloGetOrderStatus(apptransid: String): String 
+    vnPayCallback: String
+    vnPayReturnURL: String
 }
 
 type Mutation{
@@ -1211,5 +1212,6 @@ type Mutation{
     newStore(store: StoreInput): Store
     updateStore(store: StoreInput): Store
     zaloCreateOrder(purchase: PurchaseDTO): String
+    vnPayCreateOrder(purchase: PurchaseDTO): String
 }
 `;
