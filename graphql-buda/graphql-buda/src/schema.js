@@ -425,6 +425,10 @@ type PrintSellOrder{
      sellOrder: SellOrder
      store: Store
 }
+type UserPlanStatus{
+     userID: Int
+     planType: PlanType
+}
 enum StaffPosition{
     MANAGER, 
     BASIC
@@ -950,12 +954,11 @@ input PurchaseDTO{
      userID: Int
      userName: String 
      userPhoneNumber: String 
-     userMail: String 
-     planID: Int
+     userMail: String         
      planType: PlanType 
      curPlanType: PlanType 
      price: Float
-     duration: Int
+     duration: Int  
      creationTime: String
      message: String
      callBackData: String
@@ -1031,6 +1034,7 @@ type Query{
     supplier(supplierID: Int): Supplier
     suppliersByUser: [Supplier]
     plans: [Plan]
+    userPlanStatus(userID: Int): UserPlanStatus
     purchaseByUser: [Purchase]
     picture(pictureID: Int): Picture
     fixedCostsByUser: [FixedCost]

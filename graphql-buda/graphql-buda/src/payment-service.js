@@ -28,5 +28,8 @@ class paymentService extends RESTDataSource {
         const purchaseJson = JSON.parse(JSON.stringify(purchase))
         return this.post(`api/payment/vnpay/create-order`, purchaseJson)
     }
+    async userPlanStatus(userID){
+        return this.get(`api/plan/view/${userID}`)
+    }
 }
 module.exports = paymentService

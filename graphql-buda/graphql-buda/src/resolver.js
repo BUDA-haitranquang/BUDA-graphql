@@ -204,6 +204,9 @@ module.exports.resolvers = {
         plans: async (_, args, { dataSources }) => {
             return dataSources.buda.plans(args)
         },
+        userPlanStatus: async (_, args, { dataSources }) => {
+            return dataSources.paymentService.userPlanStatus(args.userID)
+        },
         purchaseByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.purchaseByUser(args)
         },
