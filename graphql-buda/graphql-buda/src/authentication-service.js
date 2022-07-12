@@ -5,7 +5,7 @@ class authenticationService extends RESTDataSource {
     }
     constructor() {
         super()
-        this.baseURL = 'http://34.124.169.2:6060/'
+        this.baseURL = 'http://103.173.228.124:6060/'
     }
     async userLogin(email, password) {
         return this.post(`api/login`, {
