@@ -1051,7 +1051,7 @@ type Query{
     staff(staffID: Int): Staff
 #     salaryLog(salaryLogId: Int): SalaryLog
     salaryLogsByUser: [SalaryLog]
-    salaryLogsByStaff: [SalaryLog]
+    salaryLogsByStaff(staffID: Int): [SalaryLog]
     staffNotesByUser: [StaffNote]
     staffNotesByStaff(staffID: Int): [StaffNote]
     unseenStaffNotesByStaff(staffID: Int): [StaffNote]
