@@ -30,7 +30,7 @@ class authenticationService extends RESTDataSource {
     }
     async updateUserPassword(updateUserPassword){
         const updateUserPasswordJson=JSON.parse(JSON.stringify(updateUserPassword))
-        return this.put(`api/password/update`, updateUserPasswordJson)
+        return this.post(`api/password/update`, updateUserPasswordJson)
     }
     async forgotPassword(email){
         return this.get(`api/password/forgot/?email=${email}`)
@@ -38,6 +38,14 @@ class authenticationService extends RESTDataSource {
     async updateForgotPassword(token, updateUserPassword){
         const updateUserPasswordJson=JSON.parse(JSON.stringify(updateUserPassword))
         return this.put(`api/password/forgot/confirm/?token=${token}`, updateUserPasswordJson)
+    }
+    async updateBatchUserPlan(updatePlan){
+        const updatePlanJson=JSON.parse(JSON.stringify(updatePlan))
+        return this.post(`api/plan/update/batch`, updatePlanJson)
+    }
+    async updateUserPlan(updatePlan){
+        const updatePlanJson=JSON.parse(JSON.stringify(updatePlan))
+        return this.post(`api/plan/update`, updatePlanJson)
     }
 }
 

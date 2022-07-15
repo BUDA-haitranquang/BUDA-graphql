@@ -745,6 +745,12 @@ module.exports.resolvers = {
         },
         vnPayCreateOrder: async (_, args, { dataSources }) => {
             return dataSources.paymentService.vnPayCreateOrder(args.purchase)
+        },
+        updateBatchUserPlan: async (_, args, { dataSources }) => {
+            return dataSources.buda.updateBatchUserPlan(args.updatePlan)
+        },
+        updateUserPlan: async (_, args, { dataSources }) => {
+            return dataSources.buda.updateUserPlan(args.updatePlan)
         }
         // cleanCache: async (_, __, { dataSources }) => {
         //     return dataSources.buda.cleanCache()

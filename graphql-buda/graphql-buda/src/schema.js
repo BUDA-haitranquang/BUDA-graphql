@@ -965,6 +965,10 @@ input PurchaseDTO{
      status: Status
      payMethod: PaymentMethod
 }
+input UpdateUserPlan{
+     userID: Int
+     planType: PlanType
+}
 type Query{
     ingredient(ingredientID:Int): Ingredient
     ingredientsByUser: [Ingredient]
@@ -1217,5 +1221,7 @@ type Mutation{
     updateStore(store: StoreInput): Store
     zaloCreateOrder(purchase: PurchaseDTO): String
     vnPayCreateOrder(purchase: PurchaseDTO): String
+    updateBatchUserPlan(updatePlan: [UpdateUserPlan]): String
+    updateUserPlan(updatePlan: UpdateUserPlan): User 
 }
 `;
