@@ -39,6 +39,13 @@ type ProductLeftLog{
      message: String 
      userID: Int
 }
+type ProductLogInfo{
+     userID: Int
+     productID: Int
+     productSKU: String
+     name: String
+     amountLeft: Int
+}
 type Ingredient{
      ingredientID: Int
      ingredientSKU: String
@@ -51,6 +58,27 @@ type Ingredient{
      picture: Picture
      alertAmountLeft: Int
      buyOrderItems: [BuyOrderItem]
+}
+type IngredientInfo{
+     userID: Int
+     ingredientID: Int
+     ingredientSKU: String
+     name: String
+     price: Float
+     amountLeft: Int
+     alertAmountLeft: Int
+     description: String
+}
+type ProductInfo{
+     userID: Int
+     productID: Int
+     productSKU: String
+     name: String
+     sellingPrice: Float
+     amountLeft: Int
+     alertAmount: Int
+     costPerUnit: Float
+     description: String
 }
 type BuyOrderItem{
      buyOrderItemID: Int
@@ -279,6 +307,13 @@ type IngredientLeftLog{
      staffID: Int
      message: String
      userID: Int
+}
+type IngredientLogInfo{
+     userID: Int
+     ingredientID: Int
+     ingredientSKU: String
+     name: String
+     amountLeft: Int
 }
 type MailConfirmationToken{
      id: Int
@@ -974,16 +1009,20 @@ type Query{
     ingredientsByUser: [Ingredient]
     hiddenIngredients: [Ingredient]
     alertIngredients: [Ingredient]
+    filterIngredients: [IngredientInfo]
     ingredientLeftLog(ingredientLeftLogID: Int): IngredientLeftLog
     ingredientLeftLogsByIngredient(ingredientID: Int): [IngredientLeftLog]
     ingredientLeftLogsByUser: [IngredientLeftLog]
     ingredientLeftLogsByStaff(staffID: Int): [IngredientLeftLog]
+    filterIngredientLeftLog: [IngredientLogInfo]
     productsByUser: [Product] 
     product(productID: Int): Product
+    filterProducts: [ProductInfo]
     productLeftLog(productLeftLogID: Int): ProductLeftLog
     productLeftLogsByProduct(productID: Int): [ProductLeftLog]
     productLeftLogsByUser: [ProductLeftLog]
     productLeftLogsByStaff(staffID: Int): [ProductLeftLog]
+    filterProductLeftLog: [ProductLogInfo]
     productsByGroup(productGroupID: Int): [Product] 
     hiddenProducts: [Product]
     alertProducts: [Product]

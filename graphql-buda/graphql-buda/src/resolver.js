@@ -15,6 +15,9 @@ module.exports.resolvers = {
         alertIngredients: async (_, args, { dataSources }) => {
             return dataSources.buda.alertIngredients(args)
         },
+        filterIngredients: async (_, args, { dataSources }) => {    
+            return dataSources.buda.filterIngredients(args)
+        },
         ingredientLeftLog: async (_, args, { dataSources }) => {
             return dataSources.buda.ingredientLeftLog(args.ingredientLeftLogID)
         },
@@ -27,6 +30,9 @@ module.exports.resolvers = {
         ingredientLeftLogsByStaff: async (_, args, { dataSources }) => {
             return dataSources.buda.ingredientLeftLogsByStaff(args.staffID)
         },
+        filterIngredientLeftLog: async (_, args, { dataSources }) => {
+            return dataSources.buda.filterIngredientLeftLog(args)
+        },
         product: async (_, args, { dataSources }) => {
             return dataSources.buda.product(args.productID)
         },
@@ -35,6 +41,9 @@ module.exports.resolvers = {
         },
         productsByGroup: async (_, args, { dataSources }) => {
             return dataSources.buda.productsByGroup(args.productGroupID)
+        },
+        filterProducts: async (_, args, { dataSources }) => {
+            return dataSources.buda.filterProducts(args)
         },
         hiddenProducts: async (_, args, { dataSources }) => {
             return dataSources.buda.hiddenProducts(args)
@@ -53,6 +62,9 @@ module.exports.resolvers = {
         },
         productLeftLogsByStaff: async (_, args, { dataSources }) => {
             return dataSources.buda.productLeftLogsByStaff(args.staffID)
+        },
+        filterProductLeftLog: async (_, args, { dataSources }) => {
+            return dataSources.buda.filterProductLeftLog(args)
         },
         productComboByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.productComboByUser(args)
