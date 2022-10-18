@@ -315,16 +315,6 @@ type IngredientLogInfo{
      name: String
      amountLeft: Int
 }
-type MailConfirmationToken{
-     id: Int
-     token: String
-     createdAt: String
-     expiredAt: String
-     confirmedAt: String
-     mailTokenType: MailTokenType 
-     targetEmail: String 
-     user: User 
-}
 type PaySlip{
      paySlipID: Int
      supplier: Supplier 
@@ -371,10 +361,6 @@ type ViewSellOrder{
 type UserLogin{
     email: String 
     password: String 
-}
-type Role{
-     roleID: Int
-     name: String
 }
 type ExpenseByTimeStatistics{
      timePeriod: String 
@@ -503,11 +489,6 @@ enum PlanType {
      BASIC, 
      PRO, 
      PREMIUM
-}
-enum MailTokenType{
-    REGISTER, 
-    UPDATE_INFO, 
-    UPDATE_PASSWORD 
 }
 enum IssueType{
      TECHNICAL,
@@ -1009,20 +990,20 @@ type Query{
     ingredientsByUser: [Ingredient]
     hiddenIngredients: [Ingredient]
     alertIngredients: [Ingredient]
-    filterIngredients: [IngredientInfo]
+    filterIngredients(page: Int=0, size: Int=50, sort: String="ingredientID,desc"): [IngredientInfo]
     ingredientLeftLog(ingredientLeftLogID: Int): IngredientLeftLog
     ingredientLeftLogsByIngredient(ingredientID: Int): [IngredientLeftLog]
     ingredientLeftLogsByUser: [IngredientLeftLog]
     ingredientLeftLogsByStaff(staffID: Int): [IngredientLeftLog]
-    filterIngredientLeftLog: [IngredientLogInfo]
+    filterIngredientLeftLog(page: Int=0, size: Int=50, sort: String="ingredientLeftLogID,desc"): [IngredientLogInfo]
     productsByUser: [Product] 
     product(productID: Int): Product
-    filterProducts: [ProductInfo]
+    filterProducts(page: Int=0, size: Int=50, sort: String="productID,desc"): [ProductInfo]
     productLeftLog(productLeftLogID: Int): ProductLeftLog
     productLeftLogsByProduct(productID: Int): [ProductLeftLog]
     productLeftLogsByUser: [ProductLeftLog]
     productLeftLogsByStaff(staffID: Int): [ProductLeftLog]
-    filterProductLeftLog: [ProductLogInfo]
+    filterProductLeftLog(page: Int=0, size: Int=50, sort: String="productLeftLogID,desc"): [ProductLogInfo]
     productsByGroup(productGroupID: Int): [Product] 
     hiddenProducts: [Product]
     alertProducts: [Product]
