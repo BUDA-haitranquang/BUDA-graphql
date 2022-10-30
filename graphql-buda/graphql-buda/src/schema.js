@@ -67,6 +67,7 @@ type IngredientInfo{
      price: Float
      amountLeft: Int
      alertAmountLeft: Int
+     picture: Picture
      description: String
 }
 type ProductInfo{
@@ -75,6 +76,7 @@ type ProductInfo{
      productSKU: String
      name: String
      sellingPrice: Float
+     picture: Picture
      amountLeft: Int
      alertAmount: Int
      costPerUnit: Float

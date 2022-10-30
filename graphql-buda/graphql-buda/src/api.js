@@ -20,12 +20,13 @@ class Budabackend extends RESTDataSource {
     async alertIngredients(){
         return this.get(`api/ingredient/view/alert`)
     }
-    async filterIngredients(page, size, sort){
+    async filterIngredients(page, size, sort, filter){
+        const filterJson = JSON.parse(JSON.stringify(filter))
         return this.get(`api/ingredient/view/filter-all`,{
             page: page,
             size: size,
             sort: sort
-        })
+        }, filterJson)
     }
     async ingredientLeftLog(ingredientLeftLogID){
         return this.get(`api/ingredient/quantity-log/id/${ingredientLeftLogID}`)
@@ -39,12 +40,13 @@ class Budabackend extends RESTDataSource {
     async ingredientLeftLogsByStaff(staffID){
         return this.get(`api/ingredient/quantity-log/staff/${staffID}/all`)
     }
-    async filterIngredientLeftLog(page, size, sort){
+    async filterIngredientLeftLog(page, size, sort, filter){
+        const filterJson = JSON.parse(JSON.stringify(filter))
         return this.get(`api/ingredient/quantity-log/filter-all`,{
             page: page,
             size: size,
             sort: sort
-        })
+        }, filterJson)
     }
     async product(productID) {
         return this.get(`api/product/view/productID/${productID}`)
@@ -52,12 +54,13 @@ class Budabackend extends RESTDataSource {
     async productsByUser() {
         return this.get(`api/product/view/all`)
     }
-    async filterProducts(page, size, sort){
+    async filterProducts(page, size, sort, filter){
+        const filterJson = JSON.parse(JSON.stringify(filter))
         return this.get(`api/product/view/filter-all`,{
             page: page,
             size: size,
             sort: sort
-        })
+        }, filterJson)
     }
     async productsByGroup(productGroupID) {
         return this.get(`api/product/view/group/${productGroupID}/all`)
@@ -85,7 +88,7 @@ class Budabackend extends RESTDataSource {
             page: page,
             size: size,
             sort: sort
-        })
+        }, filterJson)
     }
     async productGroupsByUser(){
         return this.get(`api/product/group/view/all`)
