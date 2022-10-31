@@ -565,6 +565,16 @@ input UpdateProduct{
     sellOrderItems: [SellOrderItemInput] 
     productLeftLogs: [ProductLeftLogInput]
 }
+input ViewProductFilter{
+    productSKU: String
+    name: String
+    description: String
+    sellingPrice: Float 
+    alertAmount: Int 
+    amountLeft: Int 
+    costPerUnit: Float 
+    groupID: Int
+}
 input ProductLeftLogInput{
      productLeftLogID: Int
      product: ProductInput 
@@ -573,6 +583,11 @@ input ProductLeftLogInput{
      staffID: Int
      message: String 
      userID: Int
+}
+input ViewProductLeftLogFilter{
+     productSKU: String
+     name: String
+     amountLeft: Int
 }
 input ProductGroupInput{
      productGroupID: Int
@@ -635,6 +650,19 @@ input UpdateIngredient{
      picture: PictureInput
      alertAmountLeft: Int 
      buyOrderItems: [BuyOrderItemInput]
+}
+input ViewIngredientFilter{
+     ingredientSKU: String
+     name: String
+     description: String 
+     amountLeft: Int 
+     price: Float 
+     alertAmountLeft: Int 
+}
+input ViewIngredientLeftLogFilter{
+     ingredientSKU: String
+     name: String
+     amountLeft: Int
 }
 input RetailCreateDTO{
      productSKU: String 
@@ -992,20 +1020,20 @@ type Query{
     ingredientsByUser: [Ingredient]
     hiddenIngredients: [Ingredient]
     alertIngredients: [Ingredient]
-    filterIngredients(page: Int=0, size: Int=50, sort: String="ingredientID,desc"): [IngredientInfo]
+    filterIngredients(page: Int=0, size: Int=50, sort: String="ingredientID,desc", filter: ViewIngredientFilter): [IngredientInfo]
     ingredientLeftLog(ingredientLeftLogID: Int): IngredientLeftLog
     ingredientLeftLogsByIngredient(ingredientID: Int): [IngredientLeftLog]
     ingredientLeftLogsByUser: [IngredientLeftLog]
     ingredientLeftLogsByStaff(staffID: Int): [IngredientLeftLog]
-    filterIngredientLeftLog(page: Int=0, size: Int=50, sort: String="ingredientLeftLogID,desc"): [IngredientLogInfo]
+    filterIngredientLeftLog(page: Int=0, size: Int=50, sort: String="ingredientLeftLogID,desc", filter: ViewIngredientLeftLogFilter): [IngredientLogInfo]
     productsByUser: [Product] 
     product(productID: Int): Product
-    filterProducts(page: Int=0, size: Int=50, sort: String="productID,desc"): [ProductInfo]
+    filterProducts(page: Int=0, size: Int=50, sort: String="productID,desc", filter: ViewProductFilter): [ProductInfo]
     productLeftLog(productLeftLogID: Int): ProductLeftLog
     productLeftLogsByProduct(productID: Int): [ProductLeftLog]
     productLeftLogsByUser: [ProductLeftLog]
     productLeftLogsByStaff(staffID: Int): [ProductLeftLog]
-    filterProductLeftLog(page: Int=0, size: Int=50, sort: String="productLeftLogID,desc"): [ProductLogInfo]
+    filterProductLeftLog(page: Int=0, size: Int=50, sort: String="productLeftLogID,desc", filter: ViewProductLeftLogFilter): [ProductLogInfo]
     productsByGroup(productGroupID: Int): [Product] 
     hiddenProducts: [Product]
     alertProducts: [Product]

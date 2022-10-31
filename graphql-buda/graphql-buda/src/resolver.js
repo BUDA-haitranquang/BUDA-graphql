@@ -16,7 +16,7 @@ module.exports.resolvers = {
             return dataSources.buda.alertIngredients(args)
         },
         filterIngredients: async (_, args, { dataSources }) => {    
-            return dataSources.buda.filterIngredients(args.page, args.size, args.sort)
+            return dataSources.buda.filterIngredients(args.page, args.size, args.sort, args.filter)
         },
         ingredientLeftLog: async (_, args, { dataSources }) => {
             return dataSources.buda.ingredientLeftLog(args.ingredientLeftLogID)
@@ -31,7 +31,7 @@ module.exports.resolvers = {
             return dataSources.buda.ingredientLeftLogsByStaff(args.staffID)
         },
         filterIngredientLeftLog: async (_, args, { dataSources }) => {
-            return dataSources.buda.filterIngredientLeftLog(args.page, args.size, args.sort)
+            return dataSources.buda.filterIngredientLeftLog(args.page, args.size, args.sort, args.filter)
         },
         product: async (_, args, { dataSources }) => {
             return dataSources.buda.product(args.productID)
@@ -43,7 +43,7 @@ module.exports.resolvers = {
             return dataSources.buda.productsByGroup(args.productGroupID)
         },
         filterProducts: async (_, args, { dataSources }) => {
-            return dataSources.buda.filterProducts(args.page, args.size, args.sort)
+            return dataSources.buda.filterProducts(args.page, args.size, args.sort, args.filter)
         },
         hiddenProducts: async (_, args, { dataSources }) => {
             return dataSources.buda.hiddenProducts(args)
@@ -64,7 +64,7 @@ module.exports.resolvers = {
             return dataSources.buda.productLeftLogsByStaff(args.staffID)
         },
         filterProductLeftLog: async (_, args, { dataSources }) => {
-            return dataSources.buda.filterProductLeftLog(args.page, args.size, args.sort)
+            return dataSources.buda.filterProductLeftLog(args.page, args.size, args.sort, args.filter)
         },
         productComboByUser: async (_, args, { dataSources }) => {
             return dataSources.buda.productComboByUser(args)
