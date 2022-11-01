@@ -360,6 +360,22 @@ type ViewSellOrder{
      count: Int
      sellOrders: [SellOrder]
 }
+type ViewProduct{
+     count: Int
+     products: [ProductInfo]
+}
+type ViewProductLeftLog{
+     count: Int
+     productLeftLogs: [ProductLogInfo]
+}
+type ViewIngredient{
+     count: Int
+     ingredients: [IngredientInfo]
+}
+type ViewIngredientLeftLog{
+     count: Int
+     ingredientLeftLogs: [IngredientLogInfo]
+}
 type UserLogin{
     email: String 
     password: String 
@@ -1020,20 +1036,20 @@ type Query{
     ingredientsByUser: [Ingredient]
     hiddenIngredients: [Ingredient]
     alertIngredients: [Ingredient]
-    filterIngredients(page: Int=0, size: Int=50, sort: String="ingredientID,desc", filter: ViewIngredientFilter): [IngredientInfo]
+    filterIngredients(page: Int=0, size: Int=50, sort: String="ingredientID,desc", filter: ViewIngredientFilter): ViewIngredient
     ingredientLeftLog(ingredientLeftLogID: Int): IngredientLeftLog
     ingredientLeftLogsByIngredient(ingredientID: Int): [IngredientLeftLog]
     ingredientLeftLogsByUser: [IngredientLeftLog]
     ingredientLeftLogsByStaff(staffID: Int): [IngredientLeftLog]
-    filterIngredientLeftLog(page: Int=0, size: Int=50, sort: String="ingredientLeftLogID,desc", filter: ViewIngredientLeftLogFilter): [IngredientLogInfo]
+    filterIngredientLeftLog(page: Int=0, size: Int=50, sort: String="ingredientLeftLogID,desc", filter: ViewIngredientLeftLogFilter): ViewIngredientLeftLog
     productsByUser: [Product] 
     product(productID: Int): Product
-    filterProducts(page: Int=0, size: Int=50, sort: String="productID,desc", filter: ViewProductFilter): [ProductInfo]
+    filterProducts(page: Int=0, size: Int=50, sort: String="productID,desc", filter: ViewProductFilter): ViewProduct
     productLeftLog(productLeftLogID: Int): ProductLeftLog
     productLeftLogsByProduct(productID: Int): [ProductLeftLog]
     productLeftLogsByUser: [ProductLeftLog]
     productLeftLogsByStaff(staffID: Int): [ProductLeftLog]
-    filterProductLeftLog(page: Int=0, size: Int=50, sort: String="productLeftLogID,desc", filter: ViewProductLeftLogFilter): [ProductLogInfo]
+    filterProductLeftLog(page: Int=0, size: Int=50, sort: String="productLeftLogID,desc", filter: ViewProductLeftLogFilter): ViewProductLeftLog
     productsByGroup(productGroupID: Int): [Product] 
     hiddenProducts: [Product]
     alertProducts: [Product]

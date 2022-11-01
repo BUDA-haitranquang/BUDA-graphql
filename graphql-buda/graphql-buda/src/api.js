@@ -22,11 +22,7 @@ class Budabackend extends RESTDataSource {
     }
     async filterIngredients(page, size, sort, filter){
         const filterJson = JSON.parse(JSON.stringify(filter))
-        return this.get(`api/ingredient/view/filter-all`,{
-            page: page,
-            size: size,
-            sort: sort
-        }, filterJson)
+        return this.get(`api/ingredient/view/filter-all/?page=${page}&size=${size}&sort=${sort}`, filterJson)
     }
     async ingredientLeftLog(ingredientLeftLogID){
         return this.get(`api/ingredient/quantity-log/id/${ingredientLeftLogID}`)
@@ -42,11 +38,7 @@ class Budabackend extends RESTDataSource {
     }
     async filterIngredientLeftLog(page, size, sort, filter){
         const filterJson = JSON.parse(JSON.stringify(filter))
-        return this.get(`api/ingredient/quantity-log/filter-all`,{
-            page: page,
-            size: size,
-            sort: sort
-        }, filterJson)
+        return this.get(`api/ingredient/quantity-log/filter-all/?page=${page}&size=${size}&sort=${sort}`, filterJson)
     }
     async product(productID) {
         return this.get(`api/product/view/productID/${productID}`)
@@ -56,11 +48,7 @@ class Budabackend extends RESTDataSource {
     }
     async filterProducts(page, size, sort, filter){
         const filterJson = JSON.parse(JSON.stringify(filter))
-        return this.get(`api/product/view/filter-all`,{
-            page: page,
-            size: size,
-            sort: sort
-        }, filterJson)
+        return this.get(`api/product/view/filter-all/?page=${page}&size=${size}&sort=${sort}`, filterJson)
     }
     async productsByGroup(productGroupID) {
         return this.get(`api/product/view/group/${productGroupID}/all`)
@@ -83,12 +71,9 @@ class Budabackend extends RESTDataSource {
     async productLeftLogsByStaff(staffID){
         return this.get(`api/product/quantity-log/staff/${staffID}/all`)
     }
-    async filterProductLeftLog(page, size, sort){
-        return this.get(`api/product/quantity-log/filter-all`,{
-            page: page,
-            size: size,
-            sort: sort
-        }, filterJson)
+    async filterProductLeftLog(page, size, sort, filter){
+        const filterJson = JSON.parse(JSON.stringify(filter))
+        return this.get(`api/product/quantity-log/filter-all/?page=${page}&size=${size}&sort=${sort}`, filterJson)
     }
     async productGroupsByUser(){
         return this.get(`api/product/group/view/all`)
