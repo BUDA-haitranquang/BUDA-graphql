@@ -548,6 +548,9 @@ module.exports.resolvers = {
         deleteStaff: async (_, args, { dataSources }) => {
             return dataSources.buda.deleteStaff(args.staffID)
         },
+        deactivateStaff: async (_, args, { dataSources }) => {
+            return dataSources.authenticationService.deactivateStaff(args.staffID)
+        },
         newSalaryLog: async (_, args, { dataSources }) => {
             return dataSources.buda.newSalaryLog(args.salaryLogInput)
         },

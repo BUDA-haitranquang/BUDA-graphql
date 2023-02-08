@@ -17,6 +17,15 @@ class authenticationService extends RESTDataSource {
         const jwtSimpleJson = JSON.parse(JSON.stringify(jwtSimple))
         return this.post(`api/login/social/google`, jwtSimpleJson)
     }
+    async staffLogin(account, password) {
+        return this.post(`api/staff/login`, {
+            account: account,
+            password: password,
+        })
+    }
+    async deactivateStaff(staffID){
+        return this.put(`api/staff/deactivate/id/${staffID}`)
+    }
     async newUser(userRegister){
         const userRegisterJson = JSON.parse(JSON.stringify(userRegister))
         return this.post(`api/register`, userRegisterJson)

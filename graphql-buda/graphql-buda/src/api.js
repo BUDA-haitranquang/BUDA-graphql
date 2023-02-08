@@ -609,12 +609,6 @@ class Budabackend extends RESTDataSource {
         const staffInputJson = JSON.parse(JSON.stringify(staffInput))
         return this.post(`api/staff/create`, staffInputJson)
     }
-    async staffLogin(account, password) {
-        return this.post(`api/staff/login`, {
-            account: account,
-            password: password,
-        })
-    }
     async updateStaff(staffID, staff) {
         const staffJson = JSON.parse(JSON.stringify(staff))
         return this.put(`api/staff/crud/update/${staffID}`, staffJson)

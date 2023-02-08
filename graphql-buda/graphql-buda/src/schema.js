@@ -1222,6 +1222,7 @@ type Mutation{
     staffLogin(account: String!, password: String!): Authenticate
     updateStaff(staffID: Int, staff: UpdateStaff): Staff
     deleteStaff(staffID: Int): String
+    deactivateStaff(staffID: Int): Staff
     newSalaryLog(salaryLogInput: SalaryLogInput): SalaryLog
     deleteSalaryLog(salaryLogID: Int): String
     newStaffNote(staffNoteInput: StaffNoteInput): StaffNote
