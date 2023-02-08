@@ -752,6 +752,9 @@ class Budabackend extends RESTDataSource {
         const membershipTypeInputJson = JSON.parse(JSON.stringify(membershipTypeInput))
         return this.post(`api/customer/membership/new`, membershipTypeInputJson)
     }
+    async updateMembershipType(membershipTypeID){
+        return this.post(`api/customer/update/${membershipTypeID}`)
+    }
     async newDiscount(discountInput){
         const discountInputJson = JSON.parse(JSON.stringify(discountInput))
         return this.post(`api/discount/create`, discountInputJson)

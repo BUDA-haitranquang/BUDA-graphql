@@ -468,6 +468,11 @@ type UserPlanStatus{
      userID: Int
      planType: PlanType
 }
+type ViewCustomer{
+     customer: Customer
+     membershipType: MembershipType
+
+}
 enum StaffPosition{
     MANAGER, 
     BASIC
@@ -1096,7 +1101,7 @@ type Query{
     warrantyOrdersByUser: [WarrantyOrder]
     warrantyOrdersByCustomer(customerID: Int): [WarrantyOrder]
     warrantyOrdersByProduct(productID: Int): [WarrantyOrder]
-    customersByUser: [Customer]
+    customersByUser: [ViewCustomer]
     membershipType(membershipTypeID: Int): MembershipType
     membershipTypeByUser: [MembershipType]
     discountsByUser: [Discount]
@@ -1262,6 +1267,7 @@ type Mutation{
     updateCustomer(customer: CustomerInput): Customer
     hideCustomer(customerID: Int): Customer
     newMembershipType(membershipTypeInput: MembershipTypeInput): MembershipType
+    updateMembershipType(membershipTypeID: Int): [Customer]
     newDiscount(discountInput: DiscountInput): Discount
     deleteDiscount(discountID: Int): String
     newSupplier(supplierInput: SupplierInput): Supplier

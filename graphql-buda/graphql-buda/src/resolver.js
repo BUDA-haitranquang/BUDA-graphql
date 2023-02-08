@@ -683,6 +683,9 @@ module.exports.resolvers = {
         newMembershipType: async (_, args, { dataSources }) => {
             return dataSources.buda.newMembershipType(args.membershipTypeInput)
         },
+        updateMembershipType: async (_, args, { dataSources }) => {
+            return dataSources.buda.updateMembershipType(args.membershipTypeID)
+        },
         newDiscount: async (_, args, { dataSources }) => {
             return dataSources.buda.newDiscount(args.discountInput)
         },
