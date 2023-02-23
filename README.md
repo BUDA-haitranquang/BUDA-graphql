@@ -2,19 +2,16 @@
 
 ## Installation
 
-Requirements: Maven + Java + MySQL installed
+Requirements: NodeJS installed
 
 ## Usage
-Run this command in folder Project/Buda:
+Run this command in folder graphql-buda:
 ```java
-mvn package -DskipTests
+npm install
 ```
-
-### Server MySQL
-
-Fix config db in file Project/Buda/src/resources/application.properties
-
 After that run this command in terminal
 ```java
-mvn spring-boot:run
+npm start
 ```
+
+The GraphQL playground is on http://localhost:4000/
